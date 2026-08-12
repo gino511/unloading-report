@@ -2,432 +2,545 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <title>下貨點收回報</title>
 
 <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 
 <style>
-  :root{
-    --ink:#1c1f1a;
-    --paper:#f6f4ee;
-    --line:#d8d3c4;
-    --accent:#2f6f4f;
-    --accent-dim:#e4ede7;
-    --warn:#b5452e;
-    --warn-dim:#f4e2dd;
-    --muted:#6b6a5f;
-  }
 
-  *{
-    box-sizing:border-box;
-  }
+:root{
+  --ink:#1c1f1a;
+  --paper:#f6f4ee;
+  --line:#d8d3c4;
+  --accent:#2f6f4f;
+  --accent-dim:#e4ede7;
+  --warn:#b5452e;
+  --warn-dim:#f4e2dd;
+  --muted:#6b6a5f;
+}
 
-  body{
-    margin:0;
-    font-family:
-      -apple-system,
-      BlinkMacSystemFont,
-      "PingFang TC",
-      "Noto Sans TC",
-      sans-serif;
-    background:var(--paper);
-    color:var(--ink);
-    -webkit-tap-highlight-color:transparent;
-  }
+*{
+  box-sizing:border-box;
+}
 
-  button,
-  input,
-  textarea{
-    font-family:inherit;
-  }
+body{
+  margin:0;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "PingFang TC",
+    "Noto Sans TC",
+    sans-serif;
 
-  .wrap{
-    max-width:480px;
-    margin:0 auto;
-    padding:20px 18px 110px;
-  }
+  background:var(--paper);
+  color:var(--ink);
 
-  .brand{
-    display:flex;
-    align-items:baseline;
-    justify-content:space-between;
-    margin-bottom:18px;
-    padding-bottom:14px;
-    border-bottom:2px solid var(--ink);
-  }
+  -webkit-tap-highlight-color:transparent;
+}
 
-  .brand h1{
-    font-size:19px;
-    margin:0;
-    letter-spacing:.02em;
-  }
+.wrap{
+  max-width:480px;
+  margin:0 auto;
+  padding:20px 18px 110px;
+}
 
-  .brand .who{
-    font-size:12px;
-    color:var(--muted);
-    max-width:150px;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-  }
+.brand{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
 
-  fieldset{
-    border:none;
-    padding:0;
-    margin:0 0 22px;
-  }
+  margin-bottom:20px;
+  padding-bottom:14px;
 
-  legend{
-    font-size:12px;
-    font-weight:700;
-    letter-spacing:.12em;
-    color:var(--muted);
-    margin-bottom:8px;
-  }
+  border-bottom:2px solid var(--ink);
+}
 
-  .field{
-    margin-bottom:16px;
-  }
+.brand h1{
+  font-size:19px;
+  margin:0;
+  letter-spacing:.02em;
+}
 
-  .field label{
-    display:block;
-    font-size:12px;
-    font-weight:700;
-    color:var(--muted);
-    letter-spacing:.08em;
-    margin-bottom:6px;
-  }
+.brand .who{
+  font-size:12px;
+  color:var(--muted);
+  max-width:130px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
 
-  /* =========================
-     大車複選下拉
-     ========================= */
+fieldset{
+  border:none;
+  padding:0;
+  margin:0 0 22px;
+}
 
-  .multi-select{
-    position:relative;
-  }
+legend{
+  font-size:12px;
+  font-weight:700;
 
-  .multi-select-button{
-    width:100%;
-    min-height:48px;
-    padding:12px 42px 12px 12px;
-    border:1.5px solid var(--line);
-    border-radius:10px;
-    background:#fff;
-    color:var(--ink);
-    font-size:16px;
-    text-align:left;
-    position:relative;
-  }
+  letter-spacing:.12em;
+  color:var(--muted);
 
-  .multi-select-button::after{
-    content:"⌄";
-    position:absolute;
-    right:14px;
-    top:50%;
-    transform:translateY(-55%);
-    font-size:20px;
-    color:var(--muted);
-  }
+  margin-bottom:8px;
+}
 
-  .multi-select-button.open{
-    border-color:var(--accent);
-  }
+/* ==========================
+   大車下拉複選
+========================== */
 
-  .multi-select-panel{
-    display:none;
-    margin-top:6px;
-    background:#fff;
-    border:1.5px solid var(--line);
-    border-radius:12px;
-    overflow:hidden;
-    box-shadow:0 8px 25px rgba(0,0,0,.08);
-  }
+.truck-select-wrap{
+  position:relative;
+}
 
-  .multi-select-panel.open{
-    display:block;
-  }
+.truck-select-button{
+  width:100%;
 
-  .truck-list{
-    max-height:300px;
-    overflow-y:auto;
-    -webkit-overflow-scrolling:touch;
-  }
+  padding:13px 42px 13px 13px;
 
-  .truck-option{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:13px 12px;
-    border-bottom:1px solid #eeeae0;
-    font-size:15px;
-  }
+  border:1.5px solid var(--line);
+  border-radius:10px;
 
-  .truck-option:last-child{
-    border-bottom:none;
-  }
+  background:#fff;
+  color:var(--ink);
 
-  .truck-option input{
-    width:20px;
-    height:20px;
-    accent-color:var(--accent);
-    flex:none;
-  }
+  text-align:left;
+  font-size:16px;
+  font-family:inherit;
 
-  .truck-option.completed{
-    color:#aaa79b;
-    background:#f7f6f2;
-  }
+  position:relative;
+}
 
-  .truck-option.completed .truck-status{
-    margin-left:auto;
-    font-size:11px;
-    color:#9a988c;
-  }
+.truck-select-button::after{
+  content:"⌄";
 
-  .truck-option-name{
-    flex:1;
-  }
+  position:absolute;
+  right:14px;
+  top:50%;
 
-  .truck-panel-footer{
-    padding:9px 12px;
-    border-top:1px solid var(--line);
-    font-size:12px;
-    color:var(--muted);
-    background:#faf9f5;
-  }
+  transform:translateY(-55%);
 
-  .selected-summary{
-    margin-top:7px;
-    font-size:12px;
-    color:var(--muted);
-    min-height:16px;
-  }
+  font-size:20px;
+  color:#777;
+}
 
-  /* =========================
-     下貨人員
-     ========================= */
+.truck-dropdown{
+  display:none;
 
-  .staff-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:8px;
-  }
+  position:absolute;
+  z-index:50;
 
-  .staff-item{
-    position:relative;
-  }
+  left:0;
+  right:0;
 
-  .staff-item input{
-    position:absolute;
-    opacity:0;
-    pointer-events:none;
-  }
+  margin-top:6px;
 
-  .staff-item label{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    min-height:48px;
-    padding:10px 8px;
-    border:1.5px solid var(--line);
-    border-radius:10px;
-    background:#fff;
-    color:var(--ink);
-    font-size:15px;
-    font-weight:700;
-    margin:0;
-    letter-spacing:0;
-  }
+  background:#fff;
 
-  .staff-item input:checked + label{
-    background:var(--accent);
-    border-color:var(--accent);
-    color:#fff;
-  }
+  border:1.5px solid var(--line);
+  border-radius:12px;
 
-  /* =========================
-     件數
-     ========================= */
+  box-shadow:0 8px 25px rgba(0,0,0,.12);
 
-  .seg{
-    display:flex;
-    gap:8px;
-  }
+  overflow:hidden;
+}
 
-  .seg button{
-    flex:1;
-    padding:14px 0;
-    border:1.5px solid var(--line);
-    border-radius:10px;
-    background:#fff;
-    font-size:15px;
-    font-weight:700;
-    color:var(--ink);
-  }
+.truck-dropdown.open{
+  display:block;
+}
 
-  .seg button[data-v="ok"].active{
-    background:var(--accent);
-    border-color:var(--accent);
-    color:#fff;
-  }
+.truck-list{
+  max-height:300px;
+  overflow-y:auto;
+}
 
-  .seg button[data-v="bad"].active{
-    background:var(--warn);
-    border-color:var(--warn);
-    color:#fff;
-  }
+.truck-option{
+  display:flex;
+  align-items:center;
+  gap:10px;
 
-  /* =========================
-     照片
-     ========================= */
+  padding:13px 14px;
 
-  .photo-upload{
-    border:1.5px dashed var(--line);
-    border-radius:12px;
-    padding:18px;
-    text-align:center;
-    background:#fff;
-    position:relative;
-    color:#8a8879;
-  }
+  border-bottom:1px solid #eee;
 
-  .photo-upload span.icon{
-    font-size:30px;
-    display:block;
-    margin-bottom:6px;
-  }
+  font-size:15px;
+}
 
-  .photo-upload input{
-    position:absolute;
-    inset:0;
-    opacity:0;
-    cursor:pointer;
-  }
+.truck-option:last-child{
+  border-bottom:none;
+}
 
-  .photo-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:8px;
-    margin-top:12px;
-  }
+.truck-option input{
+  width:20px;
+  height:20px;
+  accent-color:var(--accent);
+}
 
-  .thumb{
-    position:relative;
-    aspect-ratio:1;
-    border-radius:8px;
-    overflow:hidden;
-    border:1px solid var(--line);
-    background:#fff;
-  }
+.truck-option.used{
+  color:#a5a397;
+  background:#f5f4ef;
+}
 
-  .thumb img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-  }
+.truck-option.used .truck-name{
+  text-decoration:line-through;
+}
 
-  .thumb .rm{
-    position:absolute;
-    top:3px;
-    right:3px;
-    width:22px;
-    height:22px;
-    border-radius:50%;
-    background:rgba(0,0,0,.65);
-    color:#fff;
-    font-size:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border:none;
-  }
+.used-tag{
+  margin-left:auto;
 
-  /* =========================
-     備註
-     ========================= */
+  font-size:11px;
 
-  textarea{
-    width:100%;
-    padding:12px;
-    border:1.5px solid var(--line);
-    border-radius:10px;
-    font-size:16px;
-    background:#fff;
-    color:var(--ink);
-    resize:vertical;
-    min-height:70px;
-  }
+  padding:3px 7px;
 
-  /* =========================
-     提示
-     ========================= */
+  border-radius:20px;
 
-  .hint{
-    font-size:12px;
-    color:#9a988c;
-    margin-top:6px;
-    line-height:1.5;
-  }
+  background:#e9e7df;
+  color:#8a887c;
 
-  /* =========================
-     送出
-     ========================= */
+  white-space:nowrap;
+}
 
-  .submit-bar{
-    position:fixed;
-    left:0;
-    right:0;
-    bottom:0;
-    background:var(--paper);
-    border-top:1px solid var(--line);
-    padding:12px 18px calc(12px + env(safe-area-inset-bottom));
-    z-index:100;
-  }
+.truck-dropdown-footer{
+  display:flex;
+  gap:8px;
 
-  .submit-bar .inner{
-    max-width:480px;
-    margin:0 auto;
-  }
+  padding:10px;
 
-  button.submit{
-    width:100%;
-    padding:15px 0;
-    border:none;
-    border-radius:12px;
-    background:var(--ink);
-    color:#fff;
-    font-size:16px;
-    font-weight:700;
-    letter-spacing:.02em;
-  }
+  border-top:1px solid var(--line);
 
-  button.submit:disabled{
-    background:#a3a091;
-  }
+  background:#faf9f5;
+}
 
-  .status{
-    font-size:13px;
-    text-align:center;
-    margin-top:8px;
-    color:var(--muted);
-    min-height:16px;
-  }
+.truck-dropdown-footer button{
+  flex:1;
 
-  .status.err{
-    color:var(--warn);
-  }
+  padding:10px;
 
-  .status.ok{
-    color:var(--accent);
-  }
+  border:1px solid var(--line);
+  border-radius:8px;
 
-  .loading{
-    text-align:center;
-    padding:15px;
-    color:var(--muted);
-    font-size:13px;
-  }
+  background:#fff;
+
+  font-family:inherit;
+  font-size:14px;
+}
+
+.truck-dropdown-footer button.primary{
+  background:var(--ink);
+  color:#fff;
+  border-color:var(--ink);
+}
+
+/* ==========================
+   下貨人員
+========================== */
+
+.staff-grid{
+  display:grid;
+
+  grid-template-columns:repeat(2,1fr);
+
+  gap:8px;
+}
+
+.staff-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+
+  padding:13px 10px;
+
+  border:1.5px solid var(--line);
+  border-radius:10px;
+
+  background:#fff;
+
+  font-size:15px;
+}
+
+.staff-item input{
+  width:20px;
+  height:20px;
+
+  accent-color:var(--accent);
+}
+
+.staff-item:has(input:checked){
+  border-color:var(--accent);
+  background:var(--accent-dim);
+}
+
+/* ==========================
+   件數
+========================== */
+
+.seg{
+  display:flex;
+  gap:8px;
+}
+
+.seg button{
+  flex:1;
+
+  padding:14px 0;
+
+  border:1.5px solid var(--line);
+  border-radius:10px;
+
+  background:#fff;
+
+  font-size:15px;
+  font-weight:700;
+
+  color:var(--ink);
+}
+
+.seg button[data-v="ok"].active{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:#fff;
+}
+
+.seg button[data-v="bad"].active{
+  background:var(--warn);
+  border-color:var(--warn);
+  color:#fff;
+}
+
+/* ==========================
+   欄位
+========================== */
+
+.field{
+  margin-bottom:16px;
+}
+
+.field label{
+  display:block;
+
+  font-size:12px;
+  font-weight:700;
+
+  color:var(--muted);
+
+  letter-spacing:.08em;
+
+  margin-bottom:6px;
+}
+
+textarea{
+  width:100%;
+
+  padding:12px;
+
+  border:1.5px solid var(--line);
+  border-radius:10px;
+
+  font-size:16px;
+
+  background:#fff;
+  color:var(--ink);
+
+  font-family:inherit;
+
+  resize:vertical;
+
+  min-height:80px;
+}
+
+textarea:focus{
+  outline:none;
+  border-color:var(--accent);
+}
+
+/* ==========================
+   照片
+========================== */
+
+.photo-upload{
+  border:1.5px dashed var(--line);
+
+  border-radius:12px;
+
+  padding:18px;
+
+  text-align:center;
+
+  background:#fff;
+
+  position:relative;
+
+  color:#8a8879;
+}
+
+.photo-upload span.icon{
+  font-size:30px;
+
+  display:block;
+
+  margin-bottom:6px;
+}
+
+.photo-upload input{
+  position:absolute;
+
+  inset:0;
+
+  opacity:0;
+
+  cursor:pointer;
+}
+
+.photo-grid{
+  display:grid;
+
+  grid-template-columns:repeat(3,1fr);
+
+  gap:8px;
+
+  margin-top:12px;
+}
+
+.thumb{
+  position:relative;
+
+  aspect-ratio:1;
+
+  border-radius:8px;
+
+  overflow:hidden;
+
+  border:1px solid var(--line);
+
+  background:#eee;
+}
+
+.thumb img{
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+}
+
+.thumb .rm{
+  position:absolute;
+
+  top:3px;
+  right:3px;
+
+  width:24px;
+  height:24px;
+
+  border-radius:50%;
+
+  background:rgba(0,0,0,.65);
+
+  color:#fff;
+
+  font-size:13px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  border:none;
+}
+
+.hint{
+  font-size:12px;
+
+  color:#9a988c;
+
+  margin-top:6px;
+}
+
+/* ==========================
+   送出
+========================== */
+
+.submit-bar{
+  position:fixed;
+
+  left:0;
+  right:0;
+  bottom:0;
+
+  background:var(--paper);
+
+  border-top:1px solid var(--line);
+
+  padding:
+    12px
+    18px
+    calc(12px + env(safe-area-inset-bottom));
+}
+
+.submit-bar .inner{
+  max-width:480px;
+
+  margin:0 auto;
+}
+
+button.submit{
+  width:100%;
+
+  padding:15px 0;
+
+  border:none;
+
+  border-radius:12px;
+
+  background:var(--ink);
+
+  color:#fff;
+
+  font-size:16px;
+
+  font-weight:700;
+}
+
+button.submit:disabled{
+  background:#a3a091;
+}
+
+.status{
+  font-size:13px;
+
+  text-align:center;
+
+  margin-top:8px;
+
+  color:var(--muted);
+
+  min-height:16px;
+}
+
+.status.err{
+  color:var(--warn);
+}
+
+.status.ok{
+  color:var(--accent);
+}
+
+/* ==========================
+   Loading
+========================== */
+
+.loading{
+  padding:18px;
+
+  text-align:center;
+
+  color:var(--muted);
+
+  font-size:14px;
+}
+
 </style>
 </head>
 
@@ -436,62 +549,79 @@
 <div class="wrap">
 
   <div class="brand">
+
     <h1>下貨點收回報</h1>
-    <span class="who" id="whoami">載入中…</span>
+
+    <span class="who" id="whoami">
+      載入中…
+    </span>
+
   </div>
 
 
-  <!-- =========================
+  <!-- ==========================
        大車
-       ========================= -->
+  =========================== -->
 
   <fieldset>
 
     <legend>大車</legend>
 
-    <div class="multi-select">
+    <div class="truck-select-wrap">
 
       <button
         type="button"
-        class="multi-select-button"
+        class="truck-select-button"
         id="truckSelectButton"
       >
         請選擇大車…
       </button>
 
       <div
-        class="multi-select-panel"
-        id="truckPanel"
+        class="truck-dropdown"
+        id="truckDropdown"
       >
 
         <div
           class="truck-list"
           id="truckList"
         >
+
           <div class="loading">
-            載入大車清單…
+            大車載入中…
           </div>
+
         </div>
 
-        <div class="truck-panel-footer">
-          已完成下貨的大車會自動移到最後
+        <div class="truck-dropdown-footer">
+
+          <button
+            type="button"
+            id="truckClearBtn"
+          >
+            清除
+          </button>
+
+          <button
+            type="button"
+            class="primary"
+            id="truckDoneBtn"
+          >
+            完成
+          </button>
+
         </div>
 
       </div>
 
     </div>
 
-    <div
-      class="selected-summary"
-      id="truckSummary"
-    ></div>
-
   </fieldset>
 
 
-  <!-- =========================
+  <!-- ==========================
        下貨人員
-       ========================= -->
+  =========================== -->
 
   <fieldset>
 
@@ -501,23 +631,28 @@
       class="staff-grid"
       id="staffGrid"
     >
+
       <div class="loading">
-        載入下貨人員…
+        下貨人員載入中…
       </div>
+
     </div>
 
   </fieldset>
 
 
-  <!-- =========================
+  <!-- ==========================
        件數
-       ========================= -->
+  =========================== -->
 
   <fieldset>
 
     <legend>件數是否正確</legend>
 
-    <div class="seg" id="qtySeg">
+    <div
+      class="seg"
+      id="qtySeg"
+    >
 
       <button
         type="button"
@@ -539,9 +674,9 @@
   </fieldset>
 
 
-  <!-- =========================
+  <!-- ==========================
        照片
-       ========================= -->
+  =========================== -->
 
   <fieldset>
 
@@ -574,9 +709,9 @@
   </fieldset>
 
 
-  <!-- =========================
+  <!-- ==========================
        備註
-       ========================= -->
+  =========================== -->
 
   <fieldset>
 
@@ -596,9 +731,9 @@
 </div>
 
 
-<!-- =========================
+<!-- ==========================
      送出
-     ========================= -->
+=========================== -->
 
 <div class="submit-bar">
 
@@ -623,253 +758,244 @@
 
 <script>
 
-/*************************************************
- * 設定
- *************************************************/
+/* =====================================================
+   系統設定
+===================================================== */
 
-/*
- * ⚠️ 這裡之後填你的 LIFF ID
- *
- * 目前先保持：
- *
- * YOUR_LIFF_ID
- *
- * 等你建立 LINE LIFF 後再換。
- */
-
-const LIFF_ID = "YOUR_LIFF_ID";
-
-
-/*
- * 你的 Google Apps Script 後端
- */
+const LIFF_ID =
+  "2011084900-xvJIcgzA";
 
 const BACKEND_URL =
   "https://script.google.com/macros/s/AKfycby8oksNTRuZEty3SpTCFYi2-QLdmLAVnQql9GxdKazFrg9DBLBTmTjfjFAifrj0gkBH/exec";
 
 
-/*************************************************
- * 全域資料
- *************************************************/
+/* =====================================================
+   系統狀態
+===================================================== */
 
 let userName = "未知使用者";
 
-let trucks = [];
-
-let staff = [];
-
-let completedTrucks = [];
-
 let photos = [];
 
+let truckData = [];
 
-/*************************************************
- * 工作日
- *************************************************/
+let staffData = [];
 
-let workDate = "";
+let usedTrucks = [];
 
-
-/*************************************************
- * DOM
- *************************************************/
-
-const truckSelectButton =
-  document.getElementById(
-    "truckSelectButton"
-  );
-
-const truckPanel =
-  document.getElementById(
-    "truckPanel"
-  );
-
-const truckList =
-  document.getElementById(
-    "truckList"
-  );
-
-const truckSummary =
-  document.getElementById(
-    "truckSummary"
-  );
-
-const staffGrid =
-  document.getElementById(
-    "staffGrid"
-  );
-
-const photoInput =
-  document.getElementById(
-    "photoInput"
-  );
-
-const photoGrid =
-  document.getElementById(
-    "photoGrid"
-  );
-
-const submitBtn =
-  document.getElementById(
-    "submitBtn"
-  );
-
-const statusMsg =
-  document.getElementById(
-    "statusMsg"
-  );
+let selectedTrucks = new Set();
 
 
-/*************************************************
- * 狀態訊息
- *************************************************/
+/* =====================================================
+   顯示狀態
+===================================================== */
 
 function setStatus(
-  message,
+  msg,
   type
-){
+) {
 
-  statusMsg.textContent =
-    message || "";
-
-  statusMsg.className =
-    "status" +
-    (
-      type
-        ? " " + type
-        : ""
+  const el =
+    document.getElementById(
+      "statusMsg"
     );
 
+  el.textContent = msg;
+
+  el.className =
+    "status" +
+    (type ? " " + type : "");
 }
 
 
-/*************************************************
- * 大車下拉開關
- *************************************************/
+/* =====================================================
+   初始化 LIFF
+===================================================== */
 
-truckSelectButton.addEventListener(
-  "click",
-  () => {
+async function initLIFF() {
 
-    const open =
-      truckPanel.classList.contains(
-        "open"
-      );
+  try {
 
-    if (open) {
+    await liff.init({
+      liffId: LIFF_ID
+    });
 
-      truckPanel.classList.remove(
-        "open"
-      );
+    if (!liff.isLoggedIn()) {
 
-      truckSelectButton.classList.remove(
-        "open"
-      );
+      liff.login();
 
-    } else {
-
-      truckPanel.classList.add(
-        "open"
-      );
-
-      truckSelectButton.classList.add(
-        "open"
-      );
-
+      return false;
     }
 
-  }
-);
+    const profile =
+      await liff.getProfile();
 
+    userName =
+      profile.displayName ||
+      "未知使用者";
 
-/*************************************************
- * 點其他地方關閉大車選單
- *************************************************/
+    document.getElementById(
+      "whoami"
+    ).textContent =
+      userName;
 
-document.addEventListener(
-  "click",
-  (event) => {
+    return true;
 
-    if (
-      !event.target.closest(
-        ".multi-select"
-      )
-    ){
+  } catch (error) {
 
-      truckPanel.classList.remove(
-        "open"
-      );
+    console.error(error);
 
-      truckSelectButton.classList.remove(
-        "open"
-      );
+    document.getElementById(
+      "whoami"
+    ).textContent =
+      "LINE 登入失敗";
 
-    }
-
-  }
-);
-
-
-/*************************************************
- * 建立大車清單
- *************************************************/
-
-function renderTrucks(){
-
-  /*
-   * 未完成的在前面
-   * 已完成的在最後
-   */
-
-  const sorted =
-    [...trucks].sort(
-      (a,b) => {
-
-        const aDone =
-          completedTrucks.includes(
-            a.name
-          );
-
-        const bDone =
-          completedTrucks.includes(
-            b.name
-          );
-
-        if (
-          aDone &&
-          !bDone
-        ){
-          return 1;
-        }
-
-        if (
-          !aDone &&
-          bDone
-        ){
-          return -1;
-        }
-
-        return 0;
-
-      }
+    setStatus(
+      "LINE 登入失敗，請重新開啟",
+      "err"
     );
 
+    return false;
+  }
+}
 
-  truckList.innerHTML = "";
+
+/* =====================================================
+   從 Apps Script 取得資料
+===================================================== */
+
+async function loadSystemData() {
+
+  try {
+
+    const response =
+      await fetch(
+        BACKEND_URL + "?t=" + Date.now(),
+        {
+          method:"GET",
+          cache:"no-store"
+        }
+      );
+
+    const result =
+      await response.json();
+
+    if (!result.success) {
+
+      throw new Error(
+        result.error ||
+        "無法取得系統資料"
+      );
+
+    }
+
+    truckData =
+      result.data.trucks || [];
+
+    staffData =
+      result.data.staff || [];
+
+    usedTrucks =
+      result.data.usedTrucks || [];
+
+    renderTrucks();
+
+    renderStaff();
+
+  } catch (error) {
+
+    console.error(error);
+
+    document.getElementById(
+      "truckList"
+    ).innerHTML =
+      `<div class="loading">
+        大車資料載入失敗
+      </div>`;
+
+    document.getElementById(
+      "staffGrid"
+    ).innerHTML =
+      `<div class="loading">
+        下貨人員資料載入失敗
+      </div>`;
+
+    setStatus(
+      "無法連接系統，請確認網路或後端設定",
+      "err"
+    );
+  }
+}
 
 
-  if (sorted.length === 0){
+/* =====================================================
+   大車排序
+   已經下貨的排最後
+===================================================== */
 
-    truckList.innerHTML =
-      '<div class="loading">目前沒有可用的大車</div>';
+function sortedTrucks() {
+
+  return [...truckData].sort(
+    function(a,b) {
+
+      const aUsed =
+        usedTrucks.includes(a.name);
+
+      const bUsed =
+        usedTrucks.includes(b.name);
+
+      if (aUsed && !bUsed) {
+        return 1;
+      }
+
+      if (!aUsed && bUsed) {
+        return -1;
+      }
+
+      return 0;
+    }
+  );
+}
+
+
+/* =====================================================
+   顯示大車
+===================================================== */
+
+function renderTrucks() {
+
+  const list =
+    document.getElementById(
+      "truckList"
+    );
+
+  list.innerHTML = "";
+
+  const trucks =
+    sortedTrucks();
+
+  if (trucks.length === 0) {
+
+    list.innerHTML =
+      `<div class="loading">
+        目前沒有啟用中的大車
+      </div>`;
 
     return;
-
   }
 
+  trucks.forEach(
+    function(truck) {
 
-  sorted.forEach(
-    truck => {
+      const used =
+        usedTrucks.includes(
+          truck.name
+        );
+
+      const checked =
+        selectedTrucks.has(
+          truck.name
+        );
 
       const label =
         document.createElement(
@@ -877,21 +1003,8 @@ function renderTrucks(){
         );
 
       label.className =
-        "truck-option";
-
-
-      if (
-        completedTrucks.includes(
-          truck.name
-        )
-      ){
-
-        label.classList.add(
-          "completed"
-        );
-
-      }
-
+        "truck-option" +
+        (used ? " used" : "");
 
       const checkbox =
         document.createElement(
@@ -904,15 +1017,40 @@ function renderTrucks(){
       checkbox.value =
         truck.name;
 
-      checkbox.dataset.id =
-        truck.id;
+      checkbox.checked =
+        checked;
 
+      /*
+       * 已經下貨的大車仍然可以看到，
+       * 但不會再被預設選取。
+       *
+       * 如果你希望完全不能再選，
+       * 可以把 disabled=true。
+       */
+      checkbox.disabled =
+        used;
 
       checkbox.addEventListener(
         "change",
-        updateTruckSummary
-      );
+        function() {
 
+          if (checkbox.checked) {
+
+            selectedTrucks.add(
+              truck.name
+            );
+
+          } else {
+
+            selectedTrucks.delete(
+              truck.name
+            );
+
+          }
+
+          updateTruckButtonText();
+        }
+      );
 
       const name =
         document.createElement(
@@ -920,11 +1058,10 @@ function renderTrucks(){
         );
 
       name.className =
-        "truck-option-name";
+        "truck-name";
 
       name.textContent =
         truck.name;
-
 
       label.appendChild(
         checkbox
@@ -934,125 +1071,106 @@ function renderTrucks(){
         name
       );
 
+      if (used) {
 
-      if (
-        completedTrucks.includes(
-          truck.name
-        )
-      ){
-
-        const status =
+        const tag =
           document.createElement(
             "span"
           );
 
-        status.className =
-          "truck-status";
+        tag.className =
+          "used-tag";
 
-        status.textContent =
-          "已完成";
+        tag.textContent =
+          "已下貨";
 
         label.appendChild(
-          status
+          tag
         );
-
       }
 
-
-      truckList.appendChild(
+      list.appendChild(
         label
       );
 
     }
   );
 
-
-  updateTruckSummary();
-
+  updateTruckButtonText();
 }
 
 
-/*************************************************
- * 大車選擇摘要
- *************************************************/
+/* =====================================================
+   大車按鈕文字
+===================================================== */
 
-function getSelectedTrucks(){
+function updateTruckButtonText() {
 
-  return [
-    ...document.querySelectorAll(
-      "#truckList input[type='checkbox']:checked"
-    )
-  ].map(
-    checkbox =>
-      checkbox.value
-  );
+  const button =
+    document.getElementById(
+      "truckSelectButton"
+    );
 
-}
+  const names =
+    Array.from(
+      selectedTrucks
+    );
 
+  if (names.length === 0) {
 
-function updateTruckSummary(){
-
-  const selected =
-    getSelectedTrucks();
-
-
-  if (
-    selected.length === 0
-  ){
-
-    truckSelectButton.textContent =
+    button.textContent =
       "請選擇大車…";
 
-    truckSummary.textContent =
-      "";
-
     return;
-
   }
 
+  if (names.length === 1) {
 
-  truckSelectButton.textContent =
-    `已選 ${selected.length} 台大車`;
+    button.textContent =
+      names[0];
 
+    return;
+  }
 
-  truckSummary.textContent =
-    selected.join("、");
-
+  button.textContent =
+    `已選 ${names.length} 台：` +
+    names.join("、");
 }
 
 
-/*************************************************
- * 建立下貨人員
- *************************************************/
+/* =====================================================
+   下貨人員
+===================================================== */
 
-function renderStaff(){
+function renderStaff() {
 
-  staffGrid.innerHTML = "";
+  const grid =
+    document.getElementById(
+      "staffGrid"
+    );
 
+  grid.innerHTML = "";
 
-  if (
-    staff.length === 0
-  ){
+  if (staffData.length === 0) {
 
-    staffGrid.innerHTML =
-      '<div class="loading">目前沒有可用的下貨人員</div>';
+    grid.innerHTML =
+      `<div class="loading">
+        目前沒有啟用中的下貨人員
+      </div>`;
 
     return;
-
   }
 
+  staffData.forEach(
+    function(staff) {
 
-  staff.forEach(
-    (person, index) => {
-
-      const wrapper =
+      const label =
         document.createElement(
-          "div"
+          "label"
         );
 
-      wrapper.className =
+      label.className =
         "staff-item";
-
 
       const checkbox =
         document.createElement(
@@ -1062,89 +1180,158 @@ function renderStaff(){
       checkbox.type =
         "checkbox";
 
-      checkbox.id =
-        "staff_" + index;
-
       checkbox.value =
-        person.name;
+        staff.name;
 
-
-      const label =
+      const span =
         document.createElement(
-          "label"
+          "span"
         );
 
-      label.htmlFor =
-        checkbox.id;
+      span.textContent =
+        staff.name;
 
-      label.textContent =
-        person.name;
-
-
-      wrapper.appendChild(
+      label.appendChild(
         checkbox
       );
 
-      wrapper.appendChild(
+      label.appendChild(
+        span
+      );
+
+      grid.appendChild(
         label
       );
 
+    }
+  );
+}
 
-      staffGrid.appendChild(
-        wrapper
+
+/* =====================================================
+   大車下拉
+===================================================== */
+
+document
+  .getElementById(
+    "truckSelectButton"
+  )
+  .addEventListener(
+    "click",
+    function() {
+
+      const dropdown =
+        document.getElementById(
+          "truckDropdown"
+        );
+
+      dropdown.classList.toggle(
+        "open"
       );
 
     }
   );
 
-}
-
-
-/*************************************************
- * 取得選取的下貨人員
- *************************************************/
-
-function getSelectedStaff(){
-
-  return [
-    ...document.querySelectorAll(
-      "#staffGrid input[type='checkbox']:checked"
-    )
-  ].map(
-    checkbox =>
-      checkbox.value
-  );
-
-}
-
-
-/*************************************************
- * 件數
- *************************************************/
 
 document
-  .getElementById("qtySeg")
+  .getElementById(
+    "truckDoneBtn"
+  )
   .addEventListener(
     "click",
-    event => {
+    function() {
+
+      document
+        .getElementById(
+          "truckDropdown"
+        )
+        .classList.remove(
+          "open"
+        );
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "truckClearBtn"
+  )
+  .addEventListener(
+    "click",
+    function() {
+
+      selectedTrucks.clear();
+
+      renderTrucks();
+
+    }
+  );
+
+
+/* =====================================================
+   點外面關閉大車選單
+===================================================== */
+
+document.addEventListener(
+  "click",
+  function(event) {
+
+    const wrap =
+      document.querySelector(
+        ".truck-select-wrap"
+      );
+
+    if (
+      !wrap.contains(
+        event.target
+      )
+    ) {
+
+      document
+        .getElementById(
+          "truckDropdown"
+        )
+        .classList.remove(
+          "open"
+        );
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   件數
+===================================================== */
+
+document
+  .getElementById(
+    "qtySeg"
+  )
+  .addEventListener(
+    "click",
+    function(event) {
 
       if (
         event.target.tagName !==
         "BUTTON"
-      ){
+      ) {
         return;
       }
-
 
       [
         ...event.currentTarget.children
       ].forEach(
-        button =>
+        function(button) {
+
           button.classList.remove(
             "active"
-          )
-      );
+          );
 
+        }
+      );
 
       event.target.classList.add(
         "active"
@@ -1154,69 +1341,56 @@ document
   );
 
 
-/*************************************************
- * 圖片壓縮
- *************************************************/
+/* =====================================================
+   圖片壓縮
+===================================================== */
 
 function compressImage(
   file,
   maxW = 1200,
   quality = 0.72
-){
+) {
 
   return new Promise(
-    (
-      resolve,
-      reject
-    ) => {
+    function(resolve, reject) {
 
       const reader =
         new FileReader();
 
-
       reader.onload =
-        event => {
+        function(event) {
 
           const img =
             new Image();
 
-
           img.onload =
-            () => {
+            function() {
 
               const scale =
                 Math.min(
                   1,
-                  maxW /
-                    img.width
+                  maxW / img.width
                 );
-
 
               const canvas =
                 document.createElement(
                   "canvas"
                 );
 
-
               canvas.width =
                 Math.round(
-                  img.width *
-                  scale
+                  img.width * scale
                 );
-
 
               canvas.height =
                 Math.round(
-                  img.height *
-                  scale
+                  img.height * scale
                 );
-
 
               const ctx =
                 canvas.getContext(
                   "2d"
                 );
-
 
               ctx.drawImage(
                 img,
@@ -1225,7 +1399,6 @@ function compressImage(
                 canvas.width,
                 canvas.height
               );
-
 
               resolve(
                 canvas.toDataURL(
@@ -1236,20 +1409,15 @@ function compressImage(
 
             };
 
-
           img.onerror =
             reject;
 
-
           img.src =
             event.target.result;
-
         };
-
 
       reader.onerror =
         reject;
-
 
       reader.readAsDataURL(
         file
@@ -1257,109 +1425,24 @@ function compressImage(
 
     }
   );
-
 }
 
 
-/*************************************************
- * 選照片
- *************************************************/
+/* =====================================================
+   照片縮圖
+===================================================== */
 
-photoInput.addEventListener(
-  "change",
-  async event => {
+function renderPhotoGrid() {
 
-    const files =
-      [
-        ...event.target.files
-      ];
-
-
-    if (
-      files.length === 0
-    ){
-      return;
-    }
-
-
-    setStatus(
-      "照片處理中…",
-      ""
+  const grid =
+    document.getElementById(
+      "photoGrid"
     );
 
-
-    try {
-
-      for (
-        const file of files
-      ){
-
-        if (
-          !file.type.startsWith(
-            "image/"
-          )
-        ){
-          continue;
-        }
-
-
-        const dataUrl =
-          await compressImage(
-            file
-          );
-
-
-        photos.push(
-          dataUrl
-        );
-
-      }
-
-
-      renderPhotoGrid();
-
-      setStatus(
-        "",
-        ""
-      );
-
-
-    } catch(error){
-
-      console.error(
-        error
-      );
-
-      setStatus(
-        "照片處理失敗",
-        "err"
-      );
-
-    }
-
-
-    /*
-     * 清空 input
-     * 允許下一次再次選同一批照片
-     */
-
-    event.target.value = "";
-
-  }
-);
-
-
-/*************************************************
- * 顯示照片
- *************************************************/
-
-function renderPhotoGrid(){
-
-  photoGrid.innerHTML = "";
-
+  grid.innerHTML = "";
 
   photos.forEach(
-    (photo, index) => {
+    function(photo,index) {
 
       const div =
         document.createElement(
@@ -1369,7 +1452,6 @@ function renderPhotoGrid(){
       div.className =
         "thumb";
 
-
       const img =
         document.createElement(
           "img"
@@ -1378,25 +1460,23 @@ function renderPhotoGrid(){
       img.src =
         photo;
 
-
-      const removeButton =
+      const remove =
         document.createElement(
           "button"
         );
 
-      removeButton.type =
-        "button";
-
-      removeButton.className =
+      remove.className =
         "rm";
 
-      removeButton.textContent =
+      remove.type =
+        "button";
+
+      remove.textContent =
         "✕";
 
-
-      removeButton.addEventListener(
+      remove.addEventListener(
         "click",
-        () => {
+        function() {
 
           photos.splice(
             index,
@@ -1408,350 +1488,251 @@ function renderPhotoGrid(){
         }
       );
 
-
       div.appendChild(
         img
       );
 
       div.appendChild(
-        removeButton
+        remove
       );
 
-
-      photoGrid.appendChild(
+      grid.appendChild(
         div
       );
 
+    }
+  );
+}
+
+
+/* =====================================================
+   選照片
+===================================================== */
+
+document
+  .getElementById(
+    "photoInput"
+  )
+  .addEventListener(
+    "change",
+    async function(event) {
+
+      const files =
+        [...event.target.files];
+
+      if (files.length === 0) {
+        return;
+      }
+
+      setStatus(
+        "照片處理中…",
+        ""
+      );
+
+      try {
+
+        for (
+          const file of files
+        ) {
+
+          if (
+            !file.type.startsWith(
+              "image/"
+            )
+          ) {
+            continue;
+          }
+
+          const dataUrl =
+            await compressImage(
+              file
+            );
+
+          photos.push(
+            dataUrl
+          );
+
+        }
+
+        renderPhotoGrid();
+
+        setStatus(
+          "",
+          ""
+        );
+
+      } catch(error) {
+
+        console.error(
+          error
+        );
+
+        setStatus(
+          "照片處理失敗",
+          "err"
+        );
+
+      }
+
+      /*
+       * 清空 input，
+       * 讓使用者可以再次選同一張照片
+       */
+      event.target.value = "";
+
+    }
+  );
+
+
+/* =====================================================
+   取得選取的下貨人員
+===================================================== */
+
+function getSelectedStaff() {
+
+  return [
+    ...document.querySelectorAll(
+      "#staffGrid input[type=checkbox]:checked"
+    )
+  ].map(
+    function(input) {
+      return input.value;
     }
   );
 
 }
 
 
-/*************************************************
- * 從 Apps Script 取得資料
- *************************************************/
-
-async function loadSystemData(){
-
-  try {
-
-    setStatus(
-      "載入資料中…",
-      ""
-    );
-
-
-    const response =
-      await fetch(
-        BACKEND_URL +
-        "?action=getData&t=" +
-        Date.now()
-      );
-
-
-    const result =
-      await response.json();
-
-
-    if (
-      !result.success
-    ){
-
-      throw new Error(
-        result.message ||
-        "取得資料失敗"
-      );
-
-    }
-
-
-    const data =
-      result.data;
-
-
-    trucks =
-      Array.isArray(
-        data.trucks
-      )
-        ? data.trucks
-        : [];
-
-
-    staff =
-      Array.isArray(
-        data.staff
-      )
-        ? data.staff
-        : [];
-
-
-    completedTrucks =
-      Array.isArray(
-        data.completedTrucks
-      )
-        ? data.completedTrucks
-        : [];
-
-
-    workDate =
-      data.workDate ||
-      "";
-
-
-    renderTrucks();
-
-    renderStaff();
-
-
-    setStatus(
-      "",
-      ""
-    );
-
-
-  } catch(error){
-
-    console.error(
-      error
-    );
-
-
-    truckList.innerHTML =
-      '<div class="loading">大車清單載入失敗</div>';
-
-
-    staffGrid.innerHTML =
-      '<div class="loading">下貨人員載入失敗</div>';
-
-
-    setStatus(
-      "無法取得系統資料，請重新整理",
-      "err"
-    );
-
-  }
-
-}
-
-
-/*************************************************
- * 取得 LINE 使用者
- *************************************************/
-
-async function initLIFF(){
-
-  try {
-
-    /*
-     * 尚未設定 LIFF ID
-     *
-     * 先允許網頁在一般瀏覽器測試。
-     */
-
-    if (
-      !LIFF_ID ||
-      LIFF_ID ===
-      "YOUR_LIFF_ID"
-    ){
-
-      document.getElementById(
-        "whoami"
-      ).textContent =
-        "測試模式";
-
-
-      return;
-
-    }
-
-
-    await liff.init({
-      liffId:
-        LIFF_ID
-    });
-
-
-    if (
-      !liff.isLoggedIn()
-    ){
-
-      liff.login();
-
-      return;
-
-    }
-
-
-    const profile =
-      await liff.getProfile();
-
-
-    userName =
-      profile.displayName ||
-      "未知使用者";
-
-
-    document.getElementById(
-      "whoami"
-    ).textContent =
-      userName;
-
-
-  } catch(error){
-
-    console.error(
-      error
-    );
-
-
-    document.getElementById(
-      "whoami"
-    ).textContent =
-      "LINE 使用者";
-
-
-  }
-
-}
-
-
-/*************************************************
- * 送出回報
- *************************************************/
-
-submitBtn.addEventListener(
-  "click",
-  async () => {
-
-    const selectedTrucks =
-      getSelectedTrucks();
-
-
-    const selectedStaff =
-      getSelectedStaff();
-
-
-    const qtyButton =
-      document.querySelector(
-        "#qtySeg button.active"
-      );
-
-
-    const qtyStatus =
-      qtyButton
-        ? qtyButton.dataset.v
-        : "ok";
-
-
-    const note =
-      document
-        .getElementById(
-          "note"
-        )
-        .value
-        .trim();
-
-
-    /***************
-     * 驗證
-     ***************/
-
-    if (
-      selectedTrucks.length === 0
-    ){
+/* =====================================================
+   送出
+===================================================== */
+
+document
+  .getElementById(
+    "submitBtn"
+  )
+  .addEventListener(
+    "click",
+    async function() {
+
+      const trucks =
+        Array.from(
+          selectedTrucks
+        );
+
+      const staff =
+        getSelectedStaff();
+
+      const qtyButton =
+        document.querySelector(
+          "#qtySeg button.active"
+        );
+
+      const qtyStatus =
+        qtyButton
+          ? qtyButton.dataset.v
+          : "ok";
+
+      const note =
+        document
+          .getElementById(
+            "note"
+          )
+          .value
+          .trim();
+
+
+      /* ==========================
+         檢查
+      =========================== */
+
+      if (
+        trucks.length === 0
+      ) {
+
+        setStatus(
+          "請至少選擇1台大車",
+          "err"
+        );
+
+        return;
+      }
+
+      if (
+        staff.length === 0
+      ) {
+
+        setStatus(
+          "請至少選擇1位下貨人員",
+          "err"
+        );
+
+        return;
+      }
+
+      if (
+        photos.length === 0
+      ) {
+
+        setStatus(
+          "請至少上傳1張照片",
+          "err"
+        );
+
+        return;
+      }
+
+
+      /* ==========================
+         開始送出
+      =========================== */
+
+      const button =
+        document.getElementById(
+          "submitBtn"
+        );
+
+      button.disabled =
+        true;
 
       setStatus(
-        "請至少選擇一台大車",
-        "err"
+        "照片上傳及回報送出中…",
+        ""
       );
 
-      truckPanel.classList.add(
-        "open"
-      );
 
-      return;
+      const payload = {
 
-    }
+        user:
+          userName,
 
+        trucks:
+          trucks,
 
-    if (
-      selectedStaff.length === 0
-    ){
+        staff:
+          staff,
 
-      setStatus(
-        "請至少選擇一位下貨人員",
-        "err"
-      );
+        qtyStatus:
+          qtyStatus === "ok"
+            ? "正確"
+            : "有多有少",
 
-      return;
+        note:
+          note,
 
-    }
+        photos:
+          photos
 
-
-    if (
-      photos.length === 0
-    ){
-
-      setStatus(
-        "請至少上傳1張照片",
-        "err"
-      );
-
-      return;
-
-    }
+      };
 
 
-    /***************
-     * 鎖定按鈕
-     ***************/
+      try {
 
-    submitBtn.disabled =
-      true;
-
-
-    setStatus(
-      "照片上傳中，請稍候…",
-      ""
-    );
-
-
-    /***************
-     * Payload
-     ***************/
-
-    const payload = {
-
-      user:
-        userName,
-
-      trucks:
-        selectedTrucks,
-
-      staff:
-        selectedStaff,
-
-      qtyStatus:
-        qtyStatus,
-
-      note:
-        note,
-
-      photos:
-        photos
-
-    };
-
-
-    try {
-
-      /*
-       * 使用 text/plain
-       * 避免 Apps Script CORS / preflight 問題
-       */
-
-      const response =
+        /*
+         * 使用 text/plain，
+         * 避免 Apps Script Web App
+         * 的 CORS / preflight 問題。
+         */
         await fetch(
           BACKEND_URL,
           {
@@ -1768,157 +1749,143 @@ submitBtn.addEventListener(
               JSON.stringify(
                 payload
               )
-
           }
         );
 
 
-      /*
-       * no-cors 下無法讀取 response
-       *
-       * 但 Apps Script 已收到並處理。
-       */
+        /* ==========================
+           成功
+        =========================== */
 
-      setStatus(
-        "✓ 已送出回報",
-        "ok"
-      );
-
-
-      /*
-       * 重新載入今天已完成的大車
-       *
-       * 讓下一次開啟時，
-       * 已經回報的大車會排到最後。
-       */
-
-      setTimeout(
-        async () => {
-
-          await loadSystemData();
-
-        },
-        800
-      );
-
-
-      /*
-       * 清空目前表單
-       */
-
-      photos = [];
-
-      renderPhotoGrid();
-
-
-      document
-        .querySelectorAll(
-          "#staffGrid input[type='checkbox']"
-        )
-        .forEach(
-          checkbox => {
-            checkbox.checked =
-              false;
-          }
+        setStatus(
+          "✓ 已送出回報",
+          "ok"
         );
 
+        /*
+         * 先更新本地狀態。
+         * 這樣如果沒有立即關閉，
+         * 已選的大車也會被標記。
+         */
 
-      document
-        .getElementById(
-          "note"
-        )
-        .value =
-          "";
-
-
-      document
-        .querySelectorAll(
-          "#truckList input[type='checkbox']"
-        )
-        .forEach(
-          checkbox => {
-            checkbox.checked =
-              false;
-          }
-        );
-
-
-      updateTruckSummary();
-
-
-      /*
-       * LINE 內開啟時，
-       * 延遲後關閉視窗。
-       *
-       * 測試模式不關閉。
-       */
-
-      setTimeout(
-        () => {
-
-          try {
+        trucks.forEach(
+          function(truck) {
 
             if (
-              window.liff &&
-              liff.isInClient()
-            ){
+              !usedTrucks.includes(
+                truck
+              )
+            ) {
 
-              liff.closeWindow();
+              usedTrucks.push(
+                truck
+              );
 
             }
 
-          } catch(error){
-
-            console.log(
-              error
-            );
-
           }
+        );
 
-        },
-        1500
-      );
+        selectedTrucks.clear();
 
-
-    } catch(error){
-
-      console.error(
-        error
-      );
+        renderTrucks();
 
 
-      setStatus(
-        "送出失敗，請檢查網路後重試",
-        "err"
-      );
+        /*
+         * 清空表單
+         */
+
+        photos = [];
+
+        renderPhotoGrid();
+
+        document
+          .getElementById(
+            "note"
+          )
+          .value = "";
+
+        document
+          .querySelectorAll(
+            "#staffGrid input[type=checkbox]"
+          )
+          .forEach(
+            function(input) {
+              input.checked = false;
+            }
+          );
 
 
-      submitBtn.disabled =
-        false;
+        /*
+         * LIFF 裡面完成後關閉
+         */
+
+        setTimeout(
+          function() {
+
+            try {
+
+              if (
+                window.liff &&
+                liff.isInClient()
+              ) {
+
+                liff.closeWindow();
+
+              }
+
+            } catch(error) {
+
+              console.log(
+                error
+              );
+
+            }
+
+          },
+          1200
+        );
+
+
+      } catch(error) {
+
+        console.error(
+          error
+        );
+
+        setStatus(
+          "送出失敗，請檢查網路後重試",
+          "err"
+        );
+
+        button.disabled =
+          false;
+
+      }
 
     }
+  );
 
+
+/* =====================================================
+   啟動
+===================================================== */
+
+async function init() {
+
+  const loginOK =
+    await initLIFF();
+
+  if (!loginOK) {
+    return;
   }
-);
-
-
-/*************************************************
- * 初始化
- *************************************************/
-
-async function init(){
-
-  await initLIFF();
 
   await loadSystemData();
 
 }
 
 
-/*************************************************
- * 開始
- *************************************************/
-
+/* 啟動 */
 init();
 
 </script>
