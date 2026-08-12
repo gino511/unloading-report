@@ -73,11 +73,6 @@ body{
   white-space:nowrap;
 }
 
-
-/* =========================================
-   大車
-========================================= */
-
 fieldset{
   border:none;
   padding:0;
@@ -91,6 +86,11 @@ legend{
   color:var(--muted);
   margin-bottom:8px;
 }
+
+
+/* =========================================
+   大車下拉
+========================================= */
 
 .truck-select-wrap{
   position:relative;
@@ -169,6 +169,7 @@ legend{
   color:#888679;
 }
 
+/* 已下貨人員 */
 .used-staff{
   margin-left:auto;
   font-size:11px;
@@ -182,6 +183,7 @@ legend{
   text-overflow:ellipsis;
 }
 
+/* 固定 */
 .fixed-tag{
   margin-left:auto;
   font-size:11px;
@@ -480,7 +482,7 @@ button.submit:disabled{
         class="truck-select-button"
         id="truckSelectButton"
       >
-        大車載入中…
+        請選擇大車…
       </button>
 
       <div
@@ -492,9 +494,11 @@ button.submit:disabled{
           class="truck-list"
           id="truckList"
         >
+
           <div class="loading">
             大車載入中…
           </div>
+
         </div>
 
         <div class="truck-dropdown-footer">
@@ -706,12 +710,10 @@ let selectedTrucks =
    狀態訊息
 ================================================= */
 
-function setStatus(msg,type){
+function setStatus(msg, type){
 
   const el =
-    document.getElementById(
-      "statusMsg"
-    );
+    document.getElementById("statusMsg");
 
   el.textContent =
     msg;
@@ -727,7 +729,7 @@ function setStatus(msg,type){
 
 
 /* =================================================
-   LINE LIFF
+   LIFF
 ================================================= */
 
 async function initLIFF(){
@@ -735,10 +737,13 @@ async function initLIFF(){
   try{
 
     await liff.init({
-      liffId:LIFF_ID
+      liffId:
+        LIFF_ID
     });
 
-    if(!liff.isLoggedIn()){
+    if(
+      !liff.isLoggedIn()
+    ){
 
       liff.login();
 
@@ -761,10 +766,7 @@ async function initLIFF(){
 
   }catch(error){
 
-    console.error(
-      "LIFF ERROR:",
-      error
-    );
+    console.error(error);
 
     document.getElementById(
       "whoami"
@@ -782,23 +784,17 @@ async function initLIFF(){
 
 
 /* =================================================
-   第一階段：只載入大車
- *
- * 非常重要：
- *
- * 這裡不會等待 staff。
- *
- * 大車完成後畫面就先可以使用。
+   取得後端資料
 ================================================= */
 
-async function loadTrucksFirst(){
+async function loadSystemData(){
 
   try{
 
     const response =
       await fetch(
         BACKEND_URL +
-        "?type=trucks&t=" +
+        "?t=" +
         Date.now(),
         {
           method:"GET",
@@ -819,25 +815,31 @@ async function loadTrucksFirst(){
     }catch(error){
 
       console.error(
-        "大車 JSON 錯誤：",
+        "後端回傳不是 JSON：",
         text
       );
 
       throw new Error(
-        "大車資料格式錯誤"
+        "Apps Script 回傳格式錯誤"
       );
     }
 
-    if(!result.success){
+    if(
+      !result.success
+    ){
 
       throw new Error(
         result.error ||
-        "大車資料取得失敗"
+        "無法取得系統資料"
       );
     }
 
     truckData =
       result.data.trucks ||
+      [];
+
+    staffData =
+      result.data.staff ||
       [];
 
     truckLastUsed =
@@ -846,16 +848,7 @@ async function loadTrucksFirst(){
 
     renderTrucks();
 
-    /*
-     * 大車完成後，
-     * 立刻開始抓下貨人員。
-     *
-     * 不 await。
-     *
-     * 所以不會阻塞大車畫面。
-     */
-
-    loadStaffInBackground();
+    renderStaff();
 
   }catch(error){
 
@@ -871,81 +864,6 @@ async function loadTrucksFirst(){
       `;
 
     document.getElementById(
-      "truckSelectButton"
-    ).textContent =
-      "大車載入失敗";
-
-    setStatus(
-      "無法取得大車資料",
-      "err"
-    );
-  }
-}
-
-
-/* =================================================
-   第二階段：背景載入下貨人員
-================================================= */
-
-async function loadStaffInBackground(){
-
-  try{
-
-    const response =
-      await fetch(
-        BACKEND_URL +
-        "?type=staff&t=" +
-        Date.now(),
-        {
-          method:"GET",
-          cache:"no-store"
-        }
-      );
-
-    const text =
-      await response.text();
-
-    let result;
-
-    try{
-
-      result =
-        JSON.parse(text);
-
-    }catch(error){
-
-      console.error(
-        "下貨人員 JSON 錯誤：",
-        text
-      );
-
-      throw new Error(
-        "下貨人員資料格式錯誤"
-      );
-    }
-
-    if(!result.success){
-
-      throw new Error(
-        result.error ||
-        "下貨人員取得失敗"
-      );
-    }
-
-    staffData =
-      result.data.staff ||
-      [];
-
-    renderStaff();
-
-  }catch(error){
-
-    console.error(
-      "STAFF ERROR:",
-      error
-    );
-
-    document.getElementById(
       "staffGrid"
     ).innerHTML =
       `
@@ -953,12 +871,30 @@ async function loadStaffInBackground(){
         下貨人員資料載入失敗
       </div>
       `;
+
+    setStatus(
+      "無法連接系統，請確認 Apps Script 部署網址",
+      "err"
+    );
   }
 }
 
 
 /* =================================================
    時間整理
+
+   Apps Script 從 Google Sheet 讀時間欄位時，
+   可能會回傳：
+
+   Sat Dec 30 1899 04:24:28 GMT+0800
+
+   或：
+
+   04:24:28
+
+   這裡統一轉成：
+
+   04:24
 ================================================= */
 
 function formatTruckTime(value){
@@ -978,6 +914,7 @@ function formatTruckTime(value){
     return "";
   }
 
+  /* 已經是 HH:mm:ss */
   const simpleMatch =
     text.match(
       /^(\d{1,2}):(\d{2})(?::(\d{2}))?$/
@@ -995,6 +932,7 @@ function formatTruckTime(value){
     );
   }
 
+  /* Google Date 字串 */
   const date =
     new Date(text);
 
@@ -1004,15 +942,20 @@ function formatTruckTime(value){
     )
   ){
 
-    return (
+    const hours =
       String(
         date.getHours()
-      ).padStart(2,"0")
-      +
-      ":" +
+      ).padStart(2,"0");
+
+    const minutes =
       String(
         date.getMinutes()
-      ).padStart(2,"0")
+      ).padStart(2,"0");
+
+    return (
+      hours +
+      ":" +
+      minutes
     );
   }
 
@@ -1021,10 +964,12 @@ function formatTruckTime(value){
 
 
 /* =================================================
-   大車最後使用
+   取得大車最後使用資料
 ================================================= */
 
-function getTruckUsage(truckName){
+function getTruckUsage(
+  truckName
+){
 
   const data =
     truckLastUsed[
@@ -1047,12 +992,10 @@ function getTruckUsage(truckName){
   }
 
   return {
-
     time:
       formatTruckTime(
         data.time
       ),
-
     staff:
       String(
         data.staff || ""
@@ -1062,7 +1005,7 @@ function getTruckUsage(truckName){
 
 
 /* =================================================
-   固定置頂
+   判斷固定置頂
 ================================================= */
 
 function isFixedTruck(truck){
@@ -1073,10 +1016,11 @@ function isFixedTruck(truck){
 
 /* =================================================
    大車排序
- *
- * 1. 固定車
- * 2. 今天尚未下貨
- * 3. 今天已下貨
+
+   1. 固定置頂永遠最前
+   2. 尚未下貨的一般車
+   3. 已下貨的一般車
+   4. 保持 Google Sheet 原本順序
 ================================================= */
 
 function sortedTrucks(){
@@ -1092,6 +1036,8 @@ function sortedTrucks(){
       const bFixed =
         isFixedTruck(b);
 
+      /* 固定車永遠最前 */
+
       if(
         aFixed &&
         !bFixed
@@ -1105,6 +1051,8 @@ function sortedTrucks(){
       ){
         return 1;
       }
+
+      /* 兩個都是固定車 */
 
       if(
         aFixed &&
@@ -1135,6 +1083,8 @@ function sortedTrucks(){
           bUsage.staff
         );
 
+      /* 尚未下貨排前 */
+
       if(
         !aUsed &&
         bUsed
@@ -1148,6 +1098,12 @@ function sortedTrucks(){
       ){
         return 1;
       }
+
+      /*
+       * 都已下貨：
+       * 保持 Google Sheet 原本順序，
+       * 不要每次重新排序。
+       */
 
       return 0;
     }
@@ -1182,11 +1138,6 @@ function renderTrucks(){
         目前沒有啟用中的大車
       </div>
       `;
-
-    document.getElementById(
-      "truckSelectButton"
-    ).textContent =
-      "目前沒有大車";
 
     return;
   }
@@ -1237,6 +1188,12 @@ function renderTrucks(){
       checkbox.checked =
         checked;
 
+      /*
+       * 已下過的車仍然可以再次選。
+       */
+      checkbox.disabled =
+        false;
+
       checkbox.addEventListener(
         "change",
         function(){
@@ -1280,9 +1237,10 @@ function renderTrucks(){
       );
 
 
-      /*
-       * 今天已下貨
-       */
+      /* =====================================
+         已下貨 → 顯示下貨人員
+         不顯示時間
+      ===================================== */
 
       if(
         isUsed &&
@@ -1309,9 +1267,9 @@ function renderTrucks(){
       }
 
 
-      /*
-       * 固定
-       */
+      /* =====================================
+         固定置頂
+      ===================================== */
 
       if(
         truck.fixed
@@ -1474,7 +1432,7 @@ function renderStaff(){
 
 
 /* =================================================
-   大車下拉
+   大車下拉開關
 ================================================= */
 
 document
@@ -1604,8 +1562,8 @@ document
 
 function compressImage(
   file,
-  maxW=1200,
-  quality=0.72
+  maxW = 1200,
+  quality = 0.72
 ){
 
   return new Promise(
@@ -1896,6 +1854,10 @@ document
           .trim();
 
 
+      /* =====================================
+         檢查
+      ===================================== */
+
       if(
         trucks.length === 0
       ){
@@ -1990,6 +1952,10 @@ document
         );
 
 
+        /* =================================
+           成功
+        ================================= */
+
         setStatus(
           "✓ 已送出回報",
           "ok"
@@ -1997,7 +1963,11 @@ document
 
 
         /*
-         * 立即更新今天的大車狀態
+         * 立即更新畫面：
+         * 大車旁邊顯示剛剛選的下貨人員。
+         *
+         * 注意：
+         * 不顯示時間。
          */
 
         trucks.forEach(
@@ -2022,11 +1992,15 @@ document
         renderTrucks();
 
 
+        /* 清空照片 */
+
         photos =
           [];
 
         renderPhotoGrid();
 
+
+        /* 清空備註 */
 
         document
           .getElementById(
@@ -2035,6 +2009,8 @@ document
           .value =
           "";
 
+
+        /* 清空下貨人員 */
 
         document
           .querySelectorAll(
@@ -2046,20 +2022,19 @@ document
               input.checked =
                 false;
 
-              const item =
-                input.closest(
+              input
+                .closest(
                   ".staff-item"
-                );
-
-              if(item){
-
-                item.classList.remove(
+                )
+                .classList
+                .remove(
                   "selected"
                 );
-              }
             }
           );
 
+
+        /* 關閉 LIFF */
 
         setTimeout(
           function(){
@@ -2103,22 +2078,6 @@ document
 
 /* =================================================
    啟動
- *
- * 重點：
- *
- * 先 LINE
- * ↓
- * 只抓大車
- * ↓
- * 大車顯示
- * ↓
- * 背景抓下貨人員
- *
- * 不再：
- *
- * LINE
- * ↓
- * 大車 + 人員一起等
 ================================================= */
 
 async function init(){
@@ -2126,21 +2085,14 @@ async function init(){
   const loginOK =
     await initLIFF();
 
-  if(!loginOK){
+  if(
+    !loginOK
+  ){
     return;
   }
 
-  /*
-   * 只等待大車。
-   *
-   * loadTrucksFirst 裡面
-   * 大車畫面完成後才會
-   * 背景呼叫 loadStaffInBackground。
-   */
-
-  await loadTrucksFirst();
+  await loadSystemData();
 }
-
 
 init();
 
