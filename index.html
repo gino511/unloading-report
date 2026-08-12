@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
+
 <meta charset="UTF-8">
 
 <meta
@@ -44,7 +46,7 @@ body{
 .wrap{
   max-width:480px;
   margin:0 auto;
-  padding:20px 18px 120px;
+  padding:20px 18px 110px;
 }
 
 .brand{
@@ -64,7 +66,7 @@ body{
 .brand .who{
   font-size:12px;
   color:var(--muted);
-  max-width:150px;
+  max-width:130px;
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
@@ -84,10 +86,7 @@ legend{
   margin-bottom:8px;
 }
 
-
-/* =========================
-   大車
-========================= */
+/* 大車 */
 
 .truck-select-wrap{
   position:relative;
@@ -119,7 +118,7 @@ legend{
 .truck-dropdown{
   display:none;
   position:absolute;
-  z-index:100;
+  z-index:50;
   left:0;
   right:0;
   margin-top:6px;
@@ -148,15 +147,10 @@ legend{
   font-size:15px;
 }
 
-.truck-option:last-child{
-  border-bottom:none;
-}
-
 .truck-option input{
   width:20px;
   height:20px;
   accent-color:var(--accent);
-  flex-shrink:0;
 }
 
 .truck-option.used{
@@ -176,7 +170,7 @@ legend{
   padding:3px 7px;
   border-radius:20px;
   background:#e9e7df;
-  color:#777568;
+  color:#77756b;
   white-space:nowrap;
 }
 
@@ -204,19 +198,15 @@ legend{
   border-radius:8px;
   background:#fff;
   font-family:inherit;
-  font-size:14px;
 }
 
-.truck-dropdown-footer button.primary{
+.truck-dropdown-footer .primary{
   background:var(--ink);
   color:#fff;
   border-color:var(--ink);
 }
 
-
-/* =========================
-   下貨人員
-========================= */
+/* 人員 */
 
 .staff-grid{
   display:grid;
@@ -246,10 +236,7 @@ legend{
   background:var(--accent-dim);
 }
 
-
-/* =========================
-   件數
-========================= */
+/* 件數 */
 
 .seg{
   display:flex;
@@ -264,7 +251,6 @@ legend{
   background:#fff;
   font-size:15px;
   font-weight:700;
-  color:var(--ink);
 }
 
 .seg button[data-v="ok"].active{
@@ -279,10 +265,7 @@ legend{
   color:#fff;
 }
 
-
-/* =========================
-   照片
-========================= */
+/* 照片 */
 
 .photo-upload{
   border:1.5px dashed var(--line);
@@ -294,7 +277,7 @@ legend{
   color:#8a8879;
 }
 
-.photo-upload span.icon{
+.photo-upload .icon{
   font-size:30px;
   display:block;
   margin-bottom:6px;
@@ -304,7 +287,6 @@ legend{
   position:absolute;
   inset:0;
   opacity:0;
-  cursor:pointer;
 }
 
 .photo-grid{
@@ -320,7 +302,6 @@ legend{
   border-radius:8px;
   overflow:hidden;
   border:1px solid var(--line);
-  background:#eee;
 }
 
 .thumb img{
@@ -338,10 +319,6 @@ legend{
   border-radius:50%;
   background:rgba(0,0,0,.65);
   color:#fff;
-  font-size:13px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   border:none;
 }
 
@@ -351,10 +328,7 @@ legend{
   margin-top:6px;
 }
 
-
-/* =========================
-   備註
-========================= */
+/* 備註 */
 
 textarea{
   width:100%;
@@ -363,21 +337,12 @@ textarea{
   border-radius:10px;
   font-size:16px;
   background:#fff;
-  color:var(--ink);
   font-family:inherit;
-  resize:vertical;
   min-height:80px;
+  resize:vertical;
 }
 
-textarea:focus{
-  outline:none;
-  border-color:var(--accent);
-}
-
-
-/* =========================
-   送出
-========================= */
+/* 送出 */
 
 .submit-bar{
   position:fixed;
@@ -387,12 +352,11 @@ textarea:focus{
   background:var(--paper);
   border-top:1px solid var(--line);
   padding:12px 18px calc(12px + env(safe-area-inset-bottom));
-  z-index:200;
 }
 
 .submit-bar .inner{
   max-width:480px;
-  margin:0 auto;
+  margin:auto;
 }
 
 button.submit{
@@ -430,10 +394,10 @@ button.submit:disabled{
   padding:18px;
   text-align:center;
   color:var(--muted);
-  font-size:14px;
 }
 
 </style>
+
 </head>
 
 
@@ -449,15 +413,11 @@ button.submit:disabled{
       class="who"
       id="whoami"
     >
-      載入中…
+      LINE 載入中…
     </span>
 
   </div>
 
-
-  <!-- =========================
-       大車
-  ========================== -->
 
   <fieldset>
 
@@ -515,10 +475,6 @@ button.submit:disabled{
   </fieldset>
 
 
-  <!-- =========================
-       下貨人員
-  ========================== -->
-
   <fieldset>
 
     <legend>下貨人員</legend>
@@ -534,10 +490,6 @@ button.submit:disabled{
 
   </fieldset>
 
-
-  <!-- =========================
-       件數
-  ========================== -->
 
   <fieldset>
 
@@ -568,10 +520,6 @@ button.submit:disabled{
   </fieldset>
 
 
-  <!-- =========================
-       照片
-  ========================== -->
-
   <fieldset>
 
     <legend>照片</legend>
@@ -591,12 +539,10 @@ button.submit:disabled{
 
     </div>
 
-
     <div
       class="photo-grid"
       id="photoGrid"
     ></div>
-
 
     <div class="hint">
       至少上傳1張，可拍照或從相簿選取多張
@@ -604,10 +550,6 @@ button.submit:disabled{
 
   </fieldset>
 
-
-  <!-- =========================
-       備註
-  ========================== -->
 
   <fieldset>
 
@@ -622,10 +564,6 @@ button.submit:disabled{
 
 </div>
 
-
-<!-- =========================
-     送出
-========================== -->
 
 <div class="submit-bar">
 
@@ -657,12 +595,8 @@ button.submit:disabled{
 const LIFF_ID =
   "2011084900-xvJIcgzA";
 
-
 const BACKEND_URL =
-  "https://script.google.com/macros/s/AKfycby8oksNTRuZEty3SpTCFYi2-QLdmLAVnQql9GxdKazFrg9DBLBTmTjfjFAifrj0gKbh/exec".replace(
-    "Kbh",
-    "j0gkBH"
-  );
+  "https://script.google.com/macros/s/AKfycby8oksNTRuZEty3SpTCFYi2-QLdmLAVnQql9GxdKazFrg9DBLBTmTjfjFAifrj0gkBH/exec";
 
 
 /* =================================================
@@ -672,29 +606,25 @@ const BACKEND_URL =
 let userName =
   "未知使用者";
 
-let photos =
-  [];
+let photos = [];
 
-let truckData =
-  [];
+let truckData = [];
 
-let staffData =
-  [];
+let staffData = [];
 
-let truckLastUsed =
-  {};
+let truckLastUsed = {};
 
 let selectedTrucks =
   new Set();
 
 
 /* =================================================
-   狀態訊息
+   狀態
 ================================================= */
 
 function setStatus(
   message,
-  type
+  type = ""
 ){
 
   const el =
@@ -725,10 +655,8 @@ async function initLIFF(){
   try{
 
     await liff.init({
-
       liffId:
         LIFF_ID
-
     });
 
 
@@ -760,9 +688,7 @@ async function initLIFF(){
 
     return true;
 
-  }
-
-  catch(error){
+  }catch(error){
 
     console.error(
       error
@@ -776,7 +702,7 @@ async function initLIFF(){
 
 
     setStatus(
-      "LINE 登入失敗，請重新開啟",
+      "LINE 登入失敗",
       "err"
     );
 
@@ -789,7 +715,7 @@ async function initLIFF(){
 
 
 /* =================================================
-   取得後端資料
+   取得後端
 ================================================= */
 
 async function loadSystemData(){
@@ -802,22 +728,12 @@ async function loadSystemData(){
         "?t=" +
         Date.now(),
         {
-          method:"GET",
-          cache:"no-store"
+          method:
+            "GET",
+          cache:
+            "no-store"
         }
       );
-
-
-    if(
-      !response.ok
-    ){
-
-      throw new Error(
-        "伺服器回應錯誤：" +
-        response.status
-      );
-
-    }
 
 
     const result =
@@ -830,7 +746,7 @@ async function loadSystemData(){
 
       throw new Error(
         result.error ||
-        "無法取得系統資料"
+        "後端回傳錯誤"
       );
 
     }
@@ -855,9 +771,8 @@ async function loadSystemData(){
 
     renderStaff();
 
-  }
 
-  catch(error){
+  }catch(error){
 
     console.error(
       error
@@ -868,9 +783,9 @@ async function loadSystemData(){
       "truckList"
     ).innerHTML =
       `
-        <div class="loading">
-          大車資料載入失敗
-        </div>
+      <div class="loading">
+        大車資料載入失敗
+      </div>
       `;
 
 
@@ -878,9 +793,9 @@ async function loadSystemData(){
       "staffGrid"
     ).innerHTML =
       `
-        <div class="loading">
-          下貨人員資料載入失敗
-        </div>
+      <div class="loading">
+        下貨人員資料載入失敗
+      </div>
       `;
 
 
@@ -897,29 +812,18 @@ async function loadSystemData(){
 
 /* =================================================
    大車排序
-
-   1. D欄固定置頂 → 永遠最前
-   2. 尚未下貨 → 前面
-   3. 已下貨 → 後面
-   4. 已下貨按照最後下貨時間排序
-
 ================================================= */
 
 function sortedTrucks(){
 
-  return [...truckData].sort(
+  return [
+    ...truckData
+  ].sort(
     function(a,b){
 
-      const aFixed =
-        a.fixed === true;
-
-      const bFixed =
-        b.fixed === true;
-
-
       if(
-        aFixed &&
-        !bFixed
+        a.fixed &&
+        !b.fixed
       ){
 
         return -1;
@@ -928,8 +832,8 @@ function sortedTrucks(){
 
 
       if(
-        !aFixed &&
-        bFixed
+        !a.fixed &&
+        b.fixed
       ){
 
         return 1;
@@ -938,8 +842,8 @@ function sortedTrucks(){
 
 
       if(
-        aFixed &&
-        bFixed
+        a.fixed &&
+        b.fixed
       ){
 
         return 0;
@@ -1025,12 +929,10 @@ function renderTrucks(){
 
     list.innerHTML =
       `
-        <div class="loading">
-          目前沒有啟用中的大車
-        </div>
+      <div class="loading">
+        目前沒有啟用中的大車
+      </div>
       `;
-
-    updateTruckButtonText();
 
     return;
 
@@ -1046,7 +948,7 @@ function renderTrucks(){
         ] || "";
 
 
-      const isUsed =
+      const used =
         Boolean(
           lastTime
         );
@@ -1061,7 +963,7 @@ function renderTrucks(){
       label.className =
         "truck-option" +
         (
-          isUsed
+          used
             ? " used"
             : ""
         );
@@ -1099,8 +1001,7 @@ function renderTrucks(){
               truck.name
             );
 
-          }
-          else{
+          }else{
 
             selectedTrucks.delete(
               truck.name
@@ -1139,10 +1040,8 @@ function renderTrucks(){
       );
 
 
-      /* 固定大車 */
-
       if(
-        truck.fixed === true
+        truck.fixed
       ){
 
         const tag =
@@ -1166,11 +1065,15 @@ function renderTrucks(){
       }
 
 
-      /* 已下貨 */
+      /*
+       * 已下貨：
+       * 只顯示「已下」
+       * 不再顯示時間
+       */
 
       if(
-        isUsed &&
-        truck.fixed !== true
+        used &&
+        !truck.fixed
       ){
 
         const tag =
@@ -1184,8 +1087,7 @@ function renderTrucks(){
 
 
         tag.textContent =
-          "已下貨 " +
-          lastTime;
+          "已下";
 
 
         label.appendChild(
@@ -1209,7 +1111,7 @@ function renderTrucks(){
 
 
 /* =================================================
-   大車按鈕文字
+   大車按鈕
 ================================================= */
 
 function updateTruckButtonText(){
@@ -1221,7 +1123,9 @@ function updateTruckButtonText(){
 
 
   const names =
-    [...selectedTrucks];
+    Array.from(
+      selectedTrucks
+    );
 
 
   if(
@@ -1270,22 +1174,6 @@ function renderStaff(){
 
   grid.innerHTML =
     "";
-
-
-  if(
-    staffData.length === 0
-  ){
-
-    grid.innerHTML =
-      `
-        <div class="loading">
-          目前沒有啟用中的下貨人員
-        </div>
-      `;
-
-    return;
-
-  }
 
 
   staffData.forEach(
@@ -1492,13 +1380,11 @@ document
 
 
 /* =================================================
-   圖片壓縮
+   壓縮圖片
 ================================================= */
 
 function compressImage(
-  file,
-  maxWidth = 1200,
-  quality = 0.72
+  file
 ){
 
   return new Promise(
@@ -1518,10 +1404,14 @@ function compressImage(
           img.onload =
             function(){
 
+              const maxW =
+                1200;
+
+
               const scale =
                 Math.min(
                   1,
-                  maxWidth /
+                  maxW /
                   img.width
                 );
 
@@ -1564,7 +1454,7 @@ function compressImage(
               resolve(
                 canvas.toDataURL(
                   "image/jpeg",
-                  quality
+                  0.72
                 )
               );
 
@@ -1596,7 +1486,7 @@ function compressImage(
 
 
 /* =================================================
-   照片縮圖
+   顯示照片
 ================================================= */
 
 function renderPhotoGrid(){
@@ -1640,20 +1530,19 @@ function renderPhotoGrid(){
         );
 
 
-      remove.type =
-        "button";
-
-
       remove.className =
         "rm";
 
 
+      remove.type =
+        "button";
+
+
       remove.textContent =
-        "✕";
+        "×";
 
 
-      remove.addEventListener(
-        "click",
+      remove.onclick =
         function(){
 
           photos.splice(
@@ -1664,8 +1553,7 @@ function renderPhotoGrid(){
 
           renderPhotoGrid();
 
-        }
-      );
+        };
 
 
       div.appendChild(
@@ -1689,7 +1577,7 @@ function renderPhotoGrid(){
 
 
 /* =================================================
-   選擇照片
+   選照片
 ================================================= */
 
 document
@@ -1701,7 +1589,9 @@ document
     async function(event){
 
       const files =
-        [...event.target.files];
+        Array.from(
+          event.target.files
+        );
 
 
       if(
@@ -1714,8 +1604,7 @@ document
 
 
       setStatus(
-        "照片處理中…",
-        ""
+        "照片處理中…"
       );
 
 
@@ -1736,14 +1625,14 @@ document
           }
 
 
-          const dataUrl =
+          const data =
             await compressImage(
               file
             );
 
 
           photos.push(
-            dataUrl
+            data
           );
 
         }
@@ -1753,13 +1642,10 @@ document
 
 
         setStatus(
-          "",
           ""
         );
 
-      }
-
-      catch(error){
+      }catch(error){
 
         console.error(
           error
@@ -1782,16 +1668,16 @@ document
 
 
 /* =================================================
-   取得下貨人員
+   人員
 ================================================= */
 
 function getSelectedStaff(){
 
-  return [
-    ...document.querySelectorAll(
-      "#staffGrid input[type=checkbox]:checked"
+  return Array.from(
+    document.querySelectorAll(
+      "#staffGrid input:checked"
     )
-  ].map(
+  ).map(
     function(input){
 
       return input.value;
@@ -1814,14 +1700,10 @@ document
     "click",
     async function(){
 
-      const button =
-        document.getElementById(
-          "submitBtn"
-        );
-
-
       const trucks =
-        [...selectedTrucks];
+        Array.from(
+          selectedTrucks
+        );
 
 
       const staff =
@@ -1835,9 +1717,11 @@ document
 
 
       const qtyStatus =
-        qtyButton
-          ? qtyButton.dataset.v
-          : "ok";
+        qtyButton &&
+        qtyButton.dataset.v ===
+        "bad"
+          ? "有多有少"
+          : "正確";
 
 
       const note =
@@ -1848,10 +1732,6 @@ document
           .value
           .trim();
 
-
-      /* =========================
-         檢查
-      ========================== */
 
       if(
         trucks.length === 0
@@ -1895,13 +1775,18 @@ document
       }
 
 
+      const button =
+        document.getElementById(
+          "submitBtn"
+        );
+
+
       button.disabled =
         true;
 
 
       setStatus(
-        "回報送出中…",
-        ""
+        "正在送出回報…"
       );
 
 
@@ -1917,9 +1802,7 @@ document
           staff,
 
         qtyStatus:
-          qtyStatus === "ok"
-            ? "正確"
-            : "有多有少",
+          qtyStatus,
 
         note:
           note,
@@ -1932,22 +1815,20 @@ document
 
       try{
 
-        /*
-         * Apps Script Web App
-         *
-         * 使用 text/plain 避免 CORS
-         * 預檢問題。
-         */
-
         await fetch(
           BACKEND_URL,
           {
-            method:"POST",
-            mode:"no-cors",
+            method:
+              "POST",
+
+            mode:
+              "no-cors",
+
             headers:{
               "Content-Type":
                 "text/plain;charset=utf-8"
             },
+
             body:
               JSON.stringify(
                 payload
@@ -1956,35 +1837,23 @@ document
         );
 
 
-        /* =========================
-           前端立即更新排序
-        ========================== */
-
-        const now =
-          new Date();
+        setStatus(
+          "✓ 回報成功",
+          "ok"
+        );
 
 
-        const currentTime =
-          String(
-            now.getHours()
-          ).padStart(2,"0") +
-          ":" +
-          String(
-            now.getMinutes()
-          ).padStart(2,"0") +
-          ":" +
-          String(
-            now.getSeconds()
-          ).padStart(2,"0");
-
+        /*
+         * 立即更新畫面
+         */
 
         trucks.forEach(
-          function(truck){
+          function(name){
 
             truckLastUsed[
-              truck
+              name
             ] =
-              currentTime;
+              "used";
 
           }
         );
@@ -1992,37 +1861,23 @@ document
 
         selectedTrucks.clear();
 
+        photos = [];
 
-        /* =========================
-           清空照片
-        ========================== */
 
-        photos =
-          [];
-
+        renderTrucks();
 
         renderPhotoGrid();
 
 
-        /* =========================
-           清空備註
-        ========================== */
-
-        document
-          .getElementById(
-            "note"
-          )
-          .value =
+        document.getElementById(
+          "note"
+        ).value =
           "";
 
 
-        /* =========================
-           清空下貨人員
-        ========================== */
-
         document
           .querySelectorAll(
-            "#staffGrid input[type=checkbox]"
+            "#staffGrid input"
           )
           .forEach(
             function(input){
@@ -2031,67 +1886,24 @@ document
                 false;
 
 
-              const item =
-                input.closest(
+              input
+                .closest(
                   ".staff-item"
-                );
-
-
-              if(item){
-
-                item.classList.remove(
+                )
+                ?.classList
+                .remove(
                   "selected"
                 );
-
-              }
 
             }
           );
 
 
-        renderTrucks();
+        button.disabled =
+          false;
 
 
-        setStatus(
-          "✓ 已送出回報",
-          "ok"
-        );
-
-
-        /* =========================
-           關閉 LIFF
-        ========================== */
-
-        setTimeout(
-          function(){
-
-            try{
-
-              if(
-                window.liff &&
-                liff.isInClient()
-              ){
-
-                liff.closeWindow();
-
-              }
-
-            }
-            catch(error){
-
-              console.log(
-                error
-              );
-
-            }
-
-          },
-          1200
-        );
-
-      }
-
-      catch(error){
+      }catch(error){
 
         console.error(
           error
@@ -2120,19 +1932,11 @@ document
 
 async function init(){
 
-  setStatus(
-    "系統載入中…",
-    ""
-  );
-
-
-  const loginOK =
+  const ok =
     await initLIFF();
 
 
-  if(
-    !loginOK
-  ){
+  if(!ok){
 
     return;
 
@@ -2140,12 +1944,6 @@ async function init(){
 
 
   await loadSystemData();
-
-
-  setStatus(
-    "",
-    ""
-  );
 
 }
 
@@ -2155,4 +1953,5 @@ init();
 </script>
 
 </body>
+
 </html>
