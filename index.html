@@ -169,7 +169,6 @@ legend{
   color:#888679;
 }
 
-/* 已下貨人員 */
 .used-staff{
   margin-left:auto;
   font-size:11px;
@@ -183,7 +182,6 @@ legend{
   text-overflow:ellipsis;
 }
 
-/* 固定 */
 .fixed-tag{
   margin-left:auto;
   font-size:11px;
@@ -249,6 +247,26 @@ legend{
 .staff-item.selected{
   border-color:var(--accent);
   background:var(--accent-dim);
+}
+
+
+/* =========================================
+   LINE 自動對應提示
+========================================= */
+
+.line-match-hint{
+  margin-top:8px;
+  padding:8px 10px;
+  border-radius:8px;
+  background:var(--accent-dim);
+  color:var(--accent);
+  font-size:12px;
+  line-height:1.5;
+}
+
+.line-match-hint.manual{
+  background:#eeeae0;
+  color:var(--muted);
 }
 
 
@@ -548,6 +566,12 @@ button.submit:disabled{
 
     </div>
 
+    <div
+      class="line-match-hint manual"
+      id="lineMatchHint"
+      style="display:none;"
+    ></div>
+
   </fieldset>
 
 
@@ -690,6 +714,12 @@ const BACKEND_URL =
 let userName =
   "未知使用者";
 
+let lineName =
+  "";
+
+let matchedStaffName =
+  "";
+
 let photos =
   [];
 
@@ -710,10 +740,12 @@ let selectedTrucks =
    狀態訊息
 ================================================= */
 
-function setStatus(msg, type){
+function setStatus(msg,type){
 
   const el =
-    document.getElementById("statusMsg");
+    document.getElementById(
+      "statusMsg"
+    );
 
   el.textContent =
     msg;
@@ -729,7 +761,7 @@ function setStatus(msg, type){
 
 
 /* =================================================
-   LIFF
+   LINE / LIFF
 ================================================= */
 
 async function initLIFF(){
@@ -741,6 +773,7 @@ async function initLIFF(){
         LIFF_ID
     });
 
+
     if(
       !liff.isLoggedIn()
     ){
@@ -750,19 +783,35 @@ async function initLIFF(){
       return false;
     }
 
+
     const profile =
       await liff.getProfile();
 
+
+    /*
+     * LINE 顯示名稱
+     */
+
+    lineName =
+      (
+        profile.displayName ||
+        ""
+      ).trim();
+
+
     userName =
-      profile.displayName ||
+      lineName ||
       "未知使用者";
+
 
     document.getElementById(
       "whoami"
     ).textContent =
       userName;
 
+
     return true;
+
 
   }catch(error){
 
@@ -773,13 +822,161 @@ async function initLIFF(){
     ).textContent =
       "LINE 登入失敗";
 
+
     setStatus(
       "LINE 登入失敗，請重新開啟",
       "err"
     );
 
+
     return false;
   }
+}
+
+
+/* =================================================
+   LINE 名稱對應下貨人員
+================================================= */
+
+function findMatchedStaff(){
+
+  matchedStaffName =
+    "";
+
+
+  if(
+    !lineName ||
+    staffData.length === 0
+  ){
+
+    return null;
+  }
+
+
+  const normalizedLineName =
+    lineName
+      .trim()
+      .toLowerCase();
+
+
+  const matched =
+    staffData.find(
+      function(staff){
+
+        const staffLineName =
+          String(
+            staff.lineName || ""
+          )
+          .trim()
+          .toLowerCase();
+
+
+        return (
+          staffLineName &&
+          staffLineName ===
+            normalizedLineName
+        );
+      }
+    );
+
+
+  if(matched){
+
+    matchedStaffName =
+      matched.name;
+
+    return matched;
+  }
+
+
+  return null;
+}
+
+
+/* =================================================
+   自動選取 LINE 對應的下貨人員
+================================================= */
+
+function autoSelectMatchedStaff(){
+
+  const matched =
+    findMatchedStaff();
+
+
+  const hint =
+    document.getElementById(
+      "lineMatchHint"
+    );
+
+
+  if(!matched){
+
+    hint.style.display =
+      "block";
+
+    hint.className =
+      "line-match-hint manual";
+
+    hint.textContent =
+      "LINE名稱「" +
+      lineName +
+      "」尚未設定對應的下貨人員，請手動選擇。";
+
+    return;
+  }
+
+
+  /*
+   * 自動勾選對應的人
+   */
+
+  const inputs =
+    document.querySelectorAll(
+      "#staffGrid input[type=checkbox]"
+    );
+
+
+  inputs.forEach(
+    function(input){
+
+      const isMatch =
+        input.value ===
+        matched.name;
+
+
+      input.checked =
+        isMatch;
+
+
+      const label =
+        input.closest(
+          ".staff-item"
+        );
+
+
+      if(label){
+
+        label.classList.toggle(
+          "selected",
+          isMatch
+        );
+      }
+    }
+  );
+
+
+  hint.style.display =
+    "block";
+
+  hint.className =
+    "line-match-hint";
+
+  hint.textContent =
+    "LINE「" +
+    lineName +
+    "」已自動對應下貨人員「" +
+    matched.name +
+    "」";
 }
 
 
@@ -802,10 +999,13 @@ async function loadSystemData(){
         }
       );
 
+
     const text =
       await response.text();
 
+
     let result;
+
 
     try{
 
@@ -824,6 +1024,7 @@ async function loadSystemData(){
       );
     }
 
+
     if(
       !result.success
     ){
@@ -834,25 +1035,38 @@ async function loadSystemData(){
       );
     }
 
+
     truckData =
       result.data.trucks ||
       [];
+
 
     staffData =
       result.data.staff ||
       [];
 
+
     truckLastUsed =
       result.data.truckLastUsed ||
       {};
+
 
     renderTrucks();
 
     renderStaff();
 
+    /*
+     * 後端資料載入完成後，
+     * 自動用 LINE 名稱對應下貨人員。
+     */
+
+    autoSelectMatchedStaff();
+
+
   }catch(error){
 
     console.error(error);
+
 
     document.getElementById(
       "truckList"
@@ -863,6 +1077,7 @@ async function loadSystemData(){
       </div>
       `;
 
+
     document.getElementById(
       "staffGrid"
     ).innerHTML =
@@ -871,6 +1086,7 @@ async function loadSystemData(){
         下貨人員資料載入失敗
       </div>
       `;
+
 
     setStatus(
       "無法連接系統，請確認 Apps Script 部署網址",
@@ -882,19 +1098,6 @@ async function loadSystemData(){
 
 /* =================================================
    時間整理
-
-   Apps Script 從 Google Sheet 讀時間欄位時，
-   可能會回傳：
-
-   Sat Dec 30 1899 04:24:28 GMT+0800
-
-   或：
-
-   04:24:28
-
-   這裡統一轉成：
-
-   04:24
 ================================================= */
 
 function formatTruckTime(value){
@@ -907,18 +1110,21 @@ function formatTruckTime(value){
     return "";
   }
 
+
   const text =
     String(value).trim();
+
 
   if(!text){
     return "";
   }
 
-  /* 已經是 HH:mm:ss */
+
   const simpleMatch =
     text.match(
       /^(\d{1,2}):(\d{2})(?::(\d{2}))?$/
     );
+
 
   if(simpleMatch){
 
@@ -932,9 +1138,10 @@ function formatTruckTime(value){
     );
   }
 
-  /* Google Date 字串 */
+
   const date =
     new Date(text);
+
 
   if(
     !isNaN(
@@ -947,10 +1154,12 @@ function formatTruckTime(value){
         date.getHours()
       ).padStart(2,"0");
 
+
     const minutes =
       String(
         date.getMinutes()
       ).padStart(2,"0");
+
 
     return (
       hours +
@@ -958,6 +1167,7 @@ function formatTruckTime(value){
       minutes
     );
   }
+
 
   return "";
 }
@@ -976,30 +1186,39 @@ function getTruckUsage(
       truckName
     ];
 
+
   if(!data){
     return null;
   }
+
 
   if(
     typeof data === "string"
   ){
 
     return {
+
       time:
         formatTruckTime(data),
+
       staff:""
+
     };
   }
 
+
   return {
+
     time:
       formatTruckTime(
         data.time
       ),
+
     staff:
       String(
         data.staff || ""
       ).trim()
+
   };
 }
 
@@ -1016,11 +1235,6 @@ function isFixedTruck(truck){
 
 /* =================================================
    大車排序
-
-   1. 固定置頂永遠最前
-   2. 尚未下貨的一般車
-   3. 已下貨的一般車
-   4. 保持 Google Sheet 原本順序
 ================================================= */
 
 function sortedTrucks(){
@@ -1033,43 +1247,49 @@ function sortedTrucks(){
       const aFixed =
         isFixedTruck(a);
 
+
       const bFixed =
         isFixedTruck(b);
 
-      /* 固定車永遠最前 */
 
       if(
         aFixed &&
         !bFixed
       ){
+
         return -1;
       }
+
 
       if(
         !aFixed &&
         bFixed
       ){
+
         return 1;
       }
 
-      /* 兩個都是固定車 */
 
       if(
         aFixed &&
         bFixed
       ){
+
         return 0;
       }
+
 
       const aUsage =
         getTruckUsage(
           a.name
         );
 
+
       const bUsage =
         getTruckUsage(
           b.name
         );
+
 
       const aUsed =
         Boolean(
@@ -1077,33 +1297,31 @@ function sortedTrucks(){
           aUsage.staff
         );
 
+
       const bUsed =
         Boolean(
           bUsage &&
           bUsage.staff
         );
 
-      /* 尚未下貨排前 */
 
       if(
         !aUsed &&
         bUsed
       ){
+
         return -1;
       }
+
 
       if(
         aUsed &&
         !bUsed
       ){
+
         return 1;
       }
 
-      /*
-       * 都已下貨：
-       * 保持 Google Sheet 原本順序，
-       * 不要每次重新排序。
-       */
 
       return 0;
     }
@@ -1122,11 +1340,14 @@ function renderTrucks(){
       "truckList"
     );
 
+
   list.innerHTML =
     "";
 
+
   const trucks =
     sortedTrucks();
+
 
   if(
     trucks.length === 0
@@ -1142,6 +1363,7 @@ function renderTrucks(){
     return;
   }
 
+
   trucks.forEach(
     function(truck){
 
@@ -1150,21 +1372,25 @@ function renderTrucks(){
           truck.name
         );
 
+
       const isUsed =
         Boolean(
           usage &&
           usage.staff
         );
 
+
       const checked =
         selectedTrucks.has(
           truck.name
         );
 
+
       const label =
         document.createElement(
           "label"
         );
+
 
       label.className =
         "truck-option" +
@@ -1174,25 +1400,28 @@ function renderTrucks(){
             : ""
         );
 
+
       const checkbox =
         document.createElement(
           "input"
         );
 
+
       checkbox.type =
         "checkbox";
+
 
       checkbox.value =
         truck.name;
 
+
       checkbox.checked =
         checked;
 
-      /*
-       * 已下過的車仍然可以再次選。
-       */
+
       checkbox.disabled =
         false;
+
 
       checkbox.addEventListener(
         "change",
@@ -1213,34 +1442,35 @@ function renderTrucks(){
             );
           }
 
+
           updateTruckButtonText();
         }
       );
+
 
       const name =
         document.createElement(
           "span"
         );
 
+
       name.className =
         "truck-name";
 
+
       name.textContent =
         truck.name;
+
 
       label.appendChild(
         checkbox
       );
 
+
       label.appendChild(
         name
       );
 
-
-      /* =====================================
-         已下貨 → 顯示下貨人員
-         不顯示時間
-      ===================================== */
 
       if(
         isUsed &&
@@ -1252,24 +1482,24 @@ function renderTrucks(){
             "span"
           );
 
+
         staffTag.className =
           "used-staff";
+
 
         staffTag.textContent =
           usage.staff;
 
+
         staffTag.title =
           usage.staff;
+
 
         label.appendChild(
           staffTag
         );
       }
 
-
-      /* =====================================
-         固定置頂
-      ===================================== */
 
       if(
         truck.fixed
@@ -1280,11 +1510,14 @@ function renderTrucks(){
             "span"
           );
 
+
         tag.className =
           "fixed-tag";
 
+
         tag.textContent =
           "固定";
+
 
         label.appendChild(
           tag
@@ -1297,6 +1530,7 @@ function renderTrucks(){
       );
     }
   );
+
 
   updateTruckButtonText();
 }
@@ -1313,10 +1547,12 @@ function updateTruckButtonText(){
       "truckSelectButton"
     );
 
+
   const names =
     Array.from(
       selectedTrucks
     );
+
 
   if(
     names.length === 0
@@ -1328,6 +1564,7 @@ function updateTruckButtonText(){
     return;
   }
 
+
   if(
     names.length === 1
   ){
@@ -1337,6 +1574,7 @@ function updateTruckButtonText(){
 
     return;
   }
+
 
   button.textContent =
     "已選 " +
@@ -1357,8 +1595,10 @@ function renderStaff(){
       "staffGrid"
     );
 
+
   grid.innerHTML =
     "";
+
 
   if(
     staffData.length === 0
@@ -1374,6 +1614,7 @@ function renderStaff(){
     return;
   }
 
+
   staffData.forEach(
     function(staff){
 
@@ -1382,27 +1623,34 @@ function renderStaff(){
           "label"
         );
 
+
       label.className =
         "staff-item";
+
 
       const checkbox =
         document.createElement(
           "input"
         );
 
+
       checkbox.type =
         "checkbox";
 
+
       checkbox.value =
         staff.name;
+
 
       const span =
         document.createElement(
           "span"
         );
 
+
       span.textContent =
         staff.name;
+
 
       checkbox.addEventListener(
         "change",
@@ -1415,13 +1663,16 @@ function renderStaff(){
         }
       );
 
+
       label.appendChild(
         checkbox
       );
 
+
       label.appendChild(
         span
       );
+
 
       grid.appendChild(
         label
@@ -1501,6 +1752,7 @@ document.addEventListener(
         ".truck-select-wrap"
       );
 
+
     if(
       !wrap.contains(
         event.target
@@ -1535,8 +1787,10 @@ document
         event.target.tagName !==
         "BUTTON"
       ){
+
         return;
       }
+
 
       [
         ...event.currentTarget.children
@@ -1548,6 +1802,7 @@ document
           );
         }
       );
+
 
       event.target.classList.add(
         "active"
@@ -1572,11 +1827,13 @@ function compressImage(
       const reader =
         new FileReader();
 
+
       reader.onload =
         function(event){
 
           const img =
             new Image();
+
 
           img.onload =
             function(){
@@ -1588,10 +1845,12 @@ function compressImage(
                   img.width
                 );
 
+
               const canvas =
                 document.createElement(
                   "canvas"
                 );
+
 
               canvas.width =
                 Math.round(
@@ -1599,16 +1858,19 @@ function compressImage(
                   scale
                 );
 
+
               canvas.height =
                 Math.round(
                   img.height *
                   scale
                 );
 
+
               const ctx =
                 canvas.getContext(
                   "2d"
                 );
+
 
               ctx.drawImage(
                 img,
@@ -1618,6 +1880,7 @@ function compressImage(
                 canvas.height
               );
 
+
               resolve(
                 canvas.toDataURL(
                   "image/jpeg",
@@ -1626,15 +1889,19 @@ function compressImage(
               );
             };
 
+
           img.onerror =
             reject;
+
 
           img.src =
             event.target.result;
         };
 
+
       reader.onerror =
         reject;
+
 
       reader.readAsDataURL(
         file
@@ -1655,8 +1922,10 @@ function renderPhotoGrid(){
       "photoGrid"
     );
 
+
   grid.innerHTML =
     "";
+
 
   photos.forEach(
     function(photo,index){
@@ -1666,30 +1935,38 @@ function renderPhotoGrid(){
           "div"
         );
 
+
       div.className =
         "thumb";
+
 
       const img =
         document.createElement(
           "img"
         );
 
+
       img.src =
         photo;
+
 
       const remove =
         document.createElement(
           "button"
         );
 
+
       remove.className =
         "rm";
+
 
       remove.type =
         "button";
 
+
       remove.textContent =
         "✕";
+
 
       remove.addEventListener(
         "click",
@@ -1700,17 +1977,21 @@ function renderPhotoGrid(){
             1
           );
 
+
           renderPhotoGrid();
         }
       );
+
 
       div.appendChild(
         img
       );
 
+
       div.appendChild(
         remove
       );
+
 
       grid.appendChild(
         div
@@ -1737,16 +2018,20 @@ document
           ...event.target.files
         ];
 
+
       if(
         files.length === 0
       ){
+
         return;
       }
+
 
       setStatus(
         "照片處理中…",
         ""
       );
+
 
       try{
 
@@ -1760,35 +2045,43 @@ document
               "image/"
             )
           ){
+
             continue;
           }
+
 
           const dataUrl =
             await compressImage(
               file
             );
 
+
           photos.push(
             dataUrl
           );
         }
 
+
         renderPhotoGrid();
+
 
         setStatus(
           "",
           ""
         );
 
+
       }catch(error){
 
         console.error(error);
+
 
         setStatus(
           "照片處理失敗",
           "err"
         );
       }
+
 
       event.target.value =
         "";
@@ -1832,18 +2125,22 @@ document
           selectedTrucks
         );
 
+
       const staff =
         getSelectedStaff();
+
 
       const qtyButton =
         document.querySelector(
           "#qtySeg button.active"
         );
 
+
       const qtyStatus =
         qtyButton
           ? qtyButton.dataset.v
           : "ok";
+
 
       const note =
         document
@@ -1870,6 +2167,7 @@ document
         return;
       }
 
+
       if(
         staff.length === 0
       ){
@@ -1881,6 +2179,7 @@ document
 
         return;
       }
+
 
       if(
         photos.length === 0
@@ -1900,8 +2199,10 @@ document
           "submitBtn"
         );
 
+
       button.disabled =
         true;
+
 
       setStatus(
         "照片上傳及回報送出中…",
@@ -1909,10 +2210,24 @@ document
       );
 
 
+      /*
+       * user：
+       *   保留 LINE 顯示名稱
+       *
+       * lineName：
+       *   明確傳給 Apps Script
+       *
+       * staff：
+       *   傳實際對應到的下貨人員姓名
+       */
+
       const payload = {
 
         user:
           userName,
+
+        lineName:
+          lineName,
 
         trucks:
           trucks,
@@ -1965,9 +2280,6 @@ document
         /*
          * 立即更新畫面：
          * 大車旁邊顯示剛剛選的下貨人員。
-         *
-         * 注意：
-         * 不顯示時間。
          */
 
         trucks.forEach(
@@ -1989,6 +2301,7 @@ document
 
         selectedTrucks.clear();
 
+
         renderTrucks();
 
 
@@ -1996,6 +2309,7 @@ document
 
         photos =
           [];
+
 
         renderPhotoGrid();
 
@@ -2010,7 +2324,14 @@ document
           "";
 
 
-        /* 清空下貨人員 */
+        /*
+         * 下貨人員：
+         *
+         * 如果是 LINE 自動對應，
+         * 送出後仍然維持自動對應的人。
+         *
+         * 但取消勾選，避免下一筆直接帶著上一筆。
+         */
 
         document
           .querySelectorAll(
@@ -2022,19 +2343,26 @@ document
               input.checked =
                 false;
 
-              input
-                .closest(
+
+              const label =
+                input.closest(
                   ".staff-item"
-                )
-                .classList
-                .remove(
+                );
+
+
+              if(label){
+
+                label.classList.remove(
                   "selected"
                 );
+              }
             }
           );
 
 
-        /* 關閉 LIFF */
+        /*
+         * 關閉 LINE LIFF
+         */
 
         setTimeout(
           function(){
@@ -2063,10 +2391,12 @@ document
 
         console.error(error);
 
+
         setStatus(
           "送出失敗，請檢查網路後重試",
           "err"
         );
+
 
         button.disabled =
           false;
@@ -2085,14 +2415,18 @@ async function init(){
   const loginOK =
     await initLIFF();
 
+
   if(
     !loginOK
   ){
+
     return;
   }
 
+
   await loadSystemData();
 }
+
 
 init();
 
