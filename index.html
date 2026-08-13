@@ -53,6 +53,10 @@ body{
   -webkit-tap-highlight-color:transparent;
 }
 
+body.uploading{
+  overflow:hidden;
+}
+
 button{
   font-family:inherit;
 }
@@ -212,7 +216,7 @@ legend{
 
 .truck-select-button{
   width:100%;
-  padding:14px 44px 14px 14px;
+  padding:14px 14px;
   border:1.5px solid var(--line);
   border-radius:10px;
   background:#fff;
@@ -222,14 +226,8 @@ legend{
   position:relative;
 }
 
-.truck-select-button::after{
-  content:"⌄";
-  position:absolute;
-  right:14px;
-  top:50%;
-  transform:translateY(-55%);
-  font-size:20px;
-  color:#777;
+.truck-select-button:active{
+  background:#faf9f5;
 }
 
 .truck-dropdown{
@@ -460,6 +458,7 @@ textarea:focus{
   width:100%;
   height:100%;
   object-fit:cover;
+  display:block;
 }
 
 .thumb .rm{
@@ -486,72 +485,72 @@ textarea:focus{
 
 
 /* =================================================
-   上傳總進度
+   上傳進度視窗
 ================================================= */
 
-.upload-progress{
+.upload-progress-screen{
+  position:fixed;
+  inset:0;
+  z-index:9000;
   display:none;
-  margin-top:10px;
-}
-
-.upload-progress.show{
-  display:block;
-}
-
-.upload-progress-top{
-  display:flex;
   align-items:center;
-  justify-content:space-between;
-  gap:10px;
+  justify-content:center;
+  padding:22px;
+  background:rgba(28,31,26,.52);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+}
+
+.upload-progress-screen.open{
+  display:flex;
+}
+
+.upload-progress-box{
+  width:100%;
+  max-width:360px;
+  background:#fff;
+  border-radius:16px;
+  padding:22px 20px 20px;
+  box-shadow:0 18px 50px rgba(0,0,0,.22);
+}
+
+.upload-progress-title{
+  font-size:17px;
+  font-weight:800;
+  text-align:center;
   margin-bottom:6px;
 }
 
-.upload-progress-text{
-  font-size:12px;
-  color:var(--muted);
-  min-width:0;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-
 .upload-progress-count{
-  flex-shrink:0;
-  font-size:12px;
-  font-weight:700;
-  color:var(--ink);
+  font-size:13px;
+  color:var(--muted);
+  text-align:center;
+  min-height:20px;
 }
 
 .upload-progress-track{
   width:100%;
-  height:7px;
-  border-radius:99px;
+  height:10px;
+  margin-top:17px;
+  border-radius:999px;
   overflow:hidden;
-  background:#dedbd0;
+  background:#e8e5dc;
 }
 
-.upload-progress-bar{
-  width:0%;
+.upload-progress-fill{
   height:100%;
-  border-radius:99px;
+  width:0%;
+  border-radius:999px;
   background:var(--accent);
-  transition:width .2s ease;
+  transition:width .18s ease;
 }
 
-.upload-progress.uploading .upload-progress-bar{
-  animation:uploadPulse 1.1s ease-in-out infinite;
-}
-
-@keyframes uploadPulse{
-  0%{
-    opacity:.65;
-  }
-  50%{
-    opacity:1;
-  }
-  100%{
-    opacity:.65;
-  }
+.upload-progress-text{
+  margin-top:11px;
+  text-align:center;
+  font-size:12px;
+  color:var(--muted);
+  min-height:18px;
 }
 
 
@@ -662,7 +661,7 @@ textarea:focus{
 
 .history-day-body{
   display:none;
-  padding:0 0 14px 0;
+  padding:0 0 14px;
 }
 
 .history-day.open .history-day-body{
@@ -743,19 +742,21 @@ textarea:focus{
 
 /* =================================================
    回報照片
+   4 格縮圖
 ================================================= */
 
 .report-photos{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(4,1fr);
   gap:6px;
   margin-top:10px;
 }
 
 .report-photo{
   position:relative;
+  width:100%;
   aspect-ratio:1;
-  border-radius:8px;
+  border-radius:7px;
   overflow:hidden;
   background:#eee;
   border:1px solid var(--line);
@@ -767,14 +768,6 @@ textarea:focus{
   height:100%;
   object-fit:cover;
   display:block;
-}
-
-.report-photo.loading{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#999;
-  font-size:10px;
 }
 
 .report-no-photo{
@@ -951,6 +944,7 @@ button.submit:disabled{
 
 </head>
 
+
 <body>
 
 
@@ -1008,7 +1002,9 @@ button.submit:disabled{
 
     <div class="brand-left">
 
-      <h1 data-i18n="title">
+      <h1
+        data-i18n="title"
+      >
         竹北托運 下貨回報
       </h1>
 
@@ -1020,6 +1016,7 @@ button.submit:disabled{
       </span>
 
     </div>
+
 
     <div class="top-actions">
 
@@ -1062,6 +1059,7 @@ button.submit:disabled{
         大車載入中…
       </button>
 
+
       <div
         class="truck-dropdown"
         id="truckDropdown"
@@ -1071,10 +1069,13 @@ button.submit:disabled{
           class="truck-list"
           id="truckList"
         >
+
           <div class="loading">
             大車資料載入中…
           </div>
+
         </div>
+
 
         <div class="truck-dropdown-footer">
 
@@ -1116,10 +1117,13 @@ button.submit:disabled{
       class="staff-grid"
       id="staffGrid"
     >
+
       <div class="loading">
         下貨人員資料載入中…
       </div>
+
     </div>
+
 
     <div
       id="lineMatchHint"
@@ -1192,52 +1196,18 @@ button.submit:disabled{
 
     </div>
 
+
     <div
       class="photo-grid"
       id="photoGrid"
     ></div>
+
 
     <div
       class="hint"
       data-i18n="photoHint"
     >
       至少上傳1張，可拍照或從相簿選取多張
-    </div>
-
-    <!-- 唯一一條總進度 -->
-
-    <div
-      class="upload-progress"
-      id="uploadProgress"
-    >
-
-      <div class="upload-progress-top">
-
-        <div
-          class="upload-progress-text"
-          id="uploadProgressText"
-        >
-          處理照片
-        </div>
-
-        <div
-          class="upload-progress-count"
-          id="uploadProgressCount"
-        >
-          0 / 0
-        </div>
-
-      </div>
-
-      <div class="upload-progress-track">
-
-        <div
-          class="upload-progress-bar"
-          id="uploadProgressBar"
-        ></div>
-
-      </div>
-
     </div>
 
   </fieldset>
@@ -1289,6 +1259,52 @@ button.submit:disabled{
 
 
 <!-- =================================================
+     上傳進度
+================================================= -->
+
+<div
+  class="upload-progress-screen"
+  id="uploadProgressScreen"
+>
+
+  <div class="upload-progress-box">
+
+    <div
+      class="upload-progress-title"
+      id="uploadProgressTitle"
+    >
+      處理照片
+    </div>
+
+    <div
+      class="upload-progress-count"
+      id="uploadProgressCount"
+    >
+      0 / 0
+    </div>
+
+    <div class="upload-progress-track">
+
+      <div
+        class="upload-progress-fill"
+        id="uploadProgressFill"
+      ></div>
+
+    </div>
+
+    <div
+      class="upload-progress-text"
+      id="uploadProgressText"
+    >
+      準備中…
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =================================================
      回報紀錄
 ================================================= -->
 
@@ -1316,7 +1332,10 @@ button.submit:disabled{
 
     </div>
 
-    <div id="historyContent">
+
+    <div
+      id="historyContent"
+    >
 
       <div class="history-loading">
         回報紀錄載入中…
@@ -1355,6 +1374,7 @@ button.submit:disabled{
       </button>
 
     </div>
+
 
     <div
       class="all-photo-grid"
@@ -1412,18 +1432,6 @@ const BACKEND_URL =
 let userName =
   "未知使用者";
 
-/*
- * 照片不再於選取時壓縮。
- *
- * 每一筆：
- * {
- *   file: 原始 File,
- *   previewUrl: 預覽用 Object URL
- * }
- *
- * 只有送出時才會壓縮成：
- * 1200px / JPEG / quality 0.72
- */
 let photos =
   [];
 
@@ -1546,11 +1554,17 @@ const translations = {
     processingPhoto:
       "處理照片",
 
-    uploading:
-      "照片處理中…",
+    uploadingPhoto:
+      "上傳照片",
 
-    uploadingReport:
-      "照片上傳中…",
+    writingReport:
+      "寫入回報",
+
+    preparing:
+      "準備中…",
+
+    processing:
+      "處理中…",
 
     sending:
       "正在送出回報…",
@@ -1643,9 +1657,6 @@ const translations = {
     historyLoading:
       "Đang tải lịch sử…",
 
-    today:
-      "Hôm nay",
-
     delete:
       "Xóa",
 
@@ -1654,9 +1665,6 @@ const translations = {
 
     deleting:
       "Đang xóa…",
-
-    deleted:
-      "Đã xóa",
 
     reportLoadError:
       "Không thể tải lịch sử báo cáo",
@@ -1670,11 +1678,17 @@ const translations = {
     processingPhoto:
       "Đang xử lý ảnh",
 
-    uploading:
-      "Đang xử lý ảnh…",
+    uploadingPhoto:
+      "Đang tải ảnh",
 
-    uploadingReport:
-      "Đang tải ảnh…",
+    writingReport:
+      "Đang lưu báo cáo",
+
+    preparing:
+      "Đang chuẩn bị…",
+
+    processing:
+      "Đang xử lý…",
 
     sending:
       "Đang gửi báo cáo…",
@@ -1707,10 +1721,6 @@ const translations = {
 
 };
 
-
-/* =================================================
-   套用語言
-================================================= */
 
 function t(key){
 
@@ -1765,7 +1775,9 @@ function applyLanguage(){
       "languageBtn"
     )
     .textContent =
-    t("languageName");
+    t(
+      "languageName"
+    );
 
 
   if(
@@ -1883,102 +1895,122 @@ function setStatus(
 
 
 /* =================================================
-   總進度條
+   上傳進度
 ================================================= */
 
-function showUploadProgress(
-  current,
-  total,
-  text,
-  percent,
-  uploading
-){
+function showUploadProgress(){
 
-  const progress =
-    document.getElementById(
-      "uploadProgress"
+  document
+    .getElementById(
+      "uploadProgressScreen"
+    )
+    .classList
+    .add(
+      "open"
     );
 
-  const progressText =
-    document.getElementById(
-      "uploadProgressText"
-    );
-
-  const progressCount =
-    document.getElementById(
-      "uploadProgressCount"
-    );
-
-  const progressBar =
-    document.getElementById(
-      "uploadProgressBar"
-    );
-
-
-  progress.classList.add(
-    "show"
+  document.body.classList.add(
+    "uploading"
   );
-
-
-  if(uploading){
-
-    progress.classList.add(
-      "uploading"
-    );
-
-  }else{
-
-    progress.classList.remove(
-      "uploading"
-    );
-
-  }
-
-
-  progressText.textContent =
-    text;
-
-
-  progressCount.textContent =
-    current +
-    " / " +
-    total;
-
-
-  progressBar.style.width =
-    Math.max(
-      0,
-      Math.min(
-        100,
-        percent
-      )
-    ) +
-    "%";
 
 }
 
 
 function hideUploadProgress(){
 
-  const progress =
-    document.getElementById(
-      "uploadProgress"
+  document
+    .getElementById(
+      "uploadProgressScreen"
+    )
+    .classList
+    .remove(
+      "open"
     );
 
-
-  progress.classList.remove(
-    "show",
+  document.body.classList.remove(
     "uploading"
   );
 
+}
 
-  document
-    .getElementById(
-      "uploadProgressBar"
-    )
-    .style
-    .width =
-    "0%";
+
+function updateUploadProgress(
+  title,
+  current,
+  total,
+  text
+){
+
+  const titleEl =
+    document.getElementById(
+      "uploadProgressTitle"
+    );
+
+  const countEl =
+    document.getElementById(
+      "uploadProgressCount"
+    );
+
+  const fillEl =
+    document.getElementById(
+      "uploadProgressFill"
+    );
+
+  const textEl =
+    document.getElementById(
+      "uploadProgressText"
+    );
+
+
+  titleEl.textContent =
+    title;
+
+
+  countEl.textContent =
+    total > 0
+      ? current +
+        " / " +
+        total
+      : "";
+
+
+  const percent =
+    total > 0
+      ? Math.min(
+          100,
+          Math.max(
+            0,
+            (
+              current /
+              total
+            ) *
+            100
+          )
+        )
+      : 0;
+
+
+  fillEl.style.width =
+    percent +
+    "%";
+
+
+  textEl.textContent =
+    text ||
+    "";
+
+}
+
+
+function updateUploadProgressFinal(){
+
+  const fill =
+    document.getElementById(
+      "uploadProgressFill"
+    );
+
+  fill.style.width =
+    "100%";
 
 }
 
@@ -1992,10 +2024,8 @@ async function initLIFF(){
   try{
 
     await liff.init({
-
       liffId:
         LIFF_ID
-
     });
 
 
@@ -2063,7 +2093,7 @@ async function initLIFF(){
 
 
 /* =================================================
-   GET 後端
+   GET
 ================================================= */
 
 async function getBackend(
@@ -2217,7 +2247,9 @@ async function loadSystemData(){
 
 
     setStatus(
-      t("connectionFail") +
+      t(
+        "connectionFail"
+      ) +
       (
         error.message ||
         error
@@ -2372,13 +2404,8 @@ function sortedTrucks(){
       ){
 
         return {
-
-          truck:
-            truck,
-
-          originalIndex:
-            index
-
+          truck:truck,
+          originalIndex:index
         };
 
       }
@@ -2572,10 +2599,8 @@ function renderTrucks(){
       checkbox.type =
         "checkbox";
 
-
       checkbox.value =
         truck.name;
-
 
       checkbox.checked =
         checked;
@@ -2617,7 +2642,6 @@ function renderTrucks(){
       name.className =
         "truck-name";
 
-
       name.textContent =
         truck.name;
 
@@ -2625,7 +2649,6 @@ function renderTrucks(){
       label.appendChild(
         checkbox
       );
-
 
       label.appendChild(
         name
@@ -2645,7 +2668,6 @@ function renderTrucks(){
 
         staffTag.className =
           "used-staff";
-
 
         staffTag.textContent =
           usage.staff;
@@ -2777,7 +2799,6 @@ function renderStaff(){
       checkbox.type =
         "checkbox";
 
-
       checkbox.value =
         staff.name;
 
@@ -2809,11 +2830,9 @@ function renderStaff(){
         checkbox
       );
 
-
       label.appendChild(
         span
       );
-
 
       grid.appendChild(
         label
@@ -2952,7 +2971,9 @@ function autoMatchLineStaff(){
 
 
   hint.textContent =
-    t("lineMatch")
+    t(
+      "lineMatch"
+    )
       .replace(
         "{user}",
         userName
@@ -3113,202 +3134,7 @@ document
 
 
 /* =================================================
-   圖片選取
- *
- * 這裡不壓縮。
- *
- * 只保存：
- * 1. 原始 File
- * 2. 預覽用 Object URL
- *
- * 真正的 1200px / 72% 壓縮
- * 發生在按下「送出回報」之後。
-================================================= */
-
-document
-  .getElementById(
-    "photoInput"
-  )
-  .addEventListener(
-    "change",
-    function(event){
-
-      const files =
-        [
-          ...event.target.files
-        ];
-
-
-      if(
-        files.length === 0
-      ){
-
-        return;
-
-      }
-
-
-      files.forEach(
-        function(file){
-
-          if(
-            !file.type.startsWith(
-              "image/"
-            )
-          ){
-
-            return;
-
-          }
-
-
-          photos.push({
-
-            file:
-              file,
-
-            previewUrl:
-              URL.createObjectURL(
-                file
-              )
-
-          });
-
-        }
-      );
-
-
-      renderPhotoGrid();
-
-
-      event.target.value =
-        "";
-
-    }
-  );
-
-
-/* =================================================
-   照片縮圖
-================================================= */
-
-function renderPhotoGrid(){
-
-  const grid =
-    document.getElementById(
-      "photoGrid"
-    );
-
-
-  grid.innerHTML =
-    "";
-
-
-  photos.forEach(
-    function(photo,index){
-
-      const div =
-        document.createElement(
-          "div"
-        );
-
-
-      div.className =
-        "thumb";
-
-
-      const img =
-        document.createElement(
-          "img"
-        );
-
-
-      img.src =
-        photo.previewUrl;
-
-
-      const remove =
-        document.createElement(
-          "button"
-        );
-
-
-      remove.className =
-        "rm";
-
-
-      remove.type =
-        "button";
-
-
-      remove.textContent =
-        "✕";
-
-
-      remove.disabled =
-        isSubmitting;
-
-
-      remove.addEventListener(
-        "click",
-        function(){
-
-          if(isSubmitting){
-            return;
-          }
-
-
-          const removed =
-            photos.splice(
-              index,
-              1
-            )[0];
-
-
-          if(
-            removed &&
-            removed.previewUrl
-          ){
-
-            URL.revokeObjectURL(
-              removed.previewUrl
-            );
-
-          }
-
-
-          renderPhotoGrid();
-
-        }
-      );
-
-
-      div.appendChild(
-        img
-      );
-
-
-      div.appendChild(
-        remove
-      );
-
-
-      grid.appendChild(
-        div
-      );
-
-    }
-  );
-
-}
-
-
-/* =================================================
    圖片壓縮
- *
- * 1200px
- * JPEG
- * Quality 72%
 ================================================= */
 
 function compressImage(
@@ -3349,22 +3175,16 @@ function compressImage(
 
 
               canvas.width =
-                Math.max(
-                  1,
-                  Math.round(
-                    img.width *
-                    scale
-                  )
+                Math.round(
+                  img.width *
+                  scale
                 );
 
 
               canvas.height =
-                Math.max(
-                  1,
-                  Math.round(
-                    img.height *
-                    scale
-                  )
+                Math.round(
+                  img.height *
+                  scale
                 );
 
 
@@ -3383,30 +3203,18 @@ function compressImage(
               );
 
 
-              const dataUrl =
+              resolve(
                 canvas.toDataURL(
                   "image/jpeg",
                   quality
-                );
-
-
-              resolve(
-                dataUrl
+                )
               );
 
             };
 
 
           img.onerror =
-            function(){
-
-              reject(
-                new Error(
-                  "圖片讀取失敗"
-                )
-              );
-
-            };
+            reject;
 
 
           img.src =
@@ -3416,15 +3224,7 @@ function compressImage(
 
 
       reader.onerror =
-        function(){
-
-          reject(
-            new Error(
-              "圖片檔案讀取失敗"
-            )
-          );
-
-        };
+        reject;
 
 
       reader.readAsDataURL(
@@ -3435,6 +3235,239 @@ function compressImage(
   );
 
 }
+
+
+/* =================================================
+   照片
+================================================= */
+
+function renderPhotoGrid(){
+
+  const grid =
+    document.getElementById(
+      "photoGrid"
+    );
+
+
+  grid.innerHTML =
+    "";
+
+
+  photos.forEach(
+    function(photo,index){
+
+      const div =
+        document.createElement(
+          "div"
+        );
+
+
+      div.className =
+        "thumb";
+
+
+      const img =
+        document.createElement(
+          "img"
+        );
+
+
+      img.src =
+        photo;
+
+
+      const remove =
+        document.createElement(
+          "button"
+        );
+
+
+      remove.className =
+        "rm";
+
+      remove.type =
+        "button";
+
+      remove.textContent =
+        "✕";
+
+
+      remove.disabled =
+        isSubmitting;
+
+
+      remove.addEventListener(
+        "click",
+        function(){
+
+          if(isSubmitting){
+            return;
+          }
+
+
+          photos.splice(
+            index,
+            1
+          );
+
+
+          renderPhotoGrid();
+
+        }
+      );
+
+
+      div.appendChild(
+        img
+      );
+
+      div.appendChild(
+        remove
+      );
+
+      grid.appendChild(
+        div
+      );
+
+    }
+  );
+
+}
+
+
+/* =================================================
+   選照片
+================================================= */
+
+document
+  .getElementById(
+    "photoInput"
+  )
+  .addEventListener(
+    "change",
+    async function(event){
+
+      if(isSubmitting){
+        event.target.value = "";
+        return;
+      }
+
+
+      const files =
+        [
+          ...event.target.files
+        ];
+
+
+      if(
+        files.length === 0
+      ){
+
+        return;
+
+      }
+
+
+      try{
+
+        const imageFiles =
+          files.filter(
+            function(file){
+
+              return file.type.startsWith(
+                "image/"
+              );
+
+            }
+          );
+
+
+        const total =
+          imageFiles.length;
+
+
+        if(total === 0){
+          return;
+        }
+
+
+        for(
+          let i = 0;
+          i < total;
+          i++
+        ){
+
+          updateUploadProgress(
+            t("processingPhoto"),
+            i,
+            total,
+            t("processing")
+          );
+
+
+          showUploadProgress();
+
+
+          const dataUrl =
+            await compressImage(
+              imageFiles[i],
+              1200,
+              0.72
+            );
+
+
+          photos.push(
+            dataUrl
+          );
+
+
+          updateUploadProgress(
+            t("processingPhoto"),
+            i + 1,
+            total,
+            t("processing")
+          );
+
+        }
+
+
+        renderPhotoGrid();
+
+
+        hideUploadProgress();
+
+
+        setStatus(
+          "",
+          ""
+        );
+
+
+      }catch(error){
+
+        console.error(
+          error
+        );
+
+
+        hideUploadProgress();
+
+
+        setStatus(
+          t(
+            "uploadFail"
+          ),
+          "err"
+        );
+
+      }
+
+
+      event.target.value =
+        "";
+
+    }
+  );
 
 
 /* =================================================
@@ -3565,6 +3598,14 @@ function setSubmittingState(
 
   document
     .getElementById(
+      "truckSelectButton"
+    )
+    .disabled =
+    locked;
+
+
+  document
+    .getElementById(
       "photoInput"
     )
     .disabled =
@@ -3573,42 +3614,25 @@ function setSubmittingState(
 
   document
     .querySelectorAll(
-      ".truck-select-button, .truck-option input, .truck-dropdown-footer button, #qtySeg button, #staffGrid input, .thumb .rm"
+      "#staffGrid input, #qtySeg button, #truckList input, #truckClearBtn, #truckDoneBtn"
     )
     .forEach(
-      function(element){
+      function(el){
 
-        element.disabled =
+        el.disabled =
           locked;
 
       }
     );
 
 
-  if(locked){
-
-    renderPhotoGrid();
-
-  }
+  renderPhotoGrid();
 
 }
 
 
 /* =================================================
    送出
- *
- * 重要：
- *
- * photos 裡面仍然是原始 File。
- *
- * 送出時：
- *
- * 1. 總數 = 照片數
- * 2. 每一張逐張壓縮成 1200px / 72%
- * 3. 每完成一張更新同一條進度條
- * 4. 全部完成後一次送給 Apps Script
- * 5. Apps Script 成功才清除照片
- * 6. 失敗不清除照片
 ================================================= */
 
 document
@@ -3660,7 +3684,9 @@ document
       ){
 
         setStatus(
-          t("needTruck"),
+          t(
+            "needTruck"
+          ),
           "err"
         );
 
@@ -3674,7 +3700,9 @@ document
       ){
 
         setStatus(
-          t("needStaff"),
+          t(
+            "needStaff"
+          ),
           "err"
         );
 
@@ -3688,7 +3716,9 @@ document
       ){
 
         setStatus(
-          t("needPhoto"),
+          t(
+            "needPhoto"
+          ),
           "err"
         );
 
@@ -3697,129 +3727,99 @@ document
       }
 
 
-      /*
-       * 從這裡開始鎖定。
-       *
-       * 員工不能重複按送出。
-       */
+      const submitPhotos =
+        photos.slice();
+
 
       setSubmittingState(
         true
       );
 
 
+      showUploadProgress();
+
+
       const total =
-        photos.length;
-
-
-      const compressedPhotos =
-        [];
+        submitPhotos.length;
 
 
       try{
 
         /*
-         * ==========================================
-         * 階段 1：逐張處理照片
-         * ==========================================
+         * 第一階段：
+         * 照片已經在選取時壓縮成
+         * 1200px / 72%
          *
-         * 進度條只有一條。
-         *
-         * 例如 6 張：
-         *
-         * 處理照片 1 / 6
-         * 處理照片 2 / 6
-         * ...
-         * 處理照片 6 / 6
+         * 這裡只顯示總進度，
+         * 不另外做第二條進度。
          */
+
+        updateUploadProgress(
+          t("uploadingPhoto"),
+          0,
+          total,
+          t("preparing")
+        );
+
+
+        /*
+         * 這裡逐張建立送出資料。
+         * 照片本身已經是壓縮後 JPEG。
+         */
+
+        const processedPhotos =
+          [];
+
 
         for(
           let i = 0;
-          i < photos.length;
+          i < submitPhotos.length;
           i++
         ){
 
-          const photo =
-            photos[i];
-
-
-          const current =
-            i + 1;
-
-
-          showUploadProgress(
-            current,
+          updateUploadProgress(
+            t("uploadingPhoto"),
+            i,
             total,
-            t("processingPhoto"),
-            (
-              current /
-              total
-            ) *
-            90,
-            false
+            t("processing")
           );
 
 
-          const compressed =
-            await compressImage(
-              photo.file,
-              1200,
-              0.72
-            );
-
-
-          compressedPhotos.push(
-            compressed
+          processedPhotos.push(
+            submitPhotos[i]
           );
 
 
           /*
-           * 讓瀏覽器有機會更新畫面，
-           * 確保進度條真的會看到變化。
+           * 讓畫面有機會更新進度
            */
 
           await new Promise(
             function(resolve){
-
-              setTimeout(
-                resolve,
-                20
+              requestAnimationFrame(
+                resolve
               );
-
             }
+          );
+
+
+          updateUploadProgress(
+            t("uploadingPhoto"),
+            i + 1,
+            total,
+            t("sending")
           );
 
         }
 
 
         /*
-         * ==========================================
-         * 階段 2：送到 Apps Script
-         * ==========================================
+         * 第二階段：
+         * 實際送給 Apps Script。
          *
-         * 這裡維持你原本後端一次 POST 的架構。
-         *
-         * 因此不能假裝每一張都各自完成 HTTP upload。
-         *
-         * 進度條會從照片處理完成後進入
-         * 「照片上傳中…」，
-         * 等真正的 POST 成功後直接到 100%。
+         * Apps Script 收到的 photos
+         * 就是前面已壓縮好的 1200px JPEG。
          */
-
-        showUploadProgress(
-          total,
-          total,
-          t("uploadingReport"),
-          95,
-          true
-        );
-
-
-        setStatus(
-          t("sending"),
-          ""
-        );
-
 
         const payload = {
 
@@ -3840,20 +3840,18 @@ document
           note:
             note,
 
-          /*
-           * 這裡傳出去的全部都是：
-           *
-           * JPEG
-           * 最寬 1200px
-           * quality 0.72
-           *
-           * 不會把原始 File 傳給 Google Drive。
-           */
-
           photos:
-            compressedPhotos
+            processedPhotos
 
         };
+
+
+        updateUploadProgress(
+          t("writingReport"),
+          total,
+          total,
+          t("sending")
+        );
 
 
         const result =
@@ -3867,29 +3865,48 @@ document
         );
 
 
-        /*
-         * ==========================================
-         * 真正成功
-         * ==========================================
-         */
+        updateUploadProgressFinal();
 
-        showUploadProgress(
-          total,
-          total,
-          t("success"),
-          100,
-          false
-        );
+
+        document
+          .getElementById(
+            "uploadProgressTitle"
+          )
+          .textContent =
+          t(
+            "success"
+          );
+
+
+        document
+          .getElementById(
+            "uploadProgressCount"
+          )
+          .textContent =
+          "";
+
+
+        document
+          .getElementById(
+            "uploadProgressText"
+          )
+          .textContent =
+          t(
+            "success"
+          );
 
 
         setStatus(
-          t("success"),
+          t(
+            "success"
+          ),
           "ok"
         );
 
 
         /*
-         * 只有成功才更新最後使用紀錄。
+         * 只有 POST 真正成功後
+         * 才清除照片與表單。
          */
 
         trucks.forEach(
@@ -3911,37 +3928,13 @@ document
         );
 
 
-        /*
-         * 只有成功才清除照片。
-         */
-
-        photos.forEach(
-          function(photo){
-
-            if(
-              photo.previewUrl
-            ){
-
-              URL.revokeObjectURL(
-                photo.previewUrl
-              );
-
-            }
-
-          }
-        );
-
-
-        photos =
-          [];
-
-
-        renderPhotoGrid();
-
-
         selectedTrucks.clear();
 
+        photos = [];
+
         renderTrucks();
+
+        renderPhotoGrid();
 
 
         document
@@ -4026,7 +4019,8 @@ document
 
 
         /*
-         * 成功後重新整理回報紀錄。
+         * 如果回報紀錄目前開著，
+         * 成功後重新載入。
          */
 
         if(
@@ -4046,8 +4040,24 @@ document
 
 
         /*
-         * 顯示完成後才解鎖。
+         * 成功畫面停留一下，
+         * 讓員工確實看到「完成」。
          */
+
+        await new Promise(
+          function(resolve){
+
+            setTimeout(
+              resolve,
+              900
+            );
+
+          }
+        );
+
+
+        hideUploadProgress();
+
 
         setSubmittingState(
           false
@@ -4055,22 +4065,7 @@ document
 
 
         /*
-         * 進度條留著短暫顯示 100%，
-         * 然後關閉。
-         */
-
-        setTimeout(
-          function(){
-
-            hideUploadProgress();
-
-          },
-          1200
-        );
-
-
-        /*
-         * LIFF 成功後關閉視窗。
+         * LIFF 環境才關閉。
          */
 
         setTimeout(
@@ -4096,7 +4091,7 @@ document
             }
 
           },
-          1500
+          500
         );
 
 
@@ -4108,17 +4103,18 @@ document
 
 
         /*
-         * ==========================================
-         * 失敗
-         * ==========================================
-         *
-         * 最重要：
-         *
-         * photos 完全不動。
-         *
-         * 所以原始照片仍然留在畫面上，
-         * 使用者可以直接重新按「送出回報」。
+         * 失敗：
+         * 不清除 photos。
+         * 使用者可以直接重新送。
          */
+
+        hideUploadProgress();
+
+
+        setSubmittingState(
+          false
+        );
+
 
         setStatus(
           "❌ " +
@@ -4127,29 +4123,6 @@ document
             error
           ),
           "err"
-        );
-
-
-        /*
-         * 進度條顯示失敗，
-         * 不清除照片。
-         */
-
-        showUploadProgress(
-          0,
-          total,
-          t("uploadFail"),
-          0,
-          false
-        );
-
-
-        /*
-         * 解鎖。
-         */
-
-        setSubmittingState(
-          false
         );
 
       }
@@ -4500,11 +4473,9 @@ function renderHistory(){
         arrow
       );
 
-
       head.appendChild(
         dateText
       );
-
 
       head.appendChild(
         allPhotoBtn
@@ -4549,7 +4520,6 @@ function renderHistory(){
       day.appendChild(
         head
       );
-
 
       day.appendChild(
         body
@@ -4721,12 +4691,10 @@ function createReportCard(
 
 
   /*
-   * 回報照片：
-   *
-   * 仍然只載入縮圖 URL。
-   *
-   * loading="lazy"
-   * 不會一進回報紀錄就把全部照片原圖抓下來。
+   * 照片：
+   * 固定 4 格縮圖。
+   * 不直接顯示原圖尺寸。
+   * 點擊才放大。
    */
 
   if(
@@ -4768,14 +4736,8 @@ function createReportCard(
         img.src =
           photo.url;
 
-
         img.loading =
           "lazy";
-
-
-        img.decoding =
-          "async";
-
 
         img.alt =
           photo.name ||
@@ -5120,13 +5082,8 @@ function showAllDayPhotos(
           img.src =
             photo.url;
 
-
           img.loading =
             "lazy";
-
-
-          img.decoding =
-            "async";
 
 
           img.addEventListener(
@@ -5292,10 +5249,6 @@ document
 ================================================= */
 
 async function init(){
-
-  /*
-   * 第一次進入才要求選語言
-   */
 
   if(
     !currentLanguage
