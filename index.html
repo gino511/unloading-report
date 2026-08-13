@@ -48,7 +48,6 @@ body{
 
   background:var(--paper);
   color:var(--ink);
-
   -webkit-tap-highlight-color:transparent;
 }
 
@@ -89,25 +88,22 @@ textarea{
 .brand h1{
   margin:0;
   font-size:19px;
-  letter-spacing:.02em;
 }
 
-.brand .who{
+.who{
   display:block;
   margin-top:5px;
   max-width:160px;
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
-  font-size:12px;
   color:var(--muted);
+  font-size:12px;
 }
 
 .top-actions{
   display:flex;
-  align-items:center;
   gap:6px;
-  flex-shrink:0;
 }
 
 .top-btn{
@@ -117,11 +113,6 @@ textarea{
   background:#fff;
   color:var(--ink);
   font-size:12px;
-  white-space:nowrap;
-}
-
-.top-btn:active{
-  transform:scale(.97);
 }
 
 
@@ -152,13 +143,10 @@ textarea{
 
 .language-box h2{
   margin:0 0 8px;
-  font-size:23px;
 }
 
 .language-box p{
-  margin:0 0 24px;
   color:var(--muted);
-  font-size:13px;
 }
 
 .language-options{
@@ -167,18 +155,12 @@ textarea{
 }
 
 .language-option{
-  width:100%;
   padding:16px;
   border:1.5px solid var(--line);
   border-radius:12px;
   background:#fff;
-  color:var(--ink);
   font-size:16px;
   font-weight:700;
-}
-
-.language-option:active{
-  background:var(--accent-dim);
 }
 
 
@@ -221,36 +203,26 @@ legend{
   font-size:16px;
 }
 
-.truck-select-button:active{
-  background:#faf9f5;
-}
-
 .truck-arrow{
   position:absolute;
   right:14px;
   top:50%;
-  width:18px;
-  height:18px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   transform:translateY(-50%);
-  color:#8a8879;
+  width:16px;
+  height:16px;
   pointer-events:none;
-  transition:transform .2s ease;
+  transition:.2s;
 }
 
 .truck-arrow svg{
-  width:14px;
-  height:14px;
+  width:100%;
+  height:100%;
 }
 
 .truck-select-wrap.open .truck-arrow{
   transform:
     translateY(-50%)
     rotate(180deg);
-
-  color:var(--accent);
 }
 
 .truck-dropdown{
@@ -282,11 +254,6 @@ legend{
   gap:10px;
   padding:13px 14px;
   border-bottom:1px solid #eee;
-  font-size:15px;
-}
-
-.truck-option:last-child{
-  border-bottom:none;
 }
 
 .truck-option input{
@@ -296,11 +263,11 @@ legend{
 }
 
 .truck-option.used{
-  background:#f5f4ef;
+  background:#f1efe8;
 }
 
 .truck-option.used .truck-name{
-  color:#888679;
+  color:#99968a;
 }
 
 .used-staff{
@@ -311,8 +278,8 @@ legend{
   white-space:nowrap;
   padding:3px 7px;
   border-radius:20px;
-  background:#e9e7df;
-  color:#6f6d62;
+  background:#e7e4dc;
+  color:#747166;
   font-size:11px;
 }
 
@@ -321,7 +288,6 @@ legend{
   gap:8px;
   padding:10px;
   border-top:1px solid var(--line);
-  background:#faf9f5;
 }
 
 .truck-dropdown-footer button{
@@ -330,10 +296,9 @@ legend{
   border:1px solid var(--line);
   border-radius:8px;
   background:#fff;
-  font-size:14px;
 }
 
-.truck-dropdown-footer button.primary{
+.truck-dropdown-footer .primary{
   border-color:var(--ink);
   background:var(--ink);
   color:#fff;
@@ -341,7 +306,7 @@ legend{
 
 
 /* =================================================
-   下貨人員
+   人員
 ================================================= */
 
 .staff-grid{
@@ -358,7 +323,6 @@ legend{
   border:1.5px solid var(--line);
   border-radius:10px;
   background:#fff;
-  font-size:15px;
 }
 
 .staff-item input{
@@ -379,7 +343,6 @@ legend{
   background:var(--accent-dim);
   color:var(--accent);
   font-size:12px;
-  line-height:1.5;
 }
 
 
@@ -399,7 +362,6 @@ legend{
   border-radius:10px;
   background:#fff;
   color:var(--ink);
-  font-size:15px;
   font-weight:700;
 }
 
@@ -420,23 +382,6 @@ legend{
    照片
 ================================================= */
 
-textarea{
-  width:100%;
-  min-height:80px;
-  padding:12px;
-  border:1.5px solid var(--line);
-  border-radius:10px;
-  background:#fff;
-  color:var(--ink);
-  font-size:16px;
-  resize:vertical;
-}
-
-textarea:focus{
-  outline:none;
-  border-color:var(--accent);
-}
-
 .photo-upload{
   position:relative;
   padding:18px;
@@ -447,7 +392,7 @@ textarea:focus{
   text-align:center;
 }
 
-.photo-upload span.icon{
+.photo-upload .icon{
   display:block;
   margin-bottom:6px;
   font-size:30px;
@@ -457,7 +402,6 @@ textarea:focus{
   position:absolute;
   inset:0;
   opacity:0;
-  cursor:pointer;
 }
 
 .photo-grid{
@@ -471,9 +415,7 @@ textarea:focus{
   position:relative;
   aspect-ratio:1;
   overflow:hidden;
-  border:1px solid var(--line);
   border-radius:8px;
-  background:#eee;
 }
 
 .thumb img{
@@ -489,25 +431,31 @@ textarea:focus{
   right:3px;
   width:24px;
   height:24px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   border:none;
   border-radius:50%;
   background:rgba(0,0,0,.65);
   color:#fff;
-  font-size:13px;
 }
 
 .hint{
   margin-top:6px;
-  color:#9a988c;
+  color:#99968a;
   font-size:12px;
+}
+
+textarea{
+  width:100%;
+  min-height:80px;
+  padding:12px;
+  border:1.5px solid var(--line);
+  border-radius:10px;
+  background:#fff;
+  font-size:16px;
 }
 
 
 /* =================================================
-   進度視窗
+   進度
 ================================================= */
 
 .upload-progress-screen{
@@ -520,7 +468,6 @@ textarea:focus{
   padding:12vh 22px 22px;
   background:rgba(28,31,26,.52);
   backdrop-filter:blur(4px);
-  -webkit-backdrop-filter:blur(4px);
 }
 
 .upload-progress-screen.open{
@@ -530,7 +477,7 @@ textarea:focus{
 .upload-progress-box{
   width:100%;
   max-width:360px;
-  padding:22px 20px 20px;
+  padding:22px 20px;
   border-radius:16px;
   background:#fff;
   box-shadow:0 18px 50px rgba(0,0,0,.22);
@@ -563,21 +510,18 @@ textarea:focus{
 }
 
 .upload-progress-title{
-  margin-bottom:6px;
-  font-size:17px;
   font-weight:800;
   text-align:center;
 }
 
 .upload-progress-count{
-  min-height:20px;
+  margin-top:5px;
   color:var(--muted);
   font-size:13px;
   text-align:center;
 }
 
 .upload-progress-track{
-  width:100%;
   height:10px;
   margin-top:17px;
   overflow:hidden;
@@ -586,15 +530,14 @@ textarea:focus{
 }
 
 .upload-progress-fill{
-  width:0%;
+  width:0;
   height:100%;
   border-radius:999px;
   background:var(--accent);
-  transition:width .25s ease;
+  transition:width .25s;
 }
 
 .upload-progress-text{
-  min-height:18px;
   margin-top:11px;
   color:var(--muted);
   font-size:12px;
@@ -636,7 +579,6 @@ textarea:focus{
 
 .history-header h2{
   margin:0;
-  font-size:19px;
 }
 
 .history-close{
@@ -644,28 +586,33 @@ textarea:focus{
   border:1px solid var(--line);
   border-radius:9px;
   background:#fff;
-  font-size:13px;
 }
 
 .history-loading,
 .history-empty{
   padding:30px 0;
   color:var(--muted);
-  font-size:14px;
   text-align:center;
 }
 
 .history-day{
-  margin-bottom:8px;
   border-bottom:1px solid var(--line);
 }
 
 .history-day-head{
-  width:100%;
   display:flex;
   align-items:center;
   gap:8px;
+  width:100%;
   padding:14px 0;
+}
+
+.history-toggle{
+  flex:1;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:0;
   border:none;
   background:transparent;
   color:var(--ink);
@@ -674,8 +621,7 @@ textarea:focus{
 
 .history-arrow{
   width:22px;
-  font-size:16px;
-  transition:transform .2s ease;
+  transition:.2s;
 }
 
 .history-day.open .history-arrow{
@@ -688,13 +634,11 @@ textarea:focus{
 }
 
 .history-photo-all{
-  margin-left:auto;
   padding:7px 9px;
   border:1px solid var(--line);
   border-radius:8px;
   background:#fff;
   font-size:11px;
-  white-space:nowrap;
 }
 
 .history-day-body{
@@ -706,9 +650,15 @@ textarea:focus{
   display:block;
 }
 
+.day-loading{
+  padding:18px;
+  color:var(--muted);
+  text-align:center;
+}
+
 
 /* =================================================
-   回報卡片
+   卡片
 ================================================= */
 
 .report-card{
@@ -723,26 +673,24 @@ textarea:focus{
   display:flex;
   align-items:center;
   gap:8px;
-  min-width:0;
 }
 
 .report-truck{
   min-width:0;
   overflow:hidden;
-  font-size:20px;
-  font-weight:900;
-  line-height:1.15;
   text-overflow:ellipsis;
   white-space:nowrap;
+  font-size:20px;
+  font-weight:900;
 }
 
 .report-staff{
   min-width:0;
   overflow:hidden;
-  color:#555;
-  font-size:13px;
   text-overflow:ellipsis;
   white-space:nowrap;
+  color:#555;
+  font-size:13px;
 }
 
 .report-status{
@@ -750,7 +698,6 @@ textarea:focus{
   flex-shrink:0;
   font-size:12px;
   font-weight:800;
-  white-space:nowrap;
 }
 
 .report-status.ok{
@@ -763,7 +710,7 @@ textarea:focus{
 
 .report-time{
   margin-top:6px;
-  color:#9a988c;
+  color:#99968a;
   font-size:11px;
 }
 
@@ -773,31 +720,25 @@ textarea:focus{
   border-radius:8px;
   background:#f7f5ef;
   font-size:12px;
-  line-height:1.5;
 }
 
 
 /* =================================================
-   回報紀錄照片
-   四格、無框、直接填滿
+   四格縮圖
+   無框、填滿
 ================================================= */
 
 .report-photos{
   display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
+  grid-template-columns:repeat(4,1fr);
   gap:6px;
   margin-top:10px;
 }
 
 .report-photo{
-  position:relative;
-  width:100%;
   aspect-ratio:1;
   overflow:hidden;
-  border:none;
   border-radius:7px;
-  background:transparent;
-  cursor:pointer;
 }
 
 .report-photo img{
@@ -807,33 +748,17 @@ textarea:focus{
   object-fit:cover;
 }
 
-.report-no-photo{
-  margin-top:8px;
-  color:#aaa;
-  font-size:11px;
-}
-
-
-/* =================================================
-   回報人與刪除
-================================================= */
-
 .report-footer{
   display:flex;
   align-items:center;
-  gap:8px;
   margin-top:10px;
-  padding-top:9px;
+  padding-top:8px;
   border-top:1px solid #eee;
 }
 
 .report-employee{
-  min-width:0;
-  overflow:hidden;
   color:#8a8879;
   font-size:11px;
-  text-overflow:ellipsis;
-  white-space:nowrap;
 }
 
 .report-delete{
@@ -849,7 +774,7 @@ textarea:focus{
 
 /* =================================================
    當日全部照片
-   三格、無框、直接填滿
+   三格
 ================================================= */
 
 .all-photo-screen{
@@ -879,11 +804,6 @@ textarea:focus{
   color:#fff;
 }
 
-.all-photo-head h3{
-  margin:0;
-  font-size:18px;
-}
-
 .all-photo-close{
   padding:7px 10px;
   border:1px solid rgba(255,255,255,.25);
@@ -894,19 +814,14 @@ textarea:focus{
 
 .all-photo-grid{
   display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-template-columns:repeat(3,1fr);
   gap:6px;
 }
 
 .all-photo-item{
-  position:relative;
-  width:100%;
   aspect-ratio:1;
   overflow:hidden;
-  border:none;
   border-radius:7px;
-  background:transparent;
-  cursor:pointer;
 }
 
 .all-photo-item img{
@@ -918,7 +833,7 @@ textarea:focus{
 
 
 /* =================================================
-   圖片放大
+   放大
 ================================================= */
 
 .lightbox{
@@ -952,7 +867,6 @@ textarea:focus{
   border-radius:50%;
   background:rgba(255,255,255,.1);
   color:#fff;
-  font-size:20px;
 }
 
 
@@ -966,8 +880,7 @@ textarea:focus{
   right:0;
   bottom:0;
   padding:
-    12px
-    18px
+    12px 18px
     calc(
       12px +
       env(safe-area-inset-bottom)
@@ -981,9 +894,9 @@ textarea:focus{
   margin:0 auto;
 }
 
-button.submit{
+.submit{
   width:100%;
-  padding:15px 0;
+  padding:15px;
   border:none;
   border-radius:12px;
   background:var(--ink);
@@ -992,8 +905,8 @@ button.submit{
   font-weight:700;
 }
 
-button.submit:disabled{
-  background:#a3a091;
+.submit:disabled{
+  background:#aaa79a;
 }
 
 .status{
@@ -1015,7 +928,6 @@ button.submit:disabled{
 .loading{
   padding:18px;
   color:var(--muted);
-  font-size:14px;
   text-align:center;
 }
 
@@ -1027,10 +939,6 @@ button.submit:disabled{
 <body>
 
 
-<!-- =================================================
-     語言
-================================================= -->
-
 <div
   class="language-screen"
   id="languageScreen"
@@ -1038,18 +946,13 @@ button.submit:disabled{
 
   <div class="language-box">
 
-    <h2>
-      選擇語言
-    </h2>
+    <h2>選擇語言</h2>
 
-    <p>
-      Choose your language
-    </p>
+    <p>Choose your language</p>
 
     <div class="language-options">
 
       <button
-        type="button"
         class="language-option"
         data-lang="zh"
       >
@@ -1057,7 +960,6 @@ button.submit:disabled{
       </button>
 
       <button
-        type="button"
         class="language-option"
         data-lang="vi"
       >
@@ -1070,10 +972,6 @@ button.submit:disabled{
 
 </div>
 
-
-<!-- =================================================
-     主畫面
-================================================= -->
 
 <div class="wrap">
 
@@ -1094,11 +992,9 @@ button.submit:disabled{
 
     </div>
 
-
     <div class="top-actions">
 
       <button
-        type="button"
         class="top-btn"
         id="historyBtn"
       >
@@ -1106,7 +1002,6 @@ button.submit:disabled{
       </button>
 
       <button
-        type="button"
         class="top-btn"
         id="languageBtn"
       >
@@ -1117,8 +1012,6 @@ button.submit:disabled{
 
   </div>
 
-
-  <!-- 大車 -->
 
   <fieldset>
 
@@ -1132,7 +1025,6 @@ button.submit:disabled{
     >
 
       <button
-        type="button"
         class="truck-select-button"
         id="truckSelectButton"
       >
@@ -1148,12 +1040,10 @@ button.submit:disabled{
             fill="none"
             stroke="currentColor"
             stroke-width="2.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
           >
             <polyline
               points="6 9 12 15 18 9"
-            ></polyline>
+            />
           </svg>
 
         </span>
@@ -1177,11 +1067,9 @@ button.submit:disabled{
 
         </div>
 
-
         <div class="truck-dropdown-footer">
 
           <button
-            type="button"
             id="truckClearBtn"
             data-i18n="clear"
           >
@@ -1189,7 +1077,6 @@ button.submit:disabled{
           </button>
 
           <button
-            type="button"
             class="primary"
             id="truckDoneBtn"
             data-i18n="done"
@@ -1205,8 +1092,6 @@ button.submit:disabled{
 
   </fieldset>
 
-
-  <!-- 下貨人員 -->
 
   <fieldset>
 
@@ -1226,15 +1111,13 @@ button.submit:disabled{
     </div>
 
     <div
-      id="lineMatchHint"
       class="line-match-hint"
+      id="lineMatchHint"
       style="display:none;"
     ></div>
 
   </fieldset>
 
-
-  <!-- 件數 -->
 
   <fieldset>
 
@@ -1248,7 +1131,6 @@ button.submit:disabled{
     >
 
       <button
-        type="button"
         data-v="ok"
         class="active"
         data-i18n="qtyOk"
@@ -1257,7 +1139,6 @@ button.submit:disabled{
       </button>
 
       <button
-        type="button"
         data-v="bad"
         data-i18n="qtyBad"
       >
@@ -1268,8 +1149,6 @@ button.submit:disabled{
 
   </fieldset>
 
-
-  <!-- 照片 -->
 
   <fieldset>
 
@@ -1305,13 +1184,11 @@ button.submit:disabled{
       class="hint"
       data-i18n="photoHint"
     >
-      至少上傳1張，可拍照或從相簿選取多張
+      至少上傳1張
     </div>
 
   </fieldset>
 
-
-  <!-- 備註 -->
 
   <fieldset>
 
@@ -1329,10 +1206,6 @@ button.submit:disabled{
 
 </div>
 
-
-<!-- =================================================
-     送出
-================================================= -->
 
 <div class="submit-bar">
 
@@ -1355,10 +1228,6 @@ button.submit:disabled{
 
 </div>
 
-
-<!-- =================================================
-     進度
-================================================= -->
 
 <div
   class="upload-progress-screen"
@@ -1389,9 +1258,7 @@ button.submit:disabled{
     <div
       class="upload-progress-title"
       id="uploadProgressTitle"
-    >
-      處理照片
-    </div>
+    ></div>
 
     <div
       class="upload-progress-count"
@@ -1417,10 +1284,6 @@ button.submit:disabled{
 </div>
 
 
-<!-- =================================================
-     回報紀錄
-================================================= -->
-
 <div
   class="history-screen"
   id="historyScreen"
@@ -1435,7 +1298,6 @@ button.submit:disabled{
       </h2>
 
       <button
-        type="button"
         class="history-close"
         id="historyClose"
         data-i18n="close"
@@ -1445,24 +1307,12 @@ button.submit:disabled{
 
     </div>
 
-    <div
-      id="historyContent"
-    >
-
-      <div class="history-loading">
-        回報紀錄載入中…
-      </div>
-
-    </div>
+    <div id="historyContent"></div>
 
   </div>
 
 </div>
 
-
-<!-- =================================================
-     當日照片
-================================================= -->
 
 <div
   class="all-photo-screen"
@@ -1473,12 +1323,9 @@ button.submit:disabled{
 
     <div class="all-photo-head">
 
-      <h3 id="allPhotoTitle">
-        當日照片
-      </h3>
+      <h3 id="allPhotoTitle"></h3>
 
       <button
-        type="button"
         class="all-photo-close"
         id="allPhotoClose"
       >
@@ -1497,17 +1344,12 @@ button.submit:disabled{
 </div>
 
 
-<!-- =================================================
-     圖片放大
-================================================= -->
-
 <div
   class="lightbox"
   id="lightbox"
 >
 
   <button
-    type="button"
     class="lightbox-close"
     id="lightboxClose"
   >
@@ -1558,16 +1400,19 @@ let truckLastUsed =
 let selectedTrucks =
   new Set();
 
-let reportData =
+let reportDates =
   [];
+
+let reportCache =
+  {};
+
+let isSubmitting =
+  false;
 
 let currentLanguage =
   localStorage.getItem(
     "zhubei_report_language"
   ) || "";
-
-let isSubmitting =
-  false;
 
 
 /* =================================================
@@ -1594,31 +1439,24 @@ const translations = {
     done:"完成",
     historyTitle:"回報紀錄",
     close:"關閉",
-    viewTodayPhotos:"查看當日照片",
-    noPhotos:"這筆回報沒有照片",
+    historyLoading:"正在取得日期…",
+    dayLoading:"正在載入這一天的回報…",
     noHistory:"目前沒有回報紀錄",
-    historyLoading:"回報紀錄載入中…",
-    delete:"刪除",
-    deleteConfirm:"確定要刪除這筆回報嗎？",
-    deleting:"刪除中…",
-    reportLoadError:"回報紀錄載入失敗",
+    viewTodayPhotos:"當日照片",
+    noPhotos:"這筆回報沒有照片",
     allPhotos:"當日全部照片",
-    noDayPhotos:"這天沒有照片",
-    stageProcess:"處理",
-    stageCompress:"壓縮",
-    stageUpload:"上傳",
-    processingPhoto:"照片處理中",
-    compressingPhoto:"照片壓縮中",
-    preparingUpload:"準備上傳…",
-    uploading:"照片傳送中…",
-    serverProcessing:"照片已傳送，系統寫入中…",
+    delete:"刪除",
+    deleting:"刪除中…",
+    deleteConfirm:"確定要刪除這筆回報嗎？",
     success:"✓ 已成功寫入回報紀錄",
-    uploadFail:"照片處理失敗",
     needTruck:"請至少選擇1台大車",
     needStaff:"請至少選擇1位下貨人員",
     needPhoto:"請至少上傳1張照片",
+    processingPhoto:"照片處理中",
+    compressingPhoto:"照片壓縮中",
+    uploading:"照片上傳中…",
+    serverProcessing:"系統寫入中…",
     lineMatch:"LINE 使用者「{user}」已自動對應下貨人員「{staff}」",
-    connectionFail:"無法連接系統：",
     languageName:"中文"
 
   },
@@ -1632,40 +1470,33 @@ const translations = {
     qtyOk:"✓ Số lượng chính xác",
     qtyBad:"✗ Thừa / thiếu",
     photo:"Ảnh",
-    uploadPhoto:"Nhấn để tải ảnh lên (có thể chọn nhiều ảnh)",
+    uploadPhoto:"Nhấn để tải ảnh lên",
     photoHint:"Vui lòng tải ít nhất 1 ảnh",
-    note:"Ghi chú (không bắt buộc)",
-    notePlaceholder:"Lý do thừa thiếu, tình trạng bất thường...",
+    note:"Ghi chú",
+    notePlaceholder:"Ghi chú...",
     submit:"Gửi báo cáo",
     clear:"Xóa",
     done:"Xong",
     historyTitle:"Lịch sử báo cáo",
     close:"Đóng",
-    viewTodayPhotos:"Xem ảnh trong ngày",
-    noPhotos:"Báo cáo này không có ảnh",
-    noHistory:"Chưa có lịch sử báo cáo",
-    historyLoading:"Đang tải lịch sử…",
-    delete:"Xóa",
-    deleteConfirm:"Bạn có chắc muốn xóa báo cáo này không?",
-    deleting:"Đang xóa…",
-    reportLoadError:"Không thể tải lịch sử báo cáo",
+    historyLoading:"Đang tải ngày…",
+    dayLoading:"Đang tải báo cáo…",
+    noHistory:"Chưa có báo cáo",
+    viewTodayPhotos:"Ảnh trong ngày",
+    noPhotos:"Không có ảnh",
     allPhotos:"Tất cả ảnh trong ngày",
-    noDayPhotos:"Không có ảnh",
-    stageProcess:"Xử lý",
-    stageCompress:"Nén",
-    stageUpload:"Tải lên",
+    delete:"Xóa",
+    deleting:"Đang xóa…",
+    deleteConfirm:"Bạn có chắc muốn xóa?",
+    success:"✓ Đã lưu báo cáo",
+    needTruck:"Vui lòng chọn xe",
+    needStaff:"Vui lòng chọn nhân viên",
+    needPhoto:"Vui lòng tải ảnh",
     processingPhoto:"Đang xử lý ảnh",
     compressingPhoto:"Đang nén ảnh",
-    preparingUpload:"Đang chuẩn bị…",
-    uploading:"Đang gửi ảnh…",
-    serverProcessing:"Ảnh đã gửi, hệ thống đang lưu…",
-    success:"✓ Đã lưu báo cáo thành công",
-    uploadFail:"Xử lý ảnh thất bại",
-    needTruck:"Vui lòng chọn ít nhất 1 xe tải",
-    needStaff:"Vui lòng chọn ít nhất 1 nhân viên dỡ hàng",
-    needPhoto:"Vui lòng tải ít nhất 1 ảnh",
-    lineMatch:"LINE「{user}」đã tự động ghép với nhân viên「{staff}」",
-    connectionFail:"Không thể kết nối hệ thống: ",
+    uploading:"Đang tải ảnh…",
+    serverProcessing:"Đang lưu…",
+    lineMatch:"LINE「{user}」đã ghép với「{staff}」",
     languageName:"Tiếng Việt"
 
   }
@@ -1677,7 +1508,8 @@ function t(key){
 
   return (
     translations[
-      currentLanguage || "zh"
+      currentLanguage ||
+      "zh"
     ][key] ||
     key
   );
@@ -1728,72 +1560,6 @@ function applyLanguage(){
       "languageName"
     );
 
-
-  const stages =
-    document.querySelectorAll(
-      "#uploadProgressStage span"
-    );
-
-
-  if(stages[0]){
-    stages[0].textContent =
-      t("stageProcess");
-  }
-
-  if(stages[1]){
-    stages[1].textContent =
-      t("stageCompress");
-  }
-
-  if(stages[2]){
-    stages[2].textContent =
-      t("stageUpload");
-  }
-
-
-  if(
-    document
-      .getElementById(
-        "historyScreen"
-      )
-      .classList
-      .contains(
-        "open"
-      )
-  ){
-
-    renderHistory();
-
-  }
-
-}
-
-
-function showLanguageScreen(){
-
-  document
-    .getElementById(
-      "languageScreen"
-    )
-    .classList
-    .add(
-      "show"
-    );
-
-}
-
-
-function hideLanguageScreen(){
-
-  document
-    .getElementById(
-      "languageScreen"
-    )
-    .classList
-    .remove(
-      "show"
-    );
-
 }
 
 
@@ -1820,7 +1586,14 @@ document
 
           applyLanguage();
 
-          hideLanguageScreen();
+
+          document
+            .getElementById(
+              "languageScreen"
+            )
+            .classList.remove(
+              "show"
+            );
 
         }
       );
@@ -1835,7 +1608,17 @@ document
   )
   .addEventListener(
     "click",
-    showLanguageScreen
+    function(){
+
+      document
+        .getElementById(
+          "languageScreen"
+        )
+        .classList.add(
+          "show"
+        );
+
+    }
   );
 
 
@@ -1870,167 +1653,175 @@ function setStatus(
 
 
 /* =================================================
-   進度
+   GET
 ================================================= */
 
-function showUploadProgress(){
-
-  document
-    .getElementById(
-      "uploadProgressScreen"
-    )
-    .classList
-    .add(
-      "open"
-    );
-
-
-  document
-    .body
-    .classList
-    .add(
-      "uploading"
-    );
-
-}
-
-
-function hideUploadProgress(){
-
-  document
-    .getElementById(
-      "uploadProgressScreen"
-    )
-    .classList
-    .remove(
-      "open"
-    );
-
-
-  document
-    .body
-    .classList
-    .remove(
-      "uploading"
-    );
-
-}
-
-
-function setProgressStage(
-  stageName
+async function getBackend(
+  type,
+  extra
 ){
 
-  const stages =
-    [
-      "process",
-      "compress",
-      "upload"
-    ];
+  const params =
+    new URLSearchParams();
 
 
-  const currentIndex =
-    stages.indexOf(
-      stageName
-    );
+  params.set(
+    "type",
+    type
+  );
 
 
-  document
-    .querySelectorAll(
-      "#uploadProgressStage span"
-    )
-    .forEach(
-      function(el){
-
-        const index =
-          stages.indexOf(
-            el.dataset.stage
-          );
+  params.set(
+    "t",
+    Date.now()
+  );
 
 
-        el.classList.remove(
-          "active",
-          "done"
+  if (
+    extra
+  ) {
+
+    Object.keys(
+      extra
+    ).forEach(
+      function(key){
+
+        params.set(
+          key,
+          extra[key]
         );
-
-
-        if(
-          index <
-          currentIndex
-        ){
-
-          el.classList.add(
-            "done"
-          );
-
-        }else if(
-          index ===
-          currentIndex
-        ){
-
-          el.classList.add(
-            "active"
-          );
-
-        }
 
       }
     );
 
-}
+  }
 
 
-function updateUploadProgress(
-  title,
-  percent,
-  text,
-  count
-){
+  const response =
+    await fetch(
+      BACKEND_URL +
+      "?" +
+      params.toString(),
+      {
 
-  const safePercent =
-    Math.max(
-      0,
-      Math.min(
-        100,
-        Number(
-          percent
-        ) || 0
-      )
+        method:
+          "GET",
+
+        cache:
+          "no-store"
+
+      }
     );
 
 
-  document
-    .getElementById(
-      "uploadProgressTitle"
-    )
-    .textContent =
-    title || "";
+  const text =
+    await response.text();
 
 
-  document
-    .getElementById(
-      "uploadProgressFill"
-    )
-    .style
-    .width =
-    safePercent +
-    "%";
+  let result;
 
 
-  document
-    .getElementById(
-      "uploadProgressText"
-    )
-    .textContent =
-    text || "";
+  try {
+
+    result =
+      JSON.parse(
+        text
+      );
+
+  } catch (error) {
+
+    throw new Error(
+      "後端沒有回傳正確 JSON"
+    );
+
+  }
 
 
-  document
-    .getElementById(
-      "uploadProgressCount"
-    )
-    .textContent =
-    count || "";
+  if (
+    !result.success
+  ) {
+
+    throw new Error(
+      result.error ||
+      "後端執行失敗"
+    );
+
+  }
+
+
+  return result;
+
+}
+
+
+/* =================================================
+   POST
+================================================= */
+
+async function postBackend(
+  payload
+){
+
+  const response =
+    await fetch(
+      BACKEND_URL,
+      {
+
+        method:
+          "POST",
+
+        headers:{
+
+          "Content-Type":
+            "text/plain;charset=utf-8"
+
+        },
+
+        body:
+          JSON.stringify(
+            payload
+          )
+
+      }
+    );
+
+
+  const text =
+    await response.text();
+
+
+  let result;
+
+
+  try {
+
+    result =
+      JSON.parse(
+        text
+      );
+
+  } catch (error) {
+
+    throw new Error(
+      "Apps Script 沒有回傳正確 JSON"
+    );
+
+  }
+
+
+  if (
+    !result.success
+  ) {
+
+    throw new Error(
+      result.error ||
+      "Apps Script 執行失敗"
+    );
+
+  }
+
+
+  return result;
 
 }
 
@@ -2041,7 +1832,7 @@ function updateUploadProgress(
 
 async function initLIFF(){
 
-  try{
+  try {
 
     await liff.init({
 
@@ -2051,9 +1842,9 @@ async function initLIFF(){
     });
 
 
-    if(
+    if (
       !liff.isLoggedIn()
-    ){
+    ) {
 
       liff.login();
 
@@ -2082,7 +1873,7 @@ async function initLIFF(){
     return true;
 
 
-  }catch(error){
+  } catch (error) {
 
     console.error(
       error
@@ -2097,16 +1888,6 @@ async function initLIFF(){
       "LINE 登入失敗";
 
 
-    setStatus(
-      "LINE 登入失敗：" +
-      (
-        error.message ||
-        error
-      ),
-      "err"
-    );
-
-
     return false;
 
   }
@@ -2115,172 +1896,40 @@ async function initLIFF(){
 
 
 /* =================================================
-   GET
+   大車先載入
 ================================================= */
 
-async function getBackend(
-  type
-){
+async function loadTrucks(){
 
-  const response =
-    await fetch(
-      BACKEND_URL +
-      "?type=" +
-      encodeURIComponent(
-        type
-      ) +
-      "&t=" +
-      Date.now(),
-      {
+  try {
 
-        method:
-          "GET",
-
-        cache:
-          "no-store"
-
-      }
-    );
-
-
-  if(
-    !response.ok
-  ){
-
-    throw new Error(
-      "HTTP " +
-      response.status
-    );
-
-  }
-
-
-  const text =
-    await response.text();
-
-
-  let result;
-
-
-  try{
-
-    result =
-      JSON.parse(
-        text
-      );
-
-  }catch(error){
-
-    throw new Error(
-      "後端沒有回傳正確 JSON"
-    );
-
-  }
-
-
-  if(
-    !result.success
-  ){
-
-    throw new Error(
-      result.error ||
-      "後端資料取得失敗"
-    );
-
-  }
-
-
-  return result;
-
-}
-
-
-/* =================================================
-   系統資料
-   真正先顯示大車
-   大車完成後才開始抓人員
-================================================= */
-
-async function loadSystemData(){
-
-  /* =================================================
-     1. 先抓大車
-  ================================================= */
-
-  try{
-
-    const truckResult =
+    const result =
       await getBackend(
         "trucks"
       );
 
 
-    const truckInfo =
-      truckResult.data ||
-      {};
-
-
     truckData =
       Array.isArray(
-        truckInfo.trucks
+        result.data.trucks
       )
-        ? truckInfo.trucks
+        ? result.data.trucks
         : [];
 
 
     truckLastUsed =
-      truckInfo.truckLastUsed ||
+      result.data.truckLastUsed ||
       {};
 
-
-    /*
-     * 大車資料一回來
-     * 立刻顯示
-     */
 
     renderTrucks();
 
 
-    /*
-     * 強制讓瀏覽器先把「大車」畫到畫面
-     * 不要馬上接著跑人員
-     */
-
-    await new Promise(
-      function(resolve){
-
-        requestAnimationFrame(
-          function(){
-
-            requestAnimationFrame(
-              resolve
-            );
-
-          }
-        );
-
-      }
-    );
-
-
-  }catch(error){
+  } catch (error) {
 
     console.error(
-      "大車載入失敗：",
       error
     );
-
-
-    document
-      .getElementById(
-        "truckList"
-      )
-      .innerHTML =
-      `
-      <div class="loading">
-        大車資料載入失敗
-      </div>
-      `;
 
 
     document
@@ -2288,81 +1937,45 @@ async function loadSystemData(){
         "truckSelectText"
       )
       .textContent =
-      "大車資料載入失敗";
+      "大車載入失敗";
 
   }
 
+}
 
-  /* =================================================
-     2. 大車已經顯示後
-        才開始抓下貨人員
-  ================================================= */
 
-  try{
+/* =================================================
+   人員
+================================================= */
 
-    const staffResult =
+async function loadStaff(){
+
+  try {
+
+    const result =
       await getBackend(
         "staff"
       );
 
 
-    const staffInfo =
-      staffResult.data ||
-      {};
-
-
     staffData =
       Array.isArray(
-        staffInfo.staff
+        result.data.staff
       )
-        ? staffInfo.staff
+        ? result.data.staff
         : [];
 
-
-    /*
-     * 顯示人員
-     */
 
     renderStaff();
 
 
-    /*
-     * 人員出來後
-     * 才比對 LINE
-     */
-
     autoMatchLineStaff();
 
 
-  }catch(error){
+  } catch (error) {
 
     console.error(
-      "下貨人員載入失敗：",
       error
-    );
-
-
-    document
-      .getElementById(
-        "staffGrid"
-      )
-      .innerHTML =
-      `
-      <div class="loading">
-        下貨人員資料載入失敗
-      </div>
-      `;
-
-
-    setStatus(
-      t(
-        "connectionFail"
-      ) +
-      (
-        error.message ||
-        error
-      ),
-      "err"
     );
 
   }
@@ -2371,128 +1984,8 @@ async function loadSystemData(){
 
 
 /* =================================================
-   大車
+   大車排序
 ================================================= */
-
-function formatTruckTime(
-  value
-){
-
-  if(
-    value === null ||
-    value === undefined
-  ){
-
-    return "";
-
-  }
-
-
-  const text =
-    String(
-      value
-    ).trim();
-
-
-  if(!text){
-
-    return "";
-
-  }
-
-
-  const match =
-    text.match(
-      /^(\d{1,2}):(\d{2})(?::(\d{2}))?$/
-    );
-
-
-  if(match){
-
-    return (
-      String(
-        match[1]
-      ).padStart(
-        2,
-        "0"
-      ) +
-      ":" +
-      match[2]
-    );
-
-  }
-
-
-  const date =
-    new Date(
-      text
-    );
-
-
-  if(
-    !isNaN(
-      date.getTime()
-    )
-  ){
-
-    return (
-      String(
-        date.getHours()
-      ).padStart(
-        2,
-        "0"
-      ) +
-      ":" +
-      String(
-        date.getMinutes()
-      ).padStart(
-        2,
-        "0"
-      )
-    );
-
-  }
-
-
-  return "";
-
-}
-
-
-function getTruckUsage(
-  truckName
-){
-
-  const data =
-    truckLastUsed[
-      truckName
-    ];
-
-
-  if(!data){
-
-    return null;
-
-  }
-
-
-  return {
-
-    time:
-      formatTruckTime(
-        data.time
-      ),
-
-    staff:
-      String(
-        data.staff ||
-        ""
-      ).trim()
-
-  };
-
-}
-
 
 function sortedTrucks(){
 
@@ -2518,33 +2011,26 @@ function sortedTrucks(){
     )
 
     .sort(
-      function(
-        a,
-        b
-      ){
-
-        const truckA =
-          a.truck;
-
-        const truckB =
-          b.truck;
-
+      function(a,b){
 
         const fixedA =
-          truckA.fixed === true;
+          a.truck.fixed ===
+          true;
+
 
         const fixedB =
-          truckB.fixed === true;
+          b.truck.fixed ===
+          true;
 
 
         /*
-         * 1. D 欄固定置頂最高優先
+         * D 欄固定置頂最高優先。
          */
 
-        if(
+        if (
           fixedA !==
           fixedB
-        ){
+        ) {
 
           return fixedA
             ? -1
@@ -2553,15 +2039,10 @@ function sortedTrucks(){
         }
 
 
-        /*
-         * 2. 如果兩台都是固定置頂
-         *    維持工作表原本順序
-         */
-
-        if(
+        if (
           fixedA &&
           fixedB
-        ){
+        ) {
 
           return (
             a.originalIndex -
@@ -2571,41 +2052,31 @@ function sortedTrucks(){
         }
 
 
-        /*
-         * 3. 非固定置頂的大車
-         *    才判斷今天有沒有使用過
-         */
-
-        const usageA =
-          getTruckUsage(
-            truckA.name
-          );
-
-        const usageB =
-          getTruckUsage(
-            truckB.name
-          );
-
-
         const usedA =
           Boolean(
-            usageA
+            truckLastUsed[
+              a.truck.name
+            ]
           );
+
 
         const usedB =
           Boolean(
-            usageB
+            truckLastUsed[
+              b.truck.name
+            ]
           );
 
 
         /*
-         * 已使用排最後
+         * 非固定車：
+         * 今天用過排最後。
          */
 
-        if(
+        if (
           usedA !==
           usedB
-        ){
+        ) {
 
           return usedA
             ? 1
@@ -2613,10 +2084,6 @@ function sortedTrucks(){
 
         }
 
-
-        /*
-         * 4. 其他維持原本工作表順序
-         */
 
         return (
           a.originalIndex -
@@ -2636,7 +2103,11 @@ function sortedTrucks(){
 
 }
 
-  
+
+/* =================================================
+   大車顯示
+================================================= */
+
 function renderTrucks(){
 
   const list =
@@ -2649,179 +2120,141 @@ function renderTrucks(){
     "";
 
 
-  const trucks =
-    sortedTrucks();
+  sortedTrucks()
+    .forEach(
+      function(truck){
+
+        const usage =
+          truckLastUsed[
+            truck.name
+          ] ||
+          null;
 
 
-  if(
-    trucks.length ===
-    0
-  ){
-
-    list.innerHTML =
-      `
-      <div class="loading">
-        目前沒有啟用中的大車
-      </div>
-      `;
+        const isUsed =
+          Boolean(
+            usage
+          );
 
 
-    document
-      .getElementById(
-        "truckSelectText"
-      )
-      .textContent =
-      "目前沒有啟用中的大車";
+        const label =
+          document.createElement(
+            "label"
+          );
 
 
-    return;
-
-  }
-
-
-  trucks.forEach(
-    function(truck){
-
-      const usage =
-        getTruckUsage(
-          truck.name
-        );
+        label.className =
+          "truck-option" +
+          (
+            isUsed
+              ? " used"
+              : ""
+          );
 
 
-      /*
-       * 只要今天有這台大車的使用紀錄，
-       * 就直接視為已使用。
-       */
-      const isUsed =
-        Boolean(
-          usage
-        );
+        const checkbox =
+          document.createElement(
+            "input"
+          );
 
 
-      const label =
-        document.createElement(
-          "label"
-        );
+        checkbox.type =
+          "checkbox";
 
 
-      label.className =
-        "truck-option" +
-        (
-          isUsed
-            ? " used"
-            : ""
-        );
+        checkbox.value =
+          truck.name;
 
 
-      const checkbox =
-        document.createElement(
-          "input"
-        );
+        checkbox.checked =
+          selectedTrucks.has(
+            truck.name
+          );
 
 
-      checkbox.type =
-        "checkbox";
+        checkbox.addEventListener(
+          "change",
+          function(){
+
+            if (
+              checkbox.checked
+            ) {
+
+              selectedTrucks.add(
+                truck.name
+              );
+
+            } else {
+
+              selectedTrucks.delete(
+                truck.name
+              );
+
+            }
 
 
-      checkbox.value =
-        truck.name;
-
-
-      checkbox.checked =
-        selectedTrucks.has(
-          truck.name
-        );
-
-
-      checkbox.addEventListener(
-        "change",
-        function(){
-
-          if(
-            checkbox.checked
-          ){
-
-            selectedTrucks.add(
-              truck.name
-            );
-
-          }else{
-
-            selectedTrucks.delete(
-              truck.name
-            );
+            updateTruckButtonText();
 
           }
-
-
-          updateTruckButtonText();
-
-        }
-      );
-
-
-      const name =
-        document.createElement(
-          "span"
         );
 
 
-      name.className =
-        "truck-name";
-
-
-      name.textContent =
-        truck.name;
-
-
-      label.appendChild(
-        checkbox
-      );
-
-
-      label.appendChild(
-        name
-      );
-
-
-      /*
-       * 如果今天已經使用過，
-       * 而且有下貨人員資料，
-       * 就顯示人員標籤。
-       */
-      if(
-        isUsed &&
-        usage &&
-        usage.staff
-      ){
-
-        const staffTag =
+        const name =
           document.createElement(
             "span"
           );
 
 
-        staffTag.className =
-          "used-staff";
+        name.className =
+          "truck-name";
 
 
-        staffTag.textContent =
-          usage.staff;
+        name.textContent =
+          truck.name;
 
 
         label.appendChild(
-          staffTag
+          checkbox
+        );
+
+
+        label.appendChild(
+          name
+        );
+
+
+        if (
+          isUsed &&
+          usage.staff
+        ) {
+
+          const staff =
+            document.createElement(
+              "span"
+            );
+
+
+          staff.className =
+            "used-staff";
+
+
+          staff.textContent =
+            usage.staff;
+
+
+          label.appendChild(
+            staff
+          );
+
+        }
+
+
+        list.appendChild(
+          label
         );
 
       }
-
-
-      list.appendChild(
-        label
-      );
-
-    }
-  );
+    );
 
 
   updateTruckButtonText();
@@ -2831,57 +2264,49 @@ function renderTrucks(){
 
 function updateTruckButtonText(){
 
-  const textElement =
-    document.getElementById(
-      "truckSelectText"
-    );
-
-
   const names =
     Array.from(
       selectedTrucks
     );
 
 
-  if(
-    names.length ===
-    0
-  ){
+  const el =
+    document.getElementById(
+      "truckSelectText"
+    );
 
-    textElement.textContent =
+
+  if (
+    names.length === 0
+  ) {
+
+    el.textContent =
       "請選擇大車…";
 
-    return;
+  } else if (
+    names.length === 1
+  ) {
 
-  }
-
-
-  if(
-    names.length ===
-    1
-  ){
-
-    textElement.textContent =
+    el.textContent =
       names[0];
 
-    return;
+  } else {
+
+    el.textContent =
+      "已選 " +
+      names.length +
+      " 台：" +
+      names.join(
+        "、"
+      );
 
   }
-
-
-  textElement.textContent =
-    "已選 " +
-    names.length +
-    " 台：" +
-    names.join(
-      "、"
-    );
 
 }
 
 
 /* =================================================
-   下貨人員
+   人員顯示
 ================================================= */
 
 function renderStaff(){
@@ -2894,23 +2319,6 @@ function renderStaff(){
 
   grid.innerHTML =
     "";
-
-
-  if(
-    staffData.length ===
-    0
-  ){
-
-    grid.innerHTML =
-      `
-      <div class="loading">
-        目前沒有啟用中的下貨人員
-      </div>
-      `;
-
-    return;
-
-  }
 
 
   staffData.forEach(
@@ -2926,37 +2334,37 @@ function renderStaff(){
         "staff-item";
 
 
-      const checkbox =
+      const input =
         document.createElement(
           "input"
         );
 
 
-      checkbox.type =
+      input.type =
         "checkbox";
 
 
-      checkbox.value =
+      input.value =
         staff.name;
 
 
-      const span =
+      const text =
         document.createElement(
           "span"
         );
 
 
-      span.textContent =
+      text.textContent =
         staff.name;
 
 
-      checkbox.addEventListener(
+      input.addEventListener(
         "change",
         function(){
 
           label.classList.toggle(
             "selected",
-            checkbox.checked
+            input.checked
           );
 
         }
@@ -2964,12 +2372,12 @@ function renderStaff(){
 
 
       label.appendChild(
-        checkbox
+        input
       );
 
 
       label.appendChild(
-        span
+        text
       );
 
 
@@ -2983,34 +2391,9 @@ function renderStaff(){
 }
 
 
-/* =================================================
-   LINE 自動對應
-================================================= */
-
 function autoMatchLineStaff(){
 
-  const hint =
-    document.getElementById(
-      "lineMatchHint"
-    );
-
-
-  hint.style.display =
-    "none";
-
-
-  if(
-    !userName ||
-    userName ===
-    "未知使用者"
-  ){
-
-    return;
-
-  }
-
-
-  const currentUser =
+  const current =
     String(
       userName
     )
@@ -3022,87 +2405,77 @@ function autoMatchLineStaff(){
     staffData.find(
       function(staff){
 
-        const lineName =
+        return (
           String(
             staff.lineName ||
             ""
           )
             .trim()
-            .toLowerCase();
-
-
-        return (
-          lineName &&
-          lineName ===
-          currentUser
+            .toLowerCase() ===
+          current
         );
 
       }
     );
 
 
-  if(!matched){
+  if (!matched) {
 
     return;
 
   }
 
 
-  const inputs =
-    document.querySelectorAll(
-      "#staffGrid input[type=checkbox]"
+  const input =
+    [
+      ...
+      document.querySelectorAll(
+        "#staffGrid input"
+      )
+    ].find(
+      function(item){
+
+        return (
+          item.value ===
+          matched.name
+        );
+
+      }
     );
 
 
-  let target =
-    null;
-
-
-  inputs.forEach(
-    function(input){
-
-      if(
-        String(
-          input.value
-        ).trim() ===
-        String(
-          matched.name
-        ).trim()
-      ){
-
-        target =
-          input;
-
-      }
-
-    }
-  );
-
-
-  if(!target){
+  if (!input) {
 
     return;
 
   }
 
 
-  target.checked =
+  input.checked =
     true;
 
 
   const item =
-    target.closest(
+    input.closest(
       ".staff-item"
     );
 
 
-  if(item){
+  if (
+    item
+  ) {
 
     item.classList.add(
       "selected"
     );
 
   }
+
+
+  const hint =
+    document.getElementById(
+      "lineMatchHint"
+    );
 
 
   hint.style.display =
@@ -3137,9 +2510,9 @@ document
     "click",
     function(){
 
-      if(
+      if (
         isSubmitting
-      ){
+      ) {
 
         return;
 
@@ -3204,57 +2577,12 @@ document
     "click",
     function(){
 
-      if(
-        isSubmitting
-      ){
-
-        return;
-
-      }
-
-
       selectedTrucks.clear();
-
 
       renderTrucks();
 
     }
   );
-
-
-document.addEventListener(
-  "click",
-  function(event){
-
-    const wrap =
-      document.getElementById(
-        "truckSelectWrap"
-      );
-
-
-    if(
-      !wrap.contains(
-        event.target
-      )
-    ){
-
-      document
-        .getElementById(
-          "truckDropdown"
-        )
-        .classList.remove(
-          "open"
-        );
-
-
-      wrap.classList.remove(
-        "open"
-      );
-
-    }
-
-  }
-);
 
 
 /* =================================================
@@ -3269,19 +2597,10 @@ document
     "click",
     function(event){
 
-      if(
-        isSubmitting
-      ){
-
-        return;
-
-      }
-
-
-      if(
+      if (
         event.target.tagName !==
         "BUTTON"
-      ){
+      ) {
 
         return;
 
@@ -3289,7 +2608,8 @@ document
 
 
       [
-        ...event.currentTarget.children
+        ...
+        event.currentTarget.children
       ].forEach(
         function(button){
 
@@ -3310,7 +2630,7 @@ document
 
 
 /* =================================================
-   照片處理
+   照片壓縮
 ================================================= */
 
 function readFileAsDataURL(
@@ -3318,10 +2638,7 @@ function readFileAsDataURL(
 ){
 
   return new Promise(
-    function(
-      resolve,
-      reject
-    ){
+    function(resolve,reject){
 
       const reader =
         new FileReader();
@@ -3338,15 +2655,7 @@ function readFileAsDataURL(
 
 
       reader.onerror =
-        function(){
-
-          reject(
-            new Error(
-              "照片讀取失敗"
-            )
-          );
-
-        };
+        reject;
 
 
       reader.readAsDataURL(
@@ -3360,16 +2669,13 @@ function readFileAsDataURL(
 
 
 function compressDataURL(
-  rawDataUrl,
+  rawData,
   maxW,
   quality
 ){
 
   return new Promise(
-    function(
-      resolve,
-      reject
-    ){
+    function(resolve,reject){
 
       const img =
         new Image();
@@ -3378,84 +2684,65 @@ function compressDataURL(
       img.onload =
         function(){
 
-          try{
-
-            const scale =
-              Math.min(
-                1,
-                maxW /
-                img.width
-              );
-
-
-            const canvas =
-              document.createElement(
-                "canvas"
-              );
-
-
-            canvas.width =
-              Math.round(
-                img.width *
-                scale
-              );
-
-
-            canvas.height =
-              Math.round(
-                img.height *
-                scale
-              );
-
-
-            const ctx =
-              canvas.getContext(
-                "2d"
-              );
-
-
-            ctx.drawImage(
-              img,
-              0,
-              0,
-              canvas.width,
-              canvas.height
+          const scale =
+            Math.min(
+              1,
+              maxW /
+              img.width
             );
 
 
-            resolve(
-              canvas.toDataURL(
-                "image/jpeg",
-                quality
-              )
+          const canvas =
+            document.createElement(
+              "canvas"
             );
 
 
-          }catch(error){
-
-            reject(
-              error
+          canvas.width =
+            Math.round(
+              img.width *
+              scale
             );
 
-          }
 
-        };
+          canvas.height =
+            Math.round(
+              img.height *
+              scale
+            );
 
 
-      img.onerror =
-        function(){
+          const ctx =
+            canvas.getContext(
+              "2d"
+            );
 
-          reject(
-            new Error(
-              "照片解析失敗"
+
+          ctx.drawImage(
+            img,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          );
+
+
+          resolve(
+            canvas.toDataURL(
+              "image/jpeg",
+              quality
             )
           );
 
         };
 
 
+      img.onerror =
+        reject;
+
+
       img.src =
-        rawDataUrl;
+        rawData;
 
     }
   );
@@ -3463,9 +2750,152 @@ function compressDataURL(
 }
 
 
-/* =================================================
-   選照片
-================================================= */
+function showProgress(){
+
+  document
+    .getElementById(
+      "uploadProgressScreen"
+    )
+    .classList.add(
+      "open"
+    );
+
+
+  document.body.classList.add(
+    "uploading"
+  );
+
+}
+
+
+function hideProgress(){
+
+  document
+    .getElementById(
+      "uploadProgressScreen"
+    )
+    .classList.remove(
+      "open"
+    );
+
+
+  document.body.classList.remove(
+    "uploading"
+  );
+
+}
+
+
+function setProgressStage(
+  stage
+){
+
+  const stages =
+    [
+      "process",
+      "compress",
+      "upload"
+    ];
+
+
+  const activeIndex =
+    stages.indexOf(
+      stage
+    );
+
+
+  document
+    .querySelectorAll(
+      "#uploadProgressStage span"
+    )
+    .forEach(
+      function(el){
+
+        const index =
+          stages.indexOf(
+            el.dataset.stage
+          );
+
+
+        el.classList.remove(
+          "active",
+          "done"
+        );
+
+
+        if (
+          index <
+          activeIndex
+        ) {
+
+          el.classList.add(
+            "done"
+          );
+
+        } else if (
+          index ===
+          activeIndex
+        ) {
+
+          el.classList.add(
+            "active"
+          );
+
+        }
+
+      }
+    );
+
+}
+
+
+function updateProgress(
+  title,
+  percent,
+  text,
+  count
+){
+
+  document
+    .getElementById(
+      "uploadProgressTitle"
+    )
+    .textContent =
+    title || "";
+
+
+  document
+    .getElementById(
+      "uploadProgressFill"
+    )
+    .style.width =
+    Math.min(
+      100,
+      Math.max(
+        0,
+        percent
+      )
+    ) +
+    "%";
+
+
+  document
+    .getElementById(
+      "uploadProgressText"
+    )
+    .textContent =
+    text || "";
+
+
+  document
+    .getElementById(
+      "uploadProgressCount"
+    )
+    .textContent =
+    count || "";
+
+}
+
 
 document
   .getElementById(
@@ -3475,23 +2905,11 @@ document
     "change",
     async function(event){
 
-      if(
-        isSubmitting
-      ){
-
-        event.target.value =
-          "";
-
-        return;
-
-      }
-
-
       const files =
         [
-          ...event.target.files
-        ]
-        .filter(
+          ...
+          event.target.files
+        ].filter(
           function(file){
 
             return file.type.startsWith(
@@ -3502,48 +2920,40 @@ document
         );
 
 
-      if(
-        files.length ===
-        0
-      ){
-
-        event.target.value =
-          "";
+      if (
+        files.length === 0
+      ) {
 
         return;
 
       }
 
 
-      const total =
-        files.length;
+      showProgress();
 
 
-      showUploadProgress();
+      try {
 
-
-      try{
-
-        for(
+        for (
           let i = 0;
-          i < total;
+          i < files.length;
           i++
-        ){
+        ) {
 
           setProgressStage(
             "process"
           );
 
 
-          updateUploadProgress(
+          updateProgress(
             t(
               "processingPhoto"
             ),
             (
               i /
-              total
+              files.length
             ) *
-            35,
+            40,
             t(
               "processingPhoto"
             ),
@@ -3551,25 +2961,14 @@ document
               i + 1
             ) +
             " / " +
-            total
+            files.length
           );
 
 
-          const rawData =
+          const raw =
             await readFileAsDataURL(
               files[i]
             );
-
-
-          await new Promise(
-            function(resolve){
-
-              requestAnimationFrame(
-                resolve
-              );
-
-            }
-          );
 
 
           setProgressStage(
@@ -3577,16 +2976,16 @@ document
           );
 
 
-          updateUploadProgress(
+          updateProgress(
             t(
               "compressingPhoto"
             ),
-            35 +
+            40 +
             (
               i /
-              total
+              files.length
             ) *
-            60,
+            55,
             t(
               "compressingPhoto"
             ),
@@ -3594,13 +2993,13 @@ document
               i + 1
             ) +
             " / " +
-            total
+            files.length
           );
 
 
           const compressed =
             await compressDataURL(
-              rawData,
+              raw,
               1200,
               0.72
             );
@@ -3610,88 +3009,23 @@ document
             compressed
           );
 
-
-          updateUploadProgress(
-            t(
-              "compressingPhoto"
-            ),
-            35 +
-            (
-              (
-                i + 1
-              ) /
-              total
-            ) *
-            60,
-            t(
-              "compressingPhoto"
-            ),
-            (
-              i + 1
-            ) +
-            " / " +
-            total
-          );
-
-
-          await new Promise(
-            function(resolve){
-
-              requestAnimationFrame(
-                resolve
-              );
-
-            }
-          );
-
         }
 
 
         renderPhotoGrid();
 
 
-        await new Promise(
-          function(resolve){
-
-            setTimeout(
-              resolve,
-              180
-            );
-
-          }
-        );
+        hideProgress();
 
 
-        hideUploadProgress();
-
-
-        setStatus(
-          "",
-          ""
-        );
-
-
-      }catch(error){
+      } catch (error) {
 
         console.error(
           error
         );
 
 
-        hideUploadProgress();
-
-
-        setStatus(
-          t(
-            "uploadFail"
-          ) +
-          "：" +
-          (
-            error.message ||
-            error
-          ),
-          "err"
-        );
+        hideProgress();
 
       }
 
@@ -3716,10 +3050,7 @@ function renderPhotoGrid(){
 
 
   photos.forEach(
-    function(
-      photo,
-      index
-    ){
+    function(photo,index){
 
       const div =
         document.createElement(
@@ -3751,25 +3082,17 @@ function renderPhotoGrid(){
         "rm";
 
 
-      remove.type =
-        "button";
-
-
       remove.textContent =
-        "✕";
-
-
-      remove.disabled =
-        isSubmitting;
+        "×";
 
 
       remove.addEventListener(
         "click",
         function(){
 
-          if(
+          if (
             isSubmitting
-          ){
+          ) {
 
             return;
 
@@ -3809,7 +3132,7 @@ function renderPhotoGrid(){
 
 
 /* =================================================
-   選取人員
+   送出
 ================================================= */
 
 function getSelectedStaff(){
@@ -3817,7 +3140,7 @@ function getSelectedStaff(){
   return [
     ...
     document.querySelectorAll(
-      "#staffGrid input[type=checkbox]:checked"
+      "#staffGrid input:checked"
     )
   ].map(
     function(input){
@@ -3830,149 +3153,6 @@ function getSelectedStaff(){
 }
 
 
-/* =================================================
-   POST
-================================================= */
-
-async function postBackend(
-  payload
-){
-
-  const response =
-    await fetch(
-      BACKEND_URL,
-      {
-
-        method:
-          "POST",
-
-        headers:{
-
-          "Content-Type":
-            "text/plain;charset=utf-8"
-
-        },
-
-        body:
-          JSON.stringify(
-            payload
-          )
-
-      }
-    );
-
-
-  if(
-    !response.ok
-  ){
-
-    throw new Error(
-      "HTTP " +
-      response.status
-    );
-
-  }
-
-
-  const text =
-    await response.text();
-
-
-  let result;
-
-
-  try{
-
-    result =
-      JSON.parse(
-        text
-      );
-
-  }catch(error){
-
-    throw new Error(
-      "Apps Script 沒有回傳正確 JSON"
-    );
-
-  }
-
-
-  if(
-    !result.success
-  ){
-
-    throw new Error(
-      result.error ||
-      "Apps Script 執行失敗"
-    );
-
-  }
-
-
-  return result;
-
-}
-
-
-/* =================================================
-   鎖定
-================================================= */
-
-function setSubmittingState(
-  locked
-){
-
-  isSubmitting =
-    locked;
-
-
-  document
-    .getElementById(
-      "submitBtn"
-    )
-    .disabled =
-    locked;
-
-
-  document
-    .getElementById(
-      "truckSelectButton"
-    )
-    .disabled =
-    locked;
-
-
-  document
-    .getElementById(
-      "photoInput"
-    )
-    .disabled =
-    locked;
-
-
-  document
-    .querySelectorAll(
-      "#staffGrid input,#qtySeg button,#truckList input,#truckClearBtn,#truckDoneBtn"
-    )
-    .forEach(
-      function(el){
-
-        el.disabled =
-          locked;
-
-      }
-    );
-
-
-  renderPhotoGrid();
-
-}
-
-
-/* =================================================
-   送出
-================================================= */
-
 document
   .getElementById(
     "submitBtn"
@@ -3981,9 +3161,9 @@ document
     "click",
     async function(){
 
-      if(
+      if (
         isSubmitting
-      ){
+      ) {
 
         return;
 
@@ -4000,31 +3180,9 @@ document
         getSelectedStaff();
 
 
-      const qtyButton =
-        document.querySelector(
-          "#qtySeg button.active"
-        );
-
-
-      const qtyStatus =
-        qtyButton
-          ? qtyButton.dataset.v
-          : "ok";
-
-
-      const note =
-        document
-          .getElementById(
-            "note"
-          )
-          .value
-          .trim();
-
-
-      if(
-        trucks.length ===
-        0
-      ){
+      if (
+        trucks.length === 0
+      ) {
 
         setStatus(
           t(
@@ -4038,10 +3196,9 @@ document
       }
 
 
-      if(
-        staff.length ===
-        0
-      ){
+      if (
+        staff.length === 0
+      ) {
 
         setStatus(
           t(
@@ -4055,10 +3212,9 @@ document
       }
 
 
-      if(
-        photos.length ===
-        0
-      ){
+      if (
+        photos.length === 0
+      ) {
 
         setStatus(
           t(
@@ -4072,16 +3228,33 @@ document
       }
 
 
-      const submitPhotos =
-        photos.slice();
+      const qtyButton =
+        document.querySelector(
+          "#qtySeg button.active"
+        );
 
 
-      setSubmittingState(
-        true
-      );
+      const qtyStatus =
+        qtyButton &&
+        qtyButton.dataset.v ===
+        "bad"
+          ? "有多有少"
+          : "正確";
 
 
-      showUploadProgress();
+      isSubmitting =
+        true;
+
+
+      document
+        .getElementById(
+          "submitBtn"
+        )
+        .disabled =
+        true;
+
+
+      showProgress();
 
 
       setProgressStage(
@@ -4089,59 +3262,64 @@ document
       );
 
 
-      let waitingPercent =
-        10;
+      let fakePercent =
+        8;
 
 
-      updateUploadProgress(
+      updateProgress(
         t(
-          "preparingUpload"
+          "uploading"
         ),
-        waitingPercent,
+        fakePercent,
         t(
-          "preparingUpload"
+          "uploading"
         ),
         ""
       );
 
 
-      const progressTimer =
+      /*
+       * Apps Script POST 無法把伺服器內部
+       * Drive 儲存進度逐張回傳給瀏覽器，
+       * 所以這裡只會在 90% 前緩慢等待，
+       * 絕不在後端完成前顯示 100%。
+       */
+
+      const timer =
         setInterval(
           function(){
 
-            if(
-              waitingPercent <
+            if (
+              fakePercent <
               70
-            ){
+            ) {
 
-              waitingPercent +=
-                3;
+              fakePercent +=
+                2;
 
-            }else if(
-              waitingPercent <
-              82
-            ){
-
-              waitingPercent +=
-                1;
-
-            }else if(
-              waitingPercent <
+            } else if (
+              fakePercent <
               88
-            ){
+            ) {
 
-              waitingPercent +=
-                0.25;
+              fakePercent +=
+                0.5;
 
             }
 
 
-            updateUploadProgress(
-              t(
-                "uploading"
-              ),
-              waitingPercent,
-              waitingPercent >= 75
+            updateProgress(
+              fakePercent >
+              75
+                ? t(
+                    "serverProcessing"
+                  )
+                : t(
+                    "uploading"
+                  ),
+              fakePercent,
+              fakePercent >
+              75
                 ? t(
                     "serverProcessing"
                   )
@@ -4156,75 +3334,43 @@ document
         );
 
 
-      try{
-
-        const payload = {
-
-          user:
-            userName,
-
-          trucks:
-            trucks,
-
-          staff:
-            staff,
-
-          qtyStatus:
-            qtyStatus ===
-            "ok"
-              ? "正確"
-              : "有多有少",
-
-          note:
-            note,
-
-          photos:
-            submitPhotos
-
-        };
-
+      try {
 
         const result =
-          await postBackend(
-            payload
-          );
+          await postBackend({
+
+            user:
+              userName,
+
+            trucks:
+              trucks,
+
+            staff:
+              staff,
+
+            qtyStatus:
+              qtyStatus,
+
+            note:
+              document
+                .getElementById(
+                  "note"
+                )
+                .value
+                .trim(),
+
+            photos:
+              photos.slice()
+
+          });
 
 
         clearInterval(
-          progressTimer
+          timer
         );
 
 
-        console.log(
-          result
-        );
-
-
-        updateUploadProgress(
-          t(
-            "serverProcessing"
-          ),
-          94,
-          t(
-            "serverProcessing"
-          ),
-          ""
-        );
-
-
-        await new Promise(
-          function(resolve){
-
-            setTimeout(
-              resolve,
-              180
-            );
-
-          }
-        );
-
-
-        updateUploadProgress(
+        updateProgress(
           t(
             "success"
           ),
@@ -4242,6 +3388,20 @@ document
           ),
           "ok"
         );
+
+
+        /*
+         * 新回報後：
+         * 清除回報紀錄快取，
+         * 下次打開重新取得日期。
+         */
+
+        reportDates =
+          [];
+
+
+        reportCache =
+          {};
 
 
         trucks.forEach(
@@ -4267,13 +3427,11 @@ document
 
         selectedTrucks.clear();
 
-
         photos =
           [];
 
 
         renderTrucks();
-
 
         renderPhotoGrid();
 
@@ -4288,7 +3446,7 @@ document
 
         document
           .querySelectorAll(
-            "#staffGrid input[type=checkbox]"
+            "#staffGrid input"
           )
           .forEach(
             function(input){
@@ -4303,7 +3461,9 @@ document
                 );
 
 
-              if(item){
+              if (
+                item
+              ) {
 
                 item.classList.remove(
                   "selected"
@@ -4315,109 +3475,36 @@ document
           );
 
 
-        document
-          .getElementById(
-            "lineMatchHint"
-          )
-          .style
-          .display =
-          "none";
-
-
-        document
-          .querySelectorAll(
-            "#qtySeg button"
-          )
-          .forEach(
-            function(btn){
-
-              btn.classList.remove(
-                "active"
-              );
-
-            }
-          );
-
-
-        document
-          .querySelector(
-            '#qtySeg button[data-v="ok"]'
-          )
-          .classList
-          .add(
-            "active"
-          );
-
-
-        document
-          .getElementById(
-            "truckDropdown"
-          )
-          .classList.remove(
-            "open"
-          );
-
-
-        document
-          .getElementById(
-            "truckSelectWrap"
-          )
-          .classList.remove(
-            "open"
-          );
-
-
-        if(
-          document
-            .getElementById(
-              "historyScreen"
-            )
-            .classList
-            .contains(
-              "open"
-            )
-        ){
-
-          await loadReports();
-
-        }
-
-
-        await new Promise(
-          function(resolve){
-
-            setTimeout(
-              resolve,
-              700
-            );
-
-          }
-        );
-
-
-        hideUploadProgress();
-
-
-        setSubmittingState(
-          false
-        );
-
-
         setTimeout(
           function(){
 
-            try{
+            hideProgress();
 
-              if(
+
+            isSubmitting =
+              false;
+
+
+            document
+              .getElementById(
+                "submitBtn"
+              )
+              .disabled =
+              false;
+
+
+            try {
+
+              if (
                 window.liff &&
                 liff.isInClient()
-              ){
+              ) {
 
                 liff.closeWindow();
 
               }
 
-            }catch(error){
+            } catch (error) {
 
               console.log(
                 error
@@ -4426,28 +3513,30 @@ document
             }
 
           },
-          500
+          700
         );
 
 
-      }catch(error){
+      } catch (error) {
 
         clearInterval(
-          progressTimer
+          timer
         );
 
 
-        console.error(
-          error
-        );
+        hideProgress();
 
 
-        hideUploadProgress();
+        isSubmitting =
+          false;
 
 
-        setSubmittingState(
-          false
-        );
+        document
+          .getElementById(
+            "submitBtn"
+          )
+          .disabled =
+          false;
 
 
         setStatus(
@@ -4467,6 +3556,8 @@ document
 
 /* =================================================
    回報紀錄
+
+   第一階段只取得日期
 ================================================= */
 
 document
@@ -4477,15 +3568,6 @@ document
     "click",
     async function(){
 
-      if(
-        isSubmitting
-      ){
-
-        return;
-
-      }
-
-
       document
         .getElementById(
           "historyScreen"
@@ -4495,7 +3577,24 @@ document
         );
 
 
-      await loadReports();
+      /*
+       * 已經有日期就直接顯示，
+       * 不必每次重新抓。
+       */
+
+      if (
+        reportDates.length >
+        0
+      ) {
+
+        renderHistoryDates();
+
+        return;
+
+      }
+
+
+      await loadReportDates();
 
     }
   );
@@ -4521,7 +3620,7 @@ document
   );
 
 
-async function loadReports(){
+async function loadReportDates(){
 
   const content =
     document.getElementById(
@@ -4537,27 +3636,26 @@ async function loadReports(){
     "</div>";
 
 
-  try{
+  try {
 
     const result =
       await getBackend(
-        "reports"
+        "reportDates"
       );
 
 
-    reportData =
+    reportDates =
       Array.isArray(
-        result.data &&
-        result.data.reports
+        result.data.dates
       )
-        ? result.data.reports
+        ? result.data.dates
         : [];
 
 
-    renderHistory();
+    renderHistoryDates();
 
 
-  }catch(error){
+  } catch (error) {
 
     console.error(
       error
@@ -4565,101 +3663,18 @@ async function loadReports(){
 
 
     content.innerHTML =
-      '<div class="history-empty">' +
-      t(
-        "reportLoadError"
-      ) +
-      "</div>";
+      '<div class="history-empty">日期載入失敗</div>';
 
   }
 
 }
 
 
-function groupReportsByDate(){
+/* =================================================
+   日期先顯示
+================================================= */
 
-  const groups =
-    {};
-
-
-  reportData.forEach(
-    function(report){
-
-      const date =
-        report.date ||
-        "未知日期";
-
-
-      if(
-        !groups[
-          date
-        ]
-      ){
-
-        groups[
-          date
-        ] =
-          [];
-
-      }
-
-
-      groups[
-        date
-      ].push(
-        report
-      );
-
-    }
-  );
-
-
-  return groups;
-
-}
-
-
-function formatDateLabel(
-  date
-){
-
-  if(
-    !date
-  ){
-
-    return "";
-
-  }
-
-
-  const parts =
-    date.split(
-      "-"
-    );
-
-
-  if(
-    parts.length !==
-    3
-  ){
-
-    return date;
-
-  }
-
-
-  return (
-    parts[0] +
-    "/" +
-    parts[1] +
-    "/" +
-    parts[2]
-  );
-
-}
-
-
-function renderHistory(){
+function renderHistoryDates(){
 
   const content =
     document.getElementById(
@@ -4667,33 +3682,14 @@ function renderHistory(){
     );
 
 
-  const groups =
-    groupReportsByDate();
+  content.innerHTML =
+    "";
 
 
-  const dates =
-    Object
-      .keys(
-        groups
-      )
-      .sort(
-        function(
-          a,
-          b
-        ){
-
-          return b.localeCompare(
-            a
-          );
-
-        }
-      );
-
-
-  if(
-    dates.length ===
+  if (
+    reportDates.length ===
     0
-  ){
+  ) {
 
     content.innerHTML =
       '<div class="history-empty">' +
@@ -4707,11 +3703,7 @@ function renderHistory(){
   }
 
 
-  content.innerHTML =
-    "";
-
-
-  dates.forEach(
+  reportDates.forEach(
     function(date){
 
       const day =
@@ -4724,18 +3716,28 @@ function renderHistory(){
         "history-day";
 
 
+      day.dataset.date =
+        date;
+
+
       const head =
+        document.createElement(
+          "div"
+        );
+
+
+      head.className =
+        "history-day-head";
+
+
+      const toggle =
         document.createElement(
           "button"
         );
 
 
-      head.type =
-        "button";
-
-
-      head.className =
-        "history-day-head";
+      toggle.className =
+        "history-toggle";
 
 
       const arrow =
@@ -4768,14 +3770,20 @@ function renderHistory(){
         );
 
 
+      toggle.appendChild(
+        arrow
+      );
+
+
+      toggle.appendChild(
+        dateText
+      );
+
+
       const photoButton =
         document.createElement(
           "button"
         );
-
-
-      photoButton.type =
-        "button";
 
 
       photoButton.className =
@@ -4789,39 +3797,6 @@ function renderHistory(){
         );
 
 
-      photoButton.addEventListener(
-        "click",
-        function(event){
-
-          event.stopPropagation();
-
-
-          showAllDayPhotos(
-            date,
-            groups[
-              date
-            ]
-          );
-
-        }
-      );
-
-
-      head.appendChild(
-        arrow
-      );
-
-
-      head.appendChild(
-        dateText
-      );
-
-
-      head.appendChild(
-        photoButton
-      );
-
-
       const body =
         document.createElement(
           "div"
@@ -4832,30 +3807,106 @@ function renderHistory(){
         "history-day-body";
 
 
-      groups[
-        date
-      ].forEach(
-        function(report){
+      toggle.addEventListener(
+        "click",
+        async function(){
 
-          body.appendChild(
-            createReportCard(
-              report
+          /*
+           * 已經展開就收起。
+           */
+
+          if (
+            day.classList.contains(
+              "open"
             )
+          ) {
+
+            day.classList.remove(
+              "open"
+            );
+
+            return;
+
+          }
+
+
+          day.classList.add(
+            "open"
+          );
+
+
+          /*
+           * 第一次點才載入這天。
+           */
+
+          if (
+            !reportCache[
+              date
+            ]
+          ) {
+
+            await loadReportsForDate(
+              date,
+              body
+            );
+
+          } else {
+
+            renderReportsIntoBody(
+              reportCache[
+                date
+              ],
+              body
+            );
+
+          }
+
+        }
+      );
+
+
+      photoButton.addEventListener(
+        "click",
+        async function(){
+
+          if (
+            !reportCache[
+              date
+            ]
+          ) {
+
+            day.classList.add(
+              "open"
+            );
+
+
+            await loadReportsForDate(
+              date,
+              body
+            );
+
+          }
+
+
+          showAllDayPhotos(
+            date,
+            reportCache[
+              date
+            ] ||
+            []
           );
 
         }
       );
 
 
-      head.addEventListener(
-        "click",
-        function(){
+      head.appendChild(
+        toggle
+      );
 
-          day.classList.toggle(
-            "open"
-          );
 
-        }
+      head.appendChild(
+        photoButton
       );
 
 
@@ -4880,88 +3931,102 @@ function renderHistory(){
 
 
 /* =================================================
-   照片網址
+   點日期才載入
 ================================================= */
 
-function getThumbnailUrl(
-  photo
+async function loadReportsForDate(
+  date,
+  body
 ){
 
-  if(
-    photo &&
-    photo.thumbnailUrl
-  ){
-
-    return photo.thumbnailUrl;
-
-  }
+  body.innerHTML =
+    '<div class="day-loading">' +
+    t(
+      "dayLoading"
+    ) +
+    "</div>";
 
 
-  if(
-    photo &&
-    photo.id
-  ){
+  try {
 
-    return (
-      "https://drive.google.com/thumbnail?id=" +
-      encodeURIComponent(
-        photo.id
-      ) +
-      "&sz=w320"
+    const result =
+      await getBackend(
+        "reports",
+        {
+          date:
+            date
+        }
+      );
+
+
+    const reports =
+      Array.isArray(
+        result.data.reports
+      )
+        ? result.data.reports
+        : [];
+
+
+    /*
+     * 前端快取。
+     *
+     * 同一天再次開啟
+     * 不會再叫 Apps Script。
+     */
+
+    reportCache[
+      date
+    ] =
+      reports;
+
+
+    renderReportsIntoBody(
+      reports,
+      body
     );
 
+
+  } catch (error) {
+
+    console.error(
+      error
+    );
+
+
+    body.innerHTML =
+      '<div class="history-empty">回報載入失敗</div>';
+
   }
-
-
-  return (
-    photo &&
-    photo.url
-      ? photo.url
-      : ""
-  );
 
 }
 
 
-function getFullPhotoUrl(
-  photo
+function renderReportsIntoBody(
+  reports,
+  body
 ){
 
-  if(
-    photo &&
-    photo.url
-  ){
-
-    return photo.url;
-
-  }
+  body.innerHTML =
+    "";
 
 
-  if(
-    photo &&
-    photo.id
-  ){
+  reports.forEach(
+    function(report){
 
-    return (
-      "https://drive.google.com/thumbnail?id=" +
-      encodeURIComponent(
-        photo.id
-      ) +
-      "&sz=w1600"
-    );
+      body.appendChild(
+        createReportCard(
+          report
+        )
+      );
 
-  }
-
-
-  return getThumbnailUrl(
-    photo
+    }
   );
 
 }
 
 
 /* =================================================
-   單筆回報
+   回報卡片
 ================================================= */
 
 function createReportCard(
@@ -5024,7 +4089,7 @@ function createReportCard(
     );
 
 
-  const isOK =
+  const ok =
     report.qtyStatus ===
     "正確";
 
@@ -5032,14 +4097,14 @@ function createReportCard(
   status.className =
     "report-status " +
     (
-      isOK
+      ok
         ? "ok"
         : "bad"
     );
 
 
   status.textContent =
-    isOK
+    ok
       ? "✓ 正確"
       : "✗ " +
         (
@@ -5053,9 +4118,9 @@ function createReportCard(
   );
 
 
-  if(
+  if (
     report.staff
-  ){
+  ) {
 
     main.appendChild(
       staff
@@ -5094,13 +4159,17 @@ function createReportCard(
   );
 
 
-  if(
+  /* ---------------------------------------------
+     四格小縮圖
+  --------------------------------------------- */
+
+  if (
     Array.isArray(
       report.photos
     ) &&
     report.photos.length >
     0
-  ){
+  ) {
 
     const grid =
       document.createElement(
@@ -5131,20 +4200,9 @@ function createReportCard(
           );
 
 
-        const thumbnailUrl =
-          getThumbnailUrl(
-            photo
-          );
-
-
-        const fullUrl =
-          getFullPhotoUrl(
-            photo
-          );
-
-
         img.src =
-          thumbnailUrl;
+          photo.thumbnailUrl ||
+          photo.url;
 
 
         img.loading =
@@ -5155,37 +4213,13 @@ function createReportCard(
           "async";
 
 
-        img.alt =
-          photo.name ||
-          "";
-
-
         img.addEventListener(
-          "error",
-          function(){
-
-            if(
-              fullUrl &&
-              img.src !==
-              fullUrl
-            ){
-
-              img.src =
-                fullUrl;
-
-            }
-
-          }
-        );
-
-
-        item.addEventListener(
           "click",
           function(){
 
             openLightbox(
-              fullUrl ||
-              thumbnailUrl
+              photo.url ||
+              photo.thumbnailUrl
             );
 
           }
@@ -5209,35 +4243,12 @@ function createReportCard(
       grid
     );
 
-
-  }else{
-
-    const noPhoto =
-      document.createElement(
-        "div"
-      );
-
-
-    noPhoto.className =
-      "report-no-photo";
-
-
-    noPhoto.textContent =
-      t(
-        "noPhotos"
-      );
-
-
-    card.appendChild(
-      noPhoto
-    );
-
   }
 
 
-  if(
+  if (
     report.note
-  ){
+  ) {
 
     const note =
       document.createElement(
@@ -5259,6 +4270,10 @@ function createReportCard(
 
   }
 
+
+  /*
+   * 回報人與刪除同一排
+   */
 
   const footer =
     document.createElement(
@@ -5292,7 +4307,7 @@ function createReportCard(
   );
 
 
-  if(
+  if (
     String(
       report.employee ||
       ""
@@ -5301,16 +4316,12 @@ function createReportCard(
       userName ||
       ""
     ).trim()
-  ){
+  ) {
 
     const deleteButton =
       document.createElement(
         "button"
       );
-
-
-    deleteButton.type =
-      "button";
 
 
     deleteButton.className =
@@ -5325,15 +4336,81 @@ function createReportCard(
 
     deleteButton.addEventListener(
       "click",
-      function(event){
+      async function(){
 
-        event.stopPropagation();
+        if (
+          !confirm(
+            t(
+              "deleteConfirm"
+            )
+          )
+        ) {
+
+          return;
+
+        }
 
 
-        deleteReportFromHistory(
-          report,
-          deleteButton
-        );
+        deleteButton.disabled =
+          true;
+
+
+        deleteButton.textContent =
+          t(
+            "deleting"
+          );
+
+
+        try {
+
+          await postBackend({
+
+            action:
+              "deleteReport",
+
+            row:
+              report.row,
+
+            user:
+              userName
+
+          });
+
+
+          /*
+           * 刪除後清除日期快取，
+           * 重新載入日期。
+           */
+
+          reportDates =
+            [];
+
+
+          reportCache =
+            {};
+
+
+          await loadReportDates();
+
+
+        } catch (error) {
+
+          deleteButton.disabled =
+            false;
+
+
+          deleteButton.textContent =
+            t(
+              "delete"
+            );
+
+
+          alert(
+            error.message ||
+            "刪除失敗"
+          );
+
+        }
 
       }
     );
@@ -5357,92 +4434,38 @@ function createReportCard(
 
 
 /* =================================================
-   刪除
+   日期格式
 ================================================= */
 
-async function deleteReportFromHistory(
-  report,
-  button
+function formatDateLabel(
+  date
 ){
 
-  if(
-    !confirm(
-      t(
-        "deleteConfirm"
-      )
-    )
-  ){
+  const parts =
+    String(
+      date
+    ).split(
+      "-"
+    );
 
-    return;
+
+  if (
+    parts.length !==
+    3
+  ) {
+
+    return date;
 
   }
 
 
-  button.disabled =
-    true;
-
-
-  button.textContent =
-    t(
-      "deleting"
-    );
-
-
-  try{
-
-    await postBackend({
-
-      action:
-        "deleteReport",
-
-      row:
-        report.row,
-
-      user:
-        userName
-
-    });
-
-
-    reportData =
-      reportData.filter(
-        function(item){
-
-          return (
-            item.row !==
-            report.row
-          );
-
-        }
-      );
-
-
-    renderHistory();
-
-
-  }catch(error){
-
-    console.error(
-      error
-    );
-
-
-    button.disabled =
-      false;
-
-
-    button.textContent =
-      t(
-        "delete"
-      );
-
-
-    alert(
-      error.message ||
-      "刪除失敗"
-    );
-
-  }
+  return (
+    parts[0] +
+    "/" +
+    parts[1] +
+    "/" +
+    parts[2]
+  );
 
 }
 
@@ -5456,25 +4479,21 @@ function showAllDayPhotos(
   reports
 ){
 
-  const screen =
-    document.getElementById(
-      "allPhotoScreen"
-    );
-
-
-  const title =
-    document.getElementById(
-      "allPhotoTitle"
-    );
-
-
   const grid =
     document.getElementById(
       "allPhotoGrid"
     );
 
 
-  title.textContent =
+  grid.innerHTML =
+    "";
+
+
+  document
+    .getElementById(
+      "allPhotoTitle"
+    )
+    .textContent =
     formatDateLabel(
       date
     ) +
@@ -5484,22 +4503,14 @@ function showAllDayPhotos(
     );
 
 
-  grid.innerHTML =
-    "";
-
-
-  let count =
-    0;
-
-
   reports.forEach(
     function(report){
 
-      if(
+      if (
         !Array.isArray(
           report.photos
         )
-      ){
+      ) {
 
         return;
 
@@ -5508,9 +4519,6 @@ function showAllDayPhotos(
 
       report.photos.forEach(
         function(photo){
-
-          count++;
-
 
           const item =
             document.createElement(
@@ -5528,47 +4536,13 @@ function showAllDayPhotos(
             );
 
 
-          const thumb =
-            getThumbnailUrl(
-              photo
-            );
-
-
-          const full =
-            getFullPhotoUrl(
-              photo
-            );
-
-
           img.src =
-            thumb;
+            photo.thumbnailUrl ||
+            photo.url;
 
 
           img.loading =
             "lazy";
-
-
-          img.decoding =
-            "async";
-
-
-          img.addEventListener(
-            "error",
-            function(){
-
-              if(
-                full &&
-                img.src !==
-                full
-              ){
-
-                img.src =
-                  full;
-
-              }
-
-            }
-          );
 
 
           img.addEventListener(
@@ -5576,8 +4550,8 @@ function showAllDayPhotos(
             function(){
 
               openLightbox(
-                full ||
-                thumb
+                photo.url ||
+                photo.thumbnailUrl
               );
 
             }
@@ -5600,24 +4574,13 @@ function showAllDayPhotos(
   );
 
 
-  if(
-    count ===
-    0
-  ){
-
-    grid.innerHTML =
-      '<div style="color:#aaa;padding:30px;text-align:center;grid-column:1/-1;">' +
-      t(
-        "noDayPhotos"
-      ) +
-      "</div>";
-
-  }
-
-
-  screen.classList.add(
-    "open"
-  );
+  document
+    .getElementById(
+      "allPhotoScreen"
+    )
+    .classList.add(
+      "open"
+    );
 
 }
 
@@ -5643,21 +4606,12 @@ document
 
 
 /* =================================================
-   圖片放大
+   放大
 ================================================= */
 
 function openLightbox(
   url
 ){
-
-  if(
-    !url
-  ){
-
-    return;
-
-  }
-
 
   document
     .getElementById(
@@ -5717,10 +4671,10 @@ document
     "click",
     function(event){
 
-      if(
+      if (
         event.target ===
         this
-      ){
+      ) {
 
         closeLightbox();
 
@@ -5732,13 +4686,15 @@ document
 
 /* =================================================
    啟動
+
+   大車不等 LINE
 ================================================= */
 
 async function init(){
 
-  if(
+  if (
     !currentLanguage
-  ){
+  ) {
 
     currentLanguage =
       "zh";
@@ -5747,47 +4703,64 @@ async function init(){
     applyLanguage();
 
 
-    showLanguageScreen();
+    document
+      .getElementById(
+        "languageScreen"
+      )
+      .classList.add(
+        "show"
+      );
 
 
-  }else{
+  } else {
 
     applyLanguage();
 
   }
 
 
-  document
-    .getElementById(
-      "truckSelectText"
-    )
-    .textContent =
-    "大車載入中…";
+  /*
+   * 最重要：
+   *
+   * 大車立即開始抓，
+   * 不等待 LINE Profile。
+   */
+
+  const truckPromise =
+    loadTrucks();
+
+
+  const linePromise =
+    initLIFF();
 
 
   /*
-   * 先取得 LINE 身分。
+   * 先讓大車完成。
+   */
+
+  await truckPromise;
+
+
+  /*
+   * LINE 同時已經在跑。
    */
 
   const loginOK =
-    await initLIFF();
+    await linePromise;
 
 
-  if(
-    !loginOK
-  ){
+  if (
+    loginOK
+  ) {
 
-    return;
+    /*
+     * 大車已經出來之後，
+     * 才抓人員＋自動勾選。
+     */
+
+    await loadStaff();
 
   }
-
-
-  /*
-   * 大車、人員分開取得。
-   * 大車先畫面顯示。
-   */
-
-  await loadSystemData();
 
 }
 
