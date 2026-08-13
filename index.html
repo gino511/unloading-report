@@ -2064,9 +2064,8 @@ async function loadTrucks(){
 
 function sortedTrucks(){
 
-  return truckData
-
-    .map(
+  const items =
+    truckData.map(
       function(
         truck,
         index
@@ -2078,46 +2077,63 @@ function sortedTrucks(){
             truck,
 
           originalIndex:
-            index
+            index,
+
+          fixed:
+            truck.fixed === true,
+
+          used:
+            Boolean(
+              truckLastUsed[
+                truck.name
+              ]
+            )
 
         };
 
       }
-    )
-
-    .sort(
-      function(a,b){
-
-        const fixedA =
-          a.truck.fixed ===
-          true;
+    );
 
 
-        const fixedB =
-          b.truck.fixed ===
-          true;
+  /*
+   * 先只處理「沒有固定」的大車。
+   *
+   * D欄固定的大車完全不移動位置。
+   */
 
+  const movableItems =
+    items
+      .filter(
+        function(item){
 
-        /*
-         * D 欄 TRUE 永遠置頂
-         */
-
-        if (
-          fixedA !==
-          fixedB
-        ) {
-
-          return fixedA
-            ? -1
-            : 1;
+          return !item.fixed;
 
         }
+      )
+      .sort(
+        function(a,b){
+
+          /*
+           * 未使用排前面
+           * 已使用排後面
+           */
+
+          if(
+            a.used !==
+            b.used
+          ){
+
+            return a.used
+              ? 1
+              : -1;
+
+          }
 
 
-        if (
-          fixedA &&
-          fixedB
-        ) {
+          /*
+           * 狀態相同時
+           * 維持原始順序
+           */
 
           return (
             a.originalIndex -
@@ -2125,54 +2141,48 @@ function sortedTrucks(){
           );
 
         }
+      );
 
 
-        const usedA =
-          Boolean(
-            truckLastUsed[
-              a.truck.name
-            ]
-          );
+  /*
+   * 把排序後的「可移動大車」
+   * 填回原本所有非固定位置。
+   *
+   * 固定的大車完全留在原本 index。
+   */
+
+  let movableIndex =
+    0;
 
 
-        const usedB =
-          Boolean(
-            truckLastUsed[
-              b.truck.name
-            ]
-          );
+  return items.map(
+    function(item){
 
-
-        if (
-          usedA !==
-          usedB
-        ) {
-
-          return usedA
-            ? 1
-            : -1;
-
-        }
-
-
-        return (
-          a.originalIndex -
-          b.originalIndex
-        );
-
-      }
-    )
-
-    .map(
-      function(item){
+      if(
+        item.fixed
+      ){
 
         return item.truck;
 
       }
-    );
+
+
+      const result =
+        movableItems[
+          movableIndex
+        ].truck;
+
+
+      movableIndex++;
+
+
+      return result;
+
+    }
+  );
 
 }
-
+  
 
 function renderTrucks(){
 
