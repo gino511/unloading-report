@@ -94,11 +94,6 @@ legend{
   margin-bottom:8px;
 }
 
-
-/* =========================================
-   大車
-========================================= */
-
 .truck-select-wrap{
   position:relative;
 }
@@ -213,11 +208,6 @@ legend{
   border-color:var(--ink);
 }
 
-
-/* =========================================
-   下貨人員
-========================================= */
-
 .staff-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -256,16 +246,6 @@ legend{
   line-height:1.5;
 }
 
-.line-match-hint.manual{
-  background:#eeeae0;
-  color:var(--muted);
-}
-
-
-/* =========================================
-   件數
-========================================= */
-
 .seg{
   display:flex;
   gap:8px;
@@ -294,11 +274,6 @@ legend{
   color:#fff;
 }
 
-
-/* =========================================
-   備註
-========================================= */
-
 textarea{
   width:100%;
   padding:12px;
@@ -316,11 +291,6 @@ textarea:focus{
   outline:none;
   border-color:var(--accent);
 }
-
-
-/* =========================================
-   照片
-========================================= */
 
 .photo-upload{
   border:1.5px dashed var(--line);
@@ -389,11 +359,6 @@ textarea:focus{
   margin-top:6px;
 }
 
-
-/* =========================================
-   送出
-========================================= */
-
 .submit-bar{
   position:fixed;
   left:0;
@@ -454,7 +419,6 @@ button.submit:disabled{
 
 </head>
 
-
 <body>
 
 <div class="wrap">
@@ -471,11 +435,6 @@ button.submit:disabled{
     </span>
 
   </div>
-
-
-  <!-- ============================
-       大車
-  ============================= -->
 
   <fieldset>
 
@@ -530,11 +489,6 @@ button.submit:disabled{
 
   </fieldset>
 
-
-  <!-- ============================
-       下貨人員
-  ============================= -->
-
   <fieldset>
 
     <legend>下貨人員</legend>
@@ -555,11 +509,6 @@ button.submit:disabled{
     ></div>
 
   </fieldset>
-
-
-  <!-- ============================
-       件數
-  ============================= -->
 
   <fieldset>
 
@@ -588,11 +537,6 @@ button.submit:disabled{
     </div>
 
   </fieldset>
-
-
-  <!-- ============================
-       照片
-  ============================= -->
 
   <fieldset>
 
@@ -624,11 +568,6 @@ button.submit:disabled{
 
   </fieldset>
 
-
-  <!-- ============================
-       備註
-  ============================= -->
-
   <fieldset>
 
     <legend>備註（選填）</legend>
@@ -641,11 +580,6 @@ button.submit:disabled{
   </fieldset>
 
 </div>
-
-
-<!-- ================================
-     送出
-================================= -->
 
 <div class="submit-bar">
 
@@ -666,7 +600,6 @@ button.submit:disabled{
   </div>
 
 </div>
-
 
 <script>
 
@@ -705,7 +638,9 @@ let selectedTrucks = new Set();
 function setStatus(msg,type){
 
   const el =
-    document.getElementById("statusMsg");
+    document.getElementById(
+      "statusMsg"
+    );
 
   el.textContent =
     msg;
@@ -755,12 +690,24 @@ async function initLIFF(){
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "LIFF 初始化失敗：",
+      error
+    );
 
     document.getElementById(
       "whoami"
     ).textContent =
       "LINE 登入失敗";
+
+    setStatus(
+      "LINE 登入失敗：" +
+      (
+        error.message ||
+        error
+      ),
+      "err"
+    );
 
     return false;
   }
@@ -786,8 +733,20 @@ async function loadSystemData(){
         }
       );
 
+
+    if(!response.ok){
+
+      throw new Error(
+        "後端 HTTP " +
+        response.status
+      );
+
+    }
+
+
     const text =
       await response.text();
+
 
     let result;
 
@@ -808,6 +767,7 @@ async function loadSystemData(){
       );
     }
 
+
     if(!result.success){
 
       throw new Error(
@@ -817,33 +777,31 @@ async function loadSystemData(){
     }
 
 
-    /* =========================================
-       大車
-    ========================================= */
+    const data =
+      result.data || {};
+
 
     truckData =
       Array.isArray(
-        result.data.trucks
+        data.trucks
       )
-        ? result.data.trucks
+        ? data.trucks
         : [];
 
+
     truckLastUsed =
-      result.data.truckLastUsed || {};
+      data.truckLastUsed || {};
 
-    renderTrucks();
-
-
-    /* =========================================
-       下貨人員
-    ========================================= */
 
     staffData =
       Array.isArray(
-        result.data.staff
+        data.staff
       )
-        ? result.data.staff
+        ? data.staff
         : [];
+
+
+    renderTrucks();
 
     renderStaff();
 
@@ -852,7 +810,11 @@ async function loadSystemData(){
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "讀取系統資料失敗：",
+      error
+    );
+
 
     document.getElementById(
       "truckList"
@@ -863,10 +825,12 @@ async function loadSystemData(){
       </div>
       `;
 
+
     document.getElementById(
       "truckSelectButton"
     ).textContent =
       "大車資料載入失敗";
+
 
     document.getElementById(
       "staffGrid"
@@ -877,10 +841,16 @@ async function loadSystemData(){
       </div>
       `;
 
+
     setStatus(
-      "無法連接系統，請確認 Apps Script 部署網址",
+      "無法連接系統：" +
+      (
+        error.message ||
+        error
+      ),
       "err"
     );
+
   }
 }
 
@@ -944,7 +914,7 @@ function formatTruckTime(value){
 
 
 /* =================================================
-   大車最後使用資料
+   大車最後使用
 ================================================= */
 
 function getTruckUsage(truckName){
@@ -965,37 +935,23 @@ function getTruckUsage(truckName){
   }
 
   return {
+
     time:
-      formatTruckTime(data.time),
+      formatTruckTime(
+        data.time
+      ),
 
     staff:
       String(
         data.staff || ""
       ).trim()
+
   };
 }
 
 
 /* =================================================
    大車排序
- *
- * 排序規則：
- *
- * 1. D 欄固定 = TRUE
- *    → 永遠置頂
- *
- * 2. 固定大車彼此
- *    → 保持試算表原本順序
- *
- * 3. 非固定大車
- *    → 今天尚未使用的在前
- *
- * 4. 已使用的大車在後
- *
- * 5. 同一類別保持試算表原本順序
- *
- * 注意：
- * 固定只影響排序，不顯示任何「固定」文字。
 ================================================= */
 
 function sortedTrucks(){
@@ -1027,8 +983,6 @@ function sortedTrucks(){
           truckB.fixed === true;
 
 
-        /* 固定永遠置頂 */
-
         if(
           fixedA !== fixedB
         ){
@@ -1038,11 +992,6 @@ function sortedTrucks(){
             : 1;
         }
 
-
-        /*
-         * 如果兩台都是固定：
-         * 保持原本試算表順序
-         */
 
         if(
           fixedA &&
@@ -1056,11 +1005,6 @@ function sortedTrucks(){
         }
 
 
-        /*
-         * 非固定車：
-         * 今天沒使用的在前
-         */
-
         const usageA =
           getTruckUsage(
             truckA.name
@@ -1070,6 +1014,7 @@ function sortedTrucks(){
           getTruckUsage(
             truckB.name
           );
+
 
         const usedA =
           Boolean(
@@ -1093,11 +1038,6 @@ function sortedTrucks(){
             : -1;
         }
 
-
-        /*
-         * 同樣已使用或同樣未使用：
-         * 保持試算表原本順序
-         */
 
         return (
           a.originalIndex -
@@ -1134,6 +1074,7 @@ function renderTrucks(){
 
   list.innerHTML = "";
 
+
   const trucks =
     sortedTrucks();
 
@@ -1162,11 +1103,13 @@ function renderTrucks(){
           truck.name
         );
 
+
       const isUsed =
         Boolean(
           usage &&
           usage.staff
         );
+
 
       const checked =
         selectedTrucks.has(
@@ -1178,6 +1121,7 @@ function renderTrucks(){
         document.createElement(
           "label"
         );
+
 
       label.className =
         "truck-option" +
@@ -1193,11 +1137,14 @@ function renderTrucks(){
           "input"
         );
 
+
       checkbox.type =
         "checkbox";
 
+
       checkbox.value =
         truck.name;
+
 
       checkbox.checked =
         checked;
@@ -1220,6 +1167,7 @@ function renderTrucks(){
             selectedTrucks.delete(
               truck.name
             );
+
           }
 
           updateTruckButtonText();
@@ -1233,8 +1181,10 @@ function renderTrucks(){
           "span"
         );
 
+
       name.className =
         "truck-name";
+
 
       name.textContent =
         truck.name;
@@ -1249,10 +1199,6 @@ function renderTrucks(){
       );
 
 
-      /*
-       * 已使用大車顯示最後下貨人員
-       */
-
       if(
         isUsed &&
         usage.staff
@@ -1263,29 +1209,24 @@ function renderTrucks(){
             "span"
           );
 
+
         staffTag.className =
           "used-staff";
+
 
         staffTag.textContent =
           usage.staff;
 
+
         staffTag.title =
           usage.staff;
+
 
         label.appendChild(
           staffTag
         );
+
       }
-
-
-      /*
-       * 注意：
-       *
-       * 這裡刻意沒有建立「固定」標籤。
-       *
-       * D 欄固定只負責排序，
-       * 使用者畫面不顯示。
-       */
 
 
       list.appendChild(
@@ -1297,6 +1238,7 @@ function renderTrucks(){
 
 
   updateTruckButtonText();
+
 }
 
 
@@ -1310,6 +1252,7 @@ function updateTruckButtonText(){
     document.getElementById(
       "truckSelectButton"
     );
+
 
   const names =
     Array.from(
@@ -1340,16 +1283,12 @@ function updateTruckButtonText(){
     names.length +
     " 台：" +
     names.join("、");
+
 }
 
 
 /* =================================================
    下貨人員
- *
- * A = ID
- * B = 姓名
- * C = 啟用
- * D = LINE 名稱
 ================================================= */
 
 function renderStaff(){
@@ -1358,6 +1297,7 @@ function renderStaff(){
     document.getElementById(
       "staffGrid"
     );
+
 
   grid.innerHTML = "";
 
@@ -1383,8 +1323,10 @@ function renderStaff(){
           "label"
         );
 
+
       label.className =
         "staff-item";
+
 
       label.dataset.staffName =
         staff.name;
@@ -1395,8 +1337,10 @@ function renderStaff(){
           "input"
         );
 
+
       checkbox.type =
         "checkbox";
+
 
       checkbox.value =
         staff.name;
@@ -1406,6 +1350,7 @@ function renderStaff(){
         document.createElement(
           "span"
         );
+
 
       span.textContent =
         staff.name;
@@ -1428,6 +1373,7 @@ function renderStaff(){
         checkbox
       );
 
+
       label.appendChild(
         span
       );
@@ -1439,27 +1385,12 @@ function renderStaff(){
 
     }
   );
+
 }
 
 
 /* =================================================
-   LINE 名稱自動對應
- *
- * Apps Script：
- *
- * 下貨人員
- * A = ID
- * B = 姓名
- * C = 啟用
- * D = LINE 名稱
- *
- * 例如：
- *
- * A001 | 阿賢 | TRUE | Gino
- *
- * LINE 登入名稱 = Gino
- *
- * → 自動勾選「阿賢」
+   LINE 自動對應
 ================================================= */
 
 function autoMatchLineStaff(){
@@ -1502,6 +1433,7 @@ function autoMatchLineStaff(){
             .trim()
             .toLowerCase();
 
+
         return (
           lineName &&
           lineName === currentUser
@@ -1541,6 +1473,7 @@ function autoMatchLineStaff(){
 
         target =
           input;
+
       }
 
     }
@@ -1568,14 +1501,17 @@ function autoMatchLineStaff(){
     item.classList.add(
       "selected"
     );
+
   }
 
 
   hint.style.display =
     "block";
 
+
   hint.className =
     "line-match-hint";
+
 
   hint.textContent =
     "LINE 使用者「" +
@@ -1583,6 +1519,7 @@ function autoMatchLineStaff(){
     "」已自動對應下貨人員「" +
     matched.name +
     "」";
+
 }
 
 
@@ -1646,10 +1583,6 @@ document
   );
 
 
-/* =========================================
-   點外面關閉
-========================================= */
-
 document.addEventListener(
   "click",
   function(event){
@@ -1674,6 +1607,7 @@ document.addEventListener(
         .remove(
           "open"
         );
+
     }
 
   }
@@ -1822,6 +1756,7 @@ function compressImage(
 
     }
   );
+
 }
 
 
@@ -1836,6 +1771,7 @@ function renderPhotoGrid(){
       "photoGrid"
     );
 
+
   grid.innerHTML = "";
 
 
@@ -1847,6 +1783,7 @@ function renderPhotoGrid(){
           "div"
         );
 
+
       div.className =
         "thumb";
 
@@ -1855,6 +1792,7 @@ function renderPhotoGrid(){
         document.createElement(
           "img"
         );
+
 
       img.src =
         photo;
@@ -1865,11 +1803,14 @@ function renderPhotoGrid(){
           "button"
         );
 
+
       remove.className =
         "rm";
 
+
       remove.type =
         "button";
+
 
       remove.textContent =
         "✕";
@@ -1884,6 +1825,7 @@ function renderPhotoGrid(){
             1
           );
 
+
           renderPhotoGrid();
 
         }
@@ -1893,6 +1835,7 @@ function renderPhotoGrid(){
       div.appendChild(
         img
       );
+
 
       div.appendChild(
         remove
@@ -1905,6 +1848,7 @@ function renderPhotoGrid(){
 
     }
   );
+
 }
 
 
@@ -1967,6 +1911,7 @@ document
 
         renderPhotoGrid();
 
+
         setStatus(
           "",
           ""
@@ -1975,7 +1920,11 @@ document
 
       }catch(error){
 
-        console.error(error);
+        console.error(
+          "照片處理失敗：",
+          error
+        );
+
 
         setStatus(
           "照片處理失敗",
@@ -2008,6 +1957,98 @@ function getSelectedStaff(){
 
     }
   );
+
+}
+
+
+/* =================================================
+   POST 送出
+ *
+ * 注意：
+ *
+ * Apps Script Web App 使用 text/plain
+ * 避免瀏覽器 CORS preflight。
+ *
+ * 這裡不再使用 no-cors。
+ *
+ * 這樣才能知道 Apps Script 到底有沒有成功。
+================================================= */
+
+async function submitReport(payload){
+
+  const response =
+    await fetch(
+      BACKEND_URL,
+      {
+        method:"POST",
+
+        headers:{
+          "Content-Type":
+            "text/plain;charset=utf-8"
+        },
+
+        body:
+          JSON.stringify(
+            payload
+          )
+
+      }
+    );
+
+
+  if(!response.ok){
+
+    throw new Error(
+      "Apps Script HTTP " +
+      response.status
+    );
+
+  }
+
+
+  const text =
+    await response.text();
+
+
+  let result;
+
+
+  try{
+
+    result =
+      JSON.parse(
+        text
+      );
+
+  }catch(error){
+
+    console.error(
+      "Apps Script 回傳內容：",
+      text
+    );
+
+
+    throw new Error(
+      "Apps Script 沒有回傳正確 JSON"
+    );
+
+  }
+
+
+  if(
+    !result.success
+  ){
+
+    throw new Error(
+      result.error ||
+      "Apps Script 儲存失敗"
+    );
+
+  }
+
+
+  return result;
+
 }
 
 
@@ -2054,7 +2095,9 @@ document
           .trim();
 
 
-      if(trucks.length === 0){
+      if(
+        trucks.length === 0
+      ){
 
         setStatus(
           "請至少選擇1台大車",
@@ -2065,7 +2108,9 @@ document
       }
 
 
-      if(staff.length === 0){
+      if(
+        staff.length === 0
+      ){
 
         setStatus(
           "請至少選擇1位下貨人員",
@@ -2076,7 +2121,9 @@ document
       }
 
 
-      if(photos.length === 0){
+      if(
+        photos.length === 0
+      ){
 
         setStatus(
           "請至少上傳1張照片",
@@ -2130,31 +2177,34 @@ document
 
       try{
 
-        await fetch(
-          BACKEND_URL,
-          {
-            method:"POST",
-            mode:"no-cors",
-            headers:{
-              "Content-Type":
-                "text/plain;charset=utf-8"
-            },
-            body:
-              JSON.stringify(
-                payload
-              )
-          }
+        /*
+         * 真正等待 Apps Script 回傳。
+         *
+         * 只有 Apps Script 回傳
+         * success:true
+         * 才顯示「已送出回報」。
+         */
+
+        const result =
+          await submitReport(
+            payload
+          );
+
+
+        console.log(
+          "回報成功：",
+          result
         );
 
 
         setStatus(
-          "✓ 已送出回報",
+          "✓ 已成功寫入回報紀錄",
           "ok"
         );
 
 
         /*
-         * 立即更新畫面上的今日使用狀態
+         * 更新畫面上的今日使用狀態
          */
 
         trucks.forEach(
@@ -2176,27 +2226,15 @@ document
         );
 
 
-        /*
-         * 清除大車
-         */
-
         selectedTrucks.clear();
 
         renderTrucks();
 
 
-        /*
-         * 清除照片
-         */
-
         photos = [];
 
         renderPhotoGrid();
 
-
-        /*
-         * 清除備註
-         */
 
         document
           .getElementById(
@@ -2204,10 +2242,6 @@ document
           )
           .value = "";
 
-
-        /*
-         * 清除下貨人員
-         */
 
         document
           .querySelectorAll(
@@ -2219,35 +2253,33 @@ document
               input.checked =
                 false;
 
-              input
-                .closest(
+
+              const item =
+                input.closest(
                   ".staff-item"
-                )
-                .classList
-                .remove(
+                );
+
+
+              if(item){
+
+                item.classList.remove(
                   "selected"
                 );
+
+              }
 
             }
           );
 
 
-        /*
-         * 清除 LINE 自動對應提示
-         */
-
-        const hint =
-          document.getElementById(
+        document
+          .getElementById(
             "lineMatchHint"
-          );
-
-        hint.style.display =
+          )
+          .style
+          .display =
           "none";
 
-
-        /*
-         * 重置件數
-         */
 
         document
           .querySelectorAll(
@@ -2279,10 +2311,6 @@ document
         }
 
 
-        /*
-         * 關閉大車下拉
-         */
-
         document
           .getElementById(
             "truckDropdown"
@@ -2294,7 +2322,7 @@ document
 
 
         /*
-         * LINE App 內自動關閉
+         * 只有確定成功後才關閉 LINE。
          */
 
         setTimeout(
@@ -2313,7 +2341,9 @@ document
 
             }catch(error){
 
-              console.log(error);
+              console.log(
+                error
+              );
 
             }
 
@@ -2324,12 +2354,27 @@ document
 
       }catch(error){
 
-        console.error(error);
+        console.error(
+          "送出失敗：",
+          error
+        );
+
+
+        /*
+         * 失敗時絕對不清除資料。
+         *
+         * 讓員工可以直接重新送出。
+         */
 
         setStatus(
-          "送出失敗，請檢查網路後重試",
+          "❌ 送出失敗：" +
+          (
+            error.message ||
+            error
+          ),
           "err"
         );
+
 
         button.disabled =
           false;
