@@ -2197,40 +2197,22 @@ async function getBackend(
 
 /* =================================================
    系統資料
-   大車與人員同時抓
-   但大車先處理、先顯示
+   真正先顯示大車
+   大車完成後才開始抓人員
 ================================================= */
 
 async function loadSystemData(){
 
-  /*
-   * 兩個請求一起開始。
-   *
-   * 這樣不需要等大車抓完
-   * 才開始抓下貨人員。
-   */
-
-  const truckPromise =
-    getBackend(
-      "trucks"
-    );
-
-
-  const staffPromise =
-    getBackend(
-      "staff"
-    );
-
-
-  /*
-   * 先等大車。
-   * 大車一回來立即顯示。
-   */
+  /* =================================================
+     1. 先抓大車
+  ================================================= */
 
   try{
 
     const truckResult =
-      await truckPromise;
+      await getBackend(
+        "trucks"
+      );
 
 
     const truckInfo =
@@ -2251,7 +2233,34 @@ async function loadSystemData(){
       {};
 
 
+    /*
+     * 大車資料一回來
+     * 立刻顯示
+     */
+
     renderTrucks();
+
+
+    /*
+     * 強制讓瀏覽器先把「大車」畫到畫面
+     * 不要馬上接著跑人員
+     */
+
+    await new Promise(
+      function(resolve){
+
+        requestAnimationFrame(
+          function(){
+
+            requestAnimationFrame(
+              resolve
+            );
+
+          }
+        );
+
+      }
+    );
 
 
   }catch(error){
@@ -2284,15 +2293,17 @@ async function loadSystemData(){
   }
 
 
-  /*
-   * 大車處理完後，
-   * 再處理已經同時在背景請求的人員資料。
-   */
+  /* =================================================
+     2. 大車已經顯示後
+        才開始抓下貨人員
+  ================================================= */
 
   try{
 
     const staffResult =
-      await staffPromise;
+      await getBackend(
+        "staff"
+      );
 
 
     const staffInfo =
@@ -2308,13 +2319,16 @@ async function loadSystemData(){
         : [];
 
 
+    /*
+     * 顯示人員
+     */
+
     renderStaff();
 
 
     /*
-     * LINE 比對只需要 staffData。
-     * 所以人員一出來後才做，
-     * 不再卡住大車。
+     * 人員出來後
+     * 才比對 LINE
      */
 
     autoMatchLineStaff();
