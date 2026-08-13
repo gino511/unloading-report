@@ -2128,19 +2128,42 @@ function sortedTrucks(){
 
   /*
    * D欄固定的車：
-   * 永遠留在工作表原本的位置，完全不參加排序。
+   * 不代表固定原本位置，也不是固定最上面。
    *
-   * D欄未固定的車：
-   * 未使用排前、已使用排後，
-   * 但只在其他「非固定位置」之間移動。
+   * 它的意思是：
+   * 就算今天已經使用過，也仍然視為「未使用」來排序。
+   *
+   * 因此：
+   * - 一般未使用車在前
+   * - D欄固定車也在前
+   * - 一般已使用車排到後面
+   * - 同一群內維持工作表原本順序
+   *
+   * 例如原本：1、2、3、4
+   * 2、3 已使用，4 有勾固定
+   * 結果：1、4、2、3
    */
 
-  const items =
-    truckData.map(
+  return truckData
+    .map(
       function(
         truck,
         index
       ){
+
+        const fixed =
+          isTruckFixed(
+            truck
+          );
+
+
+        const used =
+          Boolean(
+            truckLastUsed[
+              truck.name
+            ]
+          );
+
 
         return {
 
@@ -2150,90 +2173,49 @@ function sortedTrucks(){
           originalIndex:
             index,
 
-          fixed:
-            isTruckFixed(
-              truck
-            ),
-
-          used:
-            Boolean(
-              truckLastUsed[
-                truck.name
-              ]
-            )
+          /*
+           * fixed=true 時，
+           * 即使真的用過也不算進「已使用後移」群組。
+           */
+          sortAsUsed:
+            used && !fixed
 
         };
 
       }
-    );
+    )
+    .sort(
+      function(a,b){
 
+        if(
+          a.sortAsUsed !==
+          b.sortAsUsed
+        ){
 
-  const movableItems =
-    items
-      .filter(
-        function(item){
-
-          return !item.fixed;
-
-        }
-      )
-      .sort(
-        function(a,b){
-
-          if(
-            a.used !==
-            b.used
-          ){
-
-            return a.used
-              ? 1
-              : -1;
-
-          }
-
-
-          return (
-            a.originalIndex -
-            b.originalIndex
-          );
+          return a.sortAsUsed
+            ? 1
+            : -1;
 
         }
-      );
 
 
-  let movableIndex =
-    0;
+        return (
+          a.originalIndex -
+          b.originalIndex
+        );
 
-
-  return items.map(
-    function(item){
-
-      if(
-        item.fixed
-      ){
+      }
+    )
+    .map(
+      function(item){
 
         return item.truck;
 
       }
-
-
-      const result =
-        movableItems[
-          movableIndex
-        ].truck;
-
-
-      movableIndex++;
-
-
-      return result;
-
-
-    }
-  );
+    );
 
 }
-  
+
 
 function renderTrucks(){
 
