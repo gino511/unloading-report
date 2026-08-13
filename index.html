@@ -808,15 +808,25 @@ textarea{
 
 /* =================================================
    卡片底部
+   日期 / 回報人 / 狀態 / 編輯 / 刪除 同一行
 ================================================= */
 
 .report-footer{
   display:flex;
   align-items:center;
-  gap:6px;
+  gap:5px;
+  width:100%;
   margin-top:10px;
   padding-top:8px;
   border-top:1px solid #eee;
+  white-space:nowrap;
+  overflow:hidden;
+}
+
+.report-footer-time{
+  flex-shrink:0;
+  color:#9a988c;
+  font-size:10px;
 }
 
 .report-employee{
@@ -825,22 +835,41 @@ textarea{
   text-overflow:ellipsis;
   white-space:nowrap;
   color:#8a8879;
-  font-size:11px;
+  font-size:10px;
+}
+
+.report-footer .report-status{
+  flex-shrink:0;
+  margin-left:0;
+  font-size:10px;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.report-footer .report-status.ok{
+  color:var(--accent);
+}
+
+.report-footer .report-status.bad{
+  color:var(--warn);
 }
 
 .report-actions{
   display:flex;
-  gap:5px;
+  flex-shrink:0;
+  gap:4px;
   margin-left:auto;
 }
 
 .report-edit,
 .report-delete{
-  padding:6px 9px;
+  flex-shrink:0;
+  padding:5px 7px;
   border:1px solid var(--line);
-  border-radius:8px;
+  border-radius:7px;
   background:#fff;
-  font-size:11px;
+  font-size:10px;
+  white-space:nowrap;
 }
 
 .report-edit{
@@ -4897,53 +4926,7 @@ function createReportCard(
     main
   );
 
-
-  const time =
-  document.createElement(
-    "div"
-  );
-
-
-time.className =
-  "report-time";
-
-
-/*
- * 顯示真正日期＋時間。
- *
- * 跨日凌晨也會清楚知道
- * 實際是哪一天。
- */
-
-if (
-  report.actualDate
-) {
-
-  time.textContent =
-    formatDateLabel(
-      report.actualDate
-    ) +
-    " " +
-    (
-      report.time ||
-      ""
-    );
-
-
-} else {
-
-  time.textContent =
-    report.time ||
-    "";
-
-}
-
-
-card.appendChild(
-  time
-);
-
-
+  
   if (
     Array.isArray(
       report.photos
@@ -5053,210 +5036,320 @@ card.appendChild(
 
 
   const footer =
-    document.createElement(
-      "div"
-    );
-
-
-  footer.className =
-    "report-footer";
-
-
-  const employee =
-    document.createElement(
-      "div"
-    );
-
-
-  employee.className =
-    "report-employee";
-
-
-  employee.textContent =
-    report.employee
-      ? "回報人：" +
-        report.employee
-      : "";
-
-
-  footer.appendChild(
-    employee
+  document.createElement(
+    "div"
   );
 
 
-  if (
+footer.className =
+  "report-footer";
+
+
+/*
+ * =============================================
+ * 日期＋時間
+ *
+ * 如果後端有 actualDate，
+ * 就使用真正跨日後的日期。
+ *
+ * 否則使用原本工作日日期。
+ * =============================================
+ */
+
+const footerTime =
+  document.createElement(
+    "div"
+  );
+
+
+footerTime.className =
+  "report-footer-time";
+
+
+const displayDate =
+  report.actualDate ||
+  report.date ||
+  "";
+
+
+let shortDate =
+  "";
+
+
+if(
+  displayDate
+){
+
+  const dateParts =
     String(
-      report.employee ||
-      ""
-    ).trim() ===
-    String(
-      userName ||
-      ""
-    ).trim()
-  ) {
-
-    const actions =
-      document.createElement(
-        "div"
-      );
-
-
-    actions.className =
-      "report-actions";
-
-
-    const editButton =
-      document.createElement(
-        "button"
-      );
-
-
-    editButton.type =
-      "button";
-
-
-    editButton.className =
-      "report-edit";
-
-
-    editButton.textContent =
-      t(
-        "edit"
-      );
-
-
-    editButton.addEventListener(
-      "click",
-      function(){
-
-        startEditReport(
-          report
-        );
-
-      }
+      displayDate
+    ).split(
+      "-"
     );
 
 
-    const deleteButton =
-      document.createElement(
-        "button"
+  if(
+    dateParts.length === 3
+  ){
+
+    shortDate =
+      dateParts[1] +
+      "/" +
+      dateParts[2];
+
+  }else{
+
+    shortDate =
+      displayDate;
+
+  }
+
+}
+
+
+footerTime.textContent =
+  (
+    shortDate
+      ? shortDate + " "
+      : ""
+  ) +
+  (
+    report.time
+      ? String(
+          report.time
+        ).substring(
+          0,
+          5
+        )
+      : ""
+  );
+
+
+footer.appendChild(
+  footerTime
+);
+
+
+/*
+ * =============================================
+ * 回報人
+ * =============================================
+ */
+
+const employee =
+  document.createElement(
+    "div"
+  );
+
+
+employee.className =
+  "report-employee";
+
+
+employee.textContent =
+  report.employee
+    ? "回報人：" +
+      report.employee
+    : "";
+
+
+footer.appendChild(
+  employee
+);
+
+
+/*
+ * =============================================
+ * 件數狀態
+ * 正確 / 有多有少
+ * =============================================
+ */
+
+footer.appendChild(
+  status
+);
+
+
+/*
+ * =============================================
+ * 只有本人顯示：
+ * 編輯 / 刪除
+ * =============================================
+ */
+
+if(
+  String(
+    report.employee ||
+    ""
+  ).trim() ===
+  String(
+    userName ||
+    ""
+  ).trim()
+){
+
+  const actions =
+    document.createElement(
+      "div"
+    );
+
+
+  actions.className =
+    "report-actions";
+
+
+  const editButton =
+    document.createElement(
+      "button"
+    );
+
+
+  editButton.type =
+    "button";
+
+
+  editButton.className =
+    "report-edit";
+
+
+  editButton.textContent =
+    t(
+      "edit"
+    );
+
+
+  editButton.addEventListener(
+    "click",
+    function(){
+
+      startEditReport(
+        report
       );
 
-
-    deleteButton.type =
-      "button";
-
-
-    deleteButton.className =
-      "report-delete";
+    }
+  );
 
 
-    deleteButton.textContent =
-      t(
-        "delete"
-      );
+  const deleteButton =
+    document.createElement(
+      "button"
+    );
 
 
-    deleteButton.addEventListener(
-      "click",
-      async function(){
+  deleteButton.type =
+    "button";
 
-        if (
-          !confirm(
-            t(
-              "deleteConfirm"
-            )
+
+  deleteButton.className =
+    "report-delete";
+
+
+  deleteButton.textContent =
+    t(
+      "delete"
+    );
+
+
+  deleteButton.addEventListener(
+    "click",
+    async function(){
+
+      if(
+        !confirm(
+          t(
+            "deleteConfirm"
           )
-        ) {
+        )
+      ){
 
-          return;
+        return;
 
-        }
+      }
 
+
+      deleteButton.disabled =
+        true;
+
+
+      deleteButton.textContent =
+        t(
+          "deleting"
+        );
+
+
+      try{
+
+        await postBackend({
+
+          action:
+            "deleteReport",
+
+          row:
+            report.row,
+
+          user:
+            userName
+
+        });
+
+
+        reportDates =
+          [];
+
+
+        reportCache =
+          {};
+
+
+        await loadReportDates();
+
+
+        await loadTrucks();
+
+
+      }catch(error){
 
         deleteButton.disabled =
-          true;
+          false;
 
 
         deleteButton.textContent =
           t(
-            "deleting"
+            "delete"
           );
 
 
-        try {
-
-          await postBackend({
-
-            action:
-              "deleteReport",
-
-            row:
-              report.row,
-
-            user:
-              userName
-
-          });
-
-
-          reportDates =
-            [];
-
-
-          reportCache =
-            {};
-
-
-          await loadReportDates();
-
-
-          await loadTrucks();
-
-
-        } catch (error) {
-
-          deleteButton.disabled =
-            false;
-
-
-          deleteButton.textContent =
-            t(
-              "delete"
-            );
-
-
-          alert(
-            error.message ||
-            "刪除失敗"
-          );
-
-        }
+        alert(
+          error.message ||
+          "刪除失敗"
+        );
 
       }
-    );
 
-
-    actions.appendChild(
-      editButton
-    );
-
-
-    actions.appendChild(
-      deleteButton
-    );
-
-
-    footer.appendChild(
-      actions
-    );
-
-  }
-
-
-  card.appendChild(
-    footer
+    }
   );
+
+
+  actions.appendChild(
+    editButton
+  );
+
+
+  actions.appendChild(
+    deleteButton
+  );
+
+
+  footer.appendChild(
+    actions
+  );
+
+}
+
+
+card.appendChild(
+  footer
+);
 
 
   return card;
