@@ -1009,7 +1009,8 @@ textarea:focus{
 
 
 /* =================================================
-   四格縮圖
+   回報紀錄照片
+   四格、無外框、直接填滿
 ================================================= */
 
 .report-photos{
@@ -1037,10 +1038,10 @@ textarea:focus{
 
   overflow:hidden;
 
-  border:1px solid var(--line);
+  border:none;
   border-radius:7px;
 
-  background:#f2f0e8;
+  background:transparent;
 
   cursor:pointer;
 }
@@ -1051,7 +1052,7 @@ textarea:focus{
 
   display:block;
 
-  object-fit:contain;
+  object-fit:cover;
 }
 
 .report-photo.loading::after{
@@ -1062,7 +1063,7 @@ textarea:focus{
   width:14px;
   height:14px;
 
-  border:2px solid #d8d3c4;
+  border:2px solid rgba(255,255,255,.7);
   border-top-color:var(--accent);
   border-radius:50%;
 
@@ -1132,7 +1133,8 @@ textarea:focus{
 
 
 /* =================================================
-   當日照片
+   當日全部照片
+   三格、無外框、直接填滿
 ================================================= */
 
 .all-photo-screen{
@@ -1197,23 +1199,35 @@ textarea:focus{
   display:grid;
 
   grid-template-columns:
-    repeat(2,1fr);
+    repeat(3,minmax(0,1fr));
 
-  gap:8px;
+  gap:6px;
 }
 
 .all-photo-item{
+  position:relative;
+
+  width:100%;
+
+  aspect-ratio:1;
+
   overflow:hidden;
 
-  border-radius:8px;
+  border:none;
+  border-radius:7px;
 
-  background:#111;
+  background:transparent;
+
+  cursor:pointer;
 }
 
 .all-photo-item img{
   width:100%;
+  height:100%;
 
   display:block;
+
+  object-fit:cover;
 }
 
 
@@ -1936,271 +1950,103 @@ const translations = {
 
   zh:{
 
-    title:
-      "竹北托運 下貨回報",
-
-    truck:
-      "大車",
-
-    staff:
-      "下貨人員",
-
-    qty:
-      "件數是否正確",
-
-    qtyOk:
-      "✓ 件數正確",
-
-    qtyBad:
-      "✗ 有多有少",
-
-    photo:
-      "照片",
-
-    uploadPhoto:
-      "點此上傳照片（可一次選多張）",
-
-    photoHint:
-      "至少上傳1張，可拍照或從相簿選取多張",
-
-    note:
-      "備註（選填）",
-
-    notePlaceholder:
-      "有多有少的原因、異常說明等",
-
-    submit:
-      "送出回報",
-
-    clear:
-      "清除",
-
-    done:
-      "完成",
-
-    historyTitle:
-      "回報紀錄",
-
-    close:
-      "關閉",
-
-    viewTodayPhotos:
-      "查看當日照片",
-
-    noPhotos:
-      "這筆回報沒有照片",
-
-    noHistory:
-      "目前沒有回報紀錄",
-
-    historyLoading:
-      "回報紀錄載入中…",
-
-    delete:
-      "刪除",
-
-    deleteConfirm:
-      "確定要刪除這筆回報嗎？",
-
-    deleting:
-      "刪除中…",
-
-    reportLoadError:
-      "回報紀錄載入失敗",
-
-    allPhotos:
-      "當日全部照片",
-
-    noDayPhotos:
-      "這天沒有照片",
-
-    stageProcess:
-      "處理",
-
-    stageCompress:
-      "壓縮",
-
-    stageUpload:
-      "上傳",
-
-    processingPhoto:
-      "照片處理中",
-
-    compressingPhoto:
-      "照片壓縮中",
-
-    preparingUpload:
-      "準備上傳…",
-
-    uploading:
-      "照片傳送中…",
-
-    serverProcessing:
-      "照片已傳送，系統寫入中…",
-
-    success:
-      "✓ 已成功寫入回報紀錄",
-
-    uploadFail:
-      "照片處理失敗",
-
-    needTruck:
-      "請至少選擇1台大車",
-
-    needStaff:
-      "請至少選擇1位下貨人員",
-
-    needPhoto:
-      "請至少上傳1張照片",
-
-    lineMatch:
-      "LINE 使用者「{user}」已自動對應下貨人員「{staff}」",
-
-    connectionFail:
-      "無法連接系統：",
-
-    languageName:
-      "中文"
+    title:"竹北托運 下貨回報",
+    truck:"大車",
+    staff:"下貨人員",
+    qty:"件數是否正確",
+    qtyOk:"✓ 件數正確",
+    qtyBad:"✗ 有多有少",
+    photo:"照片",
+    uploadPhoto:"點此上傳照片（可一次選多張）",
+    photoHint:"至少上傳1張，可拍照或從相簿選取多張",
+    note:"備註（選填）",
+    notePlaceholder:"有多有少的原因、異常說明等",
+    submit:"送出回報",
+    clear:"清除",
+    done:"完成",
+    historyTitle:"回報紀錄",
+    close:"關閉",
+    viewTodayPhotos:"查看當日照片",
+    noPhotos:"這筆回報沒有照片",
+    noHistory:"目前沒有回報紀錄",
+    historyLoading:"回報紀錄載入中…",
+    delete:"刪除",
+    deleteConfirm:"確定要刪除這筆回報嗎？",
+    deleting:"刪除中…",
+    reportLoadError:"回報紀錄載入失敗",
+    allPhotos:"當日全部照片",
+    noDayPhotos:"這天沒有照片",
+    stageProcess:"處理",
+    stageCompress:"壓縮",
+    stageUpload:"上傳",
+    processingPhoto:"照片處理中",
+    compressingPhoto:"照片壓縮中",
+    preparingUpload:"準備上傳…",
+    uploading:"照片傳送中…",
+    serverProcessing:"照片已傳送，系統寫入中…",
+    success:"✓ 已成功寫入回報紀錄",
+    uploadFail:"照片處理失敗",
+    needTruck:"請至少選擇1台大車",
+    needStaff:"請至少選擇1位下貨人員",
+    needPhoto:"請至少上傳1張照片",
+    lineMatch:"LINE 使用者「{user}」已自動對應下貨人員「{staff}」",
+    connectionFail:"無法連接系統：",
+    languageName:"中文"
 
   },
 
 
   vi:{
 
-    title:
-      "Báo cáo dỡ hàng Zhubei",
-
-    truck:
-      "Xe tải",
-
-    staff:
-      "Nhân viên dỡ hàng",
-
-    qty:
-      "Số lượng có chính xác không",
-
-    qtyOk:
-      "✓ Số lượng chính xác",
-
-    qtyBad:
-      "✗ Thừa / thiếu",
-
-    photo:
-      "Ảnh",
-
-    uploadPhoto:
-      "Nhấn để tải ảnh lên (có thể chọn nhiều ảnh)",
-
-    photoHint:
-      "Vui lòng tải ít nhất 1 ảnh",
-
-    note:
-      "Ghi chú (không bắt buộc)",
-
-    notePlaceholder:
-      "Lý do thừa thiếu, tình trạng bất thường...",
-
-    submit:
-      "Gửi báo cáo",
-
-    clear:
-      "Xóa",
-
-    done:
-      "Xong",
-
-    historyTitle:
-      "Lịch sử báo cáo",
-
-    close:
-      "Đóng",
-
-    viewTodayPhotos:
-      "Xem ảnh trong ngày",
-
-    noPhotos:
-      "Báo cáo này không có ảnh",
-
-    noHistory:
-      "Chưa có lịch sử báo cáo",
-
-    historyLoading:
-      "Đang tải lịch sử…",
-
-    delete:
-      "Xóa",
-
-    deleteConfirm:
-      "Bạn có chắc muốn xóa báo cáo này không?",
-
-    deleting:
-      "Đang xóa…",
-
-    reportLoadError:
-      "Không thể tải lịch sử báo cáo",
-
-    allPhotos:
-      "Tất cả ảnh trong ngày",
-
-    noDayPhotos:
-      "Không có ảnh",
-
-    stageProcess:
-      "Xử lý",
-
-    stageCompress:
-      "Nén",
-
-    stageUpload:
-      "Tải lên",
-
-    processingPhoto:
-      "Đang xử lý ảnh",
-
-    compressingPhoto:
-      "Đang nén ảnh",
-
-    preparingUpload:
-      "Đang chuẩn bị…",
-
-    uploading:
-      "Đang gửi ảnh…",
-
-    serverProcessing:
-      "Ảnh đã gửi, hệ thống đang lưu…",
-
-    success:
-      "✓ Đã lưu báo cáo thành công",
-
-    uploadFail:
-      "Xử lý ảnh thất bại",
-
-    needTruck:
-      "Vui lòng chọn ít nhất 1 xe tải",
-
-    needStaff:
-      "Vui lòng chọn ít nhất 1 nhân viên dỡ hàng",
-
-    needPhoto:
-      "Vui lòng tải ít nhất 1 ảnh",
-
-    lineMatch:
-      "LINE「{user}」đã tự động ghép với nhân viên「{staff}」",
-
-    connectionFail:
-      "Không thể kết nối hệ thống: ",
-
-    languageName:
-      "Tiếng Việt"
+    title:"Báo cáo dỡ hàng Zhubei",
+    truck:"Xe tải",
+    staff:"Nhân viên dỡ hàng",
+    qty:"Số lượng có chính xác không",
+    qtyOk:"✓ Số lượng chính xác",
+    qtyBad:"✗ Thừa / thiếu",
+    photo:"Ảnh",
+    uploadPhoto:"Nhấn để tải ảnh lên (có thể chọn nhiều ảnh)",
+    photoHint:"Vui lòng tải ít nhất 1 ảnh",
+    note:"Ghi chú (không bắt buộc)",
+    notePlaceholder:"Lý do thừa thiếu, tình trạng bất thường...",
+    submit:"Gửi báo cáo",
+    clear:"Xóa",
+    done:"Xong",
+    historyTitle:"Lịch sử báo cáo",
+    close:"Đóng",
+    viewTodayPhotos:"Xem ảnh trong ngày",
+    noPhotos:"Báo cáo này không có ảnh",
+    noHistory:"Chưa có lịch sử báo cáo",
+    historyLoading:"Đang tải lịch sử…",
+    delete:"Xóa",
+    deleteConfirm:"Bạn có chắc muốn xóa báo cáo này không?",
+    deleting:"Đang xóa…",
+    reportLoadError:"Không thể tải lịch sử báo cáo",
+    allPhotos:"Tất cả ảnh trong ngày",
+    noDayPhotos:"Không có ảnh",
+    stageProcess:"Xử lý",
+    stageCompress:"Nén",
+    stageUpload:"Tải lên",
+    processingPhoto:"Đang xử lý ảnh",
+    compressingPhoto:"Đang nén ảnh",
+    preparingUpload:"Đang chuẩn bị…",
+    uploading:"Đang gửi ảnh…",
+    serverProcessing:"Ảnh đã gửi, hệ thống đang lưu…",
+    success:"✓ Đã lưu báo cáo thành công",
+    uploadFail:"Xử lý ảnh thất bại",
+    needTruck:"Vui lòng chọn ít nhất 1 xe tải",
+    needStaff:"Vui lòng chọn ít nhất 1 nhân viên dỡ hàng",
+    needPhoto:"Vui lòng tải ít nhất 1 ảnh",
+    lineMatch:"LINE「{user}」đã tự động ghép với nhân viên「{staff}」",
+    connectionFail:"Không thể kết nối hệ thống: ",
+    languageName:"Tiếng Việt"
 
   }
 
 };
 
 
-function t(
-  key
-){
+function t(key){
 
   return (
     translations[
@@ -2264,25 +2110,19 @@ function applyLanguage(){
 
   if(stages[0]){
     stages[0].textContent =
-      t(
-        "stageProcess"
-      );
+      t("stageProcess");
   }
 
 
   if(stages[1]){
     stages[1].textContent =
-      t(
-        "stageCompress"
-      );
+      t("stageCompress");
   }
 
 
   if(stages[2]){
     stages[2].textContent =
-      t(
-        "stageUpload"
-      );
+      t("stageUpload");
   }
 
 
@@ -3935,8 +3775,6 @@ document
           i++
         ){
 
-          /* 處理 */
-
           setProgressStage(
             "process"
           );
@@ -3978,8 +3816,6 @@ document
             }
           );
 
-
-          /* 壓縮 */
 
           setProgressStage(
             "compress"
@@ -4241,7 +4077,6 @@ function getSelectedStaff(){
 
 /* =================================================
    POST
-   重要：改回 fetch
 ================================================= */
 
 async function postBackend(
@@ -4499,18 +4334,6 @@ document
       );
 
 
-      /*
-       * fetch 沒有 upload byte progress。
-       *
-       * 所以這裡不假裝顯示 100%。
-       *
-       * 只在等待 Apps Script 時，
-       * 慢慢從 10% 走到最多 88%。
-       *
-       * Apps Script 真正回傳 success
-       * 才到 100%。
-       */
-
       let waitingPercent =
         10;
 
@@ -4621,16 +4444,6 @@ document
           result
         );
 
-
-        /*
-         * 只有收到 Apps Script success
-         * 才代表：
-         *
-         * Drive 照片已建立
-         * Sheet 已寫入
-         *
-         * 這時候才跑到 100。
-         */
 
         updateUploadProgress(
           t(
@@ -4873,10 +4686,6 @@ document
           error
         );
 
-
-        /*
-         * 失敗絕對不清照片。
-         */
 
         hideUploadProgress();
 
@@ -5343,11 +5152,6 @@ function getThumbnailUrl(
   }
 
 
-  /*
-   * Apps Script 如果有回 file id，
-   * 前端直接做小縮圖。
-   */
-
   if(
     photo &&
     photo.id
@@ -5428,11 +5232,6 @@ function createReportCard(
   card.className =
     "report-card";
 
-
-  /*
-   * 第一行：
-   * 大車 / 下貨人員 / 正確
-   */
 
   const main =
     document.createElement(
@@ -5530,10 +5329,6 @@ function createReportCard(
   );
 
 
-  /*
-   * 時間
-   */
-
   const time =
     document.createElement(
       "div"
@@ -5553,10 +5348,6 @@ function createReportCard(
     time
   );
 
-
-  /*
-   * 四格縮圖
-   */
 
   if(
     Array.isArray(
@@ -5606,11 +5397,6 @@ function createReportCard(
             photo
           );
 
-
-        /*
-         * 不用 lazy。
-         * 日期一打開立即載入四格小縮圖。
-         */
 
         img.src =
           thumbnailUrl;
@@ -5728,10 +5514,6 @@ function createReportCard(
   }
 
 
-  /*
-   * 備註
-   */
-
   if(
     report.note
   ){
@@ -5756,11 +5538,6 @@ function createReportCard(
 
   }
 
-
-  /*
-   * 最下面：
-   * 誰傳的 + 刪除
-   */
 
   const footer =
     document.createElement(
@@ -6042,11 +5819,6 @@ function showAllDayPhotos(
             );
 
 
-          /*
-           * 大日期照片也先縮圖，
-           * 不先抓全部大圖。
-           */
-
           img.src =
             thumb;
 
@@ -6272,4 +6044,5 @@ init();
 </script>
 
 </body>
+
 </html>
