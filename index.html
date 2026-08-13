@@ -2,162 +2,721 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>竹北托運 下貨回報</title>
 <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
 <style>
-:root{--ink:#1c1f1a;--paper:#f6f4ee;--line:#d8d3c4;--accent:#2f6f4f;--accent-dim:#e4ede7;--warn:#b5452e;--muted:#6b6a5f;--white:#fff;}
-*{box-sizing:border-box;}
-html,body{margin:0;padding:0;width:100%;min-height:100%;}
-body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",sans-serif;background:var(--paper);color:var(--ink);-webkit-tap-highlight-color:transparent;}
-body.uploading{overflow:hidden;}
-button{font-family:inherit;}
-.wrap{max-width:480px;margin:0 auto;padding:18px 18px 110px;}
+:root{
+  --ink:#1c1f1a;
+  --paper:#f6f4ee;
+  --line:#d8d3c4;
+  --accent:#2f6f4f;
+  --accent-dim:#e4ede7;
+  --warn:#b5452e;
+  --muted:#6b6a5f;
+  --white:#fff;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;width:100%;min-height:100%}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  -webkit-tap-highlight-color:transparent;
+}
+body.uploading{overflow:hidden}
+button{font-family:inherit}
+.wrap{max-width:480px;margin:auto;padding:18px 18px 110px}
 
-.brand{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:22px;padding-bottom:14px;border-bottom:2px solid var(--ink);}
-.brand-left{min-width:0;}
-.brand h1{font-size:19px;margin:0;letter-spacing:.02em;}
-.brand .who{display:block;margin-top:5px;font-size:12px;color:var(--muted);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.brand{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:22px;
+  padding-bottom:14px;
+  border-bottom:2px solid var(--ink)
+}
+.brand-left{min-width:0}
+.brand h1{font-size:19px;margin:0}
+.brand .who{
+  display:block;
+  margin-top:5px;
+  font-size:12px;
+  color:var(--muted);
+  max-width:160px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+.top-actions{display:flex;gap:6px;flex-shrink:0}
+.top-btn{
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink);
+  border-radius:9px;
+  padding:8px 9px;
+  font-size:12px;
+  white-space:nowrap
+}
 
-.top-actions{display:flex;align-items:center;gap:6px;flex-shrink:0;}
-.top-btn{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:9px;padding:8px 9px;font-size:12px;white-space:nowrap;}
-.top-btn:active{transform:scale(.97);}
+.language-screen{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  background:var(--paper);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:24px
+}
+.language-screen.show{display:flex}
+.language-box{width:100%;max-width:380px;text-align:center}
+.language-box h2{margin:0 0 8px;font-size:23px}
+.language-box p{margin:0 0 24px;color:var(--muted);font-size:13px}
+.language-options{display:grid;gap:10px}
+.language-option{
+  width:100%;
+  padding:16px;
+  border:1.5px solid var(--line);
+  border-radius:12px;
+  background:#fff;
+  font-size:16px;
+  font-weight:700
+}
 
-.language-screen{position:fixed;inset:0;z-index:1000;background:var(--paper);display:none;align-items:center;justify-content:center;padding:24px;}
-.language-screen.show{display:flex;}
-.language-box{width:100%;max-width:380px;text-align:center;}
-.language-box h2{margin:0 0 8px;font-size:23px;}
-.language-box p{margin:0 0 24px;color:var(--muted);font-size:13px;}
-.language-options{display:grid;gap:10px;}
-.language-option{width:100%;padding:16px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font-size:16px;font-weight:700;}
-.language-option:active{background:var(--accent-dim);}
-
-fieldset{border:none;padding:0;margin:0 0 22px;}
-legend{font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--muted);margin-bottom:8px;}
+fieldset{border:none;padding:0;margin:0 0 22px}
+legend{
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.12em;
+  color:var(--muted);
+  margin-bottom:8px
+}
 
 /* 大車 */
-.truck-select-wrap{position:relative;}
-.truck-select-button{width:100%;padding:14px 40px 14px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);text-align:left;font-size:16px;position:relative;}
-.truck-select-button:active{background:#faf9f5;}
-.truck-arrow{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;display:flex;align-items:center;justify-content:center;color:#8a8879;transition:transform .2s ease;pointer-events:none;}
-.truck-arrow svg{width:14px;height:14px;}
-.truck-select-wrap.open .truck-arrow{transform:translateY(-50%) rotate(180deg);color:var(--accent);}
-
-.truck-dropdown{display:none;position:absolute;z-index:50;left:0;right:0;margin-top:6px;background:#fff;border:1.5px solid var(--line);border-radius:12px;box-shadow:0 8px 25px rgba(0,0,0,.12);overflow:hidden;}
-.truck-dropdown.open{display:block;}
-.truck-list{max-height:320px;overflow-y:auto;}
-.truck-option{display:flex;align-items:center;gap:10px;padding:13px 14px;border-bottom:1px solid #eee;font-size:15px;}
-.truck-option:last-child{border-bottom:none;}
-.truck-option input{width:20px;height:20px;accent-color:var(--accent);}
-.truck-option.used{background:#f5f4ef;}
-.truck-option.used .truck-name{color:#888679;}
-.used-staff{margin-left:auto;font-size:11px;padding:3px 7px;border-radius:20px;background:#e9e7df;color:#6f6d62;white-space:nowrap;max-width:150px;overflow:hidden;text-overflow:ellipsis;}
-.truck-dropdown-footer{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line);background:#faf9f5;}
-.truck-dropdown-footer button{flex:1;padding:10px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:14px;}
-.truck-dropdown-footer button.primary{background:var(--ink);color:#fff;border-color:var(--ink);}
+.truck-select-wrap{position:relative}
+.truck-select-button{
+  width:100%;
+  padding:14px 42px 14px 14px;
+  border:1.5px solid var(--line);
+  border-radius:10px;
+  background:#fff;
+  color:var(--ink);
+  text-align:left;
+  font-size:16px;
+  position:relative
+}
+.truck-arrow{
+  position:absolute;
+  right:14px;
+  top:50%;
+  transform:translateY(-50%);
+  width:18px;
+  height:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#8a8879;
+  transition:.2s;
+  pointer-events:none
+}
+.truck-arrow svg{width:14px;height:14px}
+.truck-select-wrap.open .truck-arrow{
+  transform:translateY(-50%) rotate(180deg);
+  color:var(--accent)
+}
+.truck-dropdown{
+  display:none;
+  position:absolute;
+  z-index:50;
+  left:0;
+  right:0;
+  margin-top:6px;
+  background:#fff;
+  border:1.5px solid var(--line);
+  border-radius:12px;
+  box-shadow:0 8px 25px rgba(0,0,0,.12);
+  overflow:hidden
+}
+.truck-dropdown.open{display:block}
+.truck-list{max-height:320px;overflow-y:auto}
+.truck-option{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:13px 14px;
+  border-bottom:1px solid #eee;
+  font-size:15px
+}
+.truck-option:last-child{border-bottom:none}
+.truck-option input{
+  width:20px;
+  height:20px;
+  accent-color:var(--accent)
+}
+.truck-option.used{background:#f5f4ef}
+.truck-option.used .truck-name{color:#888679}
+.used-staff{
+  margin-left:auto;
+  font-size:11px;
+  padding:3px 7px;
+  border-radius:20px;
+  background:#e9e7df;
+  color:#6f6d62;
+  white-space:nowrap;
+  max-width:150px;
+  overflow:hidden;
+  text-overflow:ellipsis
+}
+.truck-dropdown-footer{
+  display:flex;
+  gap:8px;
+  padding:10px;
+  border-top:1px solid var(--line);
+  background:#faf9f5
+}
+.truck-dropdown-footer button{
+  flex:1;
+  padding:10px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:#fff;
+  font-size:14px
+}
+.truck-dropdown-footer .primary{
+  background:var(--ink);
+  color:#fff;
+  border-color:var(--ink)
+}
 
 /* 人員 */
-.staff-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
-.staff-item{display:flex;align-items:center;gap:8px;padding:13px 10px;border:1.5px solid var(--line);border-radius:10px;background:#fff;font-size:15px;}
-.staff-item input{width:20px;height:20px;accent-color:var(--accent);}
-.staff-item.selected{border-color:var(--accent);background:var(--accent-dim);}
-.line-match-hint{margin-top:8px;padding:8px 10px;border-radius:8px;background:var(--accent-dim);color:var(--accent);font-size:12px;line-height:1.5;}
+.staff-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px
+}
+.staff-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:13px 10px;
+  border:1.5px solid var(--line);
+  border-radius:10px;
+  background:#fff;
+  font-size:15px
+}
+.staff-item input{
+  width:20px;
+  height:20px;
+  accent-color:var(--accent)
+}
+.staff-item.selected{
+  border-color:var(--accent);
+  background:var(--accent-dim)
+}
+.line-match-hint{
+  margin-top:8px;
+  padding:8px 10px;
+  border-radius:8px;
+  background:var(--accent-dim);
+  color:var(--accent);
+  font-size:12px;
+  line-height:1.5
+}
 
 /* 件數 */
-.seg{display:flex;gap:8px;}
-.seg button{flex:1;padding:14px 0;border:1.5px solid var(--line);border-radius:10px;background:#fff;font-size:15px;font-weight:700;color:var(--ink);}
-.seg button[data-v="ok"].active{background:var(--accent);border-color:var(--accent);color:#fff;}
-.seg button[data-v="bad"].active{background:var(--warn);border-color:var(--warn);color:#fff;}
+.seg{display:flex;gap:8px}
+.seg button{
+  flex:1;
+  padding:14px 0;
+  border:1.5px solid var(--line);
+  border-radius:10px;
+  background:#fff;
+  font-size:15px;
+  font-weight:700
+}
+.seg button[data-v=ok].active{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:#fff
+}
+.seg button[data-v=bad].active{
+  background:var(--warn);
+  border-color:var(--warn);
+  color:#fff
+}
 
-textarea{width:100%;padding:12px;border:1.5px solid var(--line);border-radius:10px;font-size:16px;background:#fff;color:var(--ink);font-family:inherit;resize:vertical;min-height:80px;}
-textarea:focus{outline:none;border-color:var(--accent);}
+textarea{
+  width:100%;
+  padding:12px;
+  border:1.5px solid var(--line);
+  border-radius:10px;
+  font-size:16px;
+  background:#fff;
+  resize:vertical;
+  min-height:80px
+}
+textarea:focus{outline:none;border-color:var(--accent)}
 
-.photo-upload{border:1.5px dashed var(--line);border-radius:12px;padding:18px;text-align:center;background:#fff;position:relative;color:#8a8879;}
-.photo-upload span.icon{font-size:30px;display:block;margin-bottom:6px;}
-.photo-upload input{position:absolute;inset:0;opacity:0;cursor:pointer;}
-.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;}
-.thumb{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;border:1px solid var(--line);background:#eee;}
-.thumb img{width:100%;height:100%;object-fit:cover;display:block;}
-.thumb .rm{position:absolute;top:3px;right:3px;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.65);color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center;border:none;}
-.hint{font-size:12px;color:#9a988c;margin-top:6px;}
+.photo-upload{
+  border:1.5px dashed var(--line);
+  border-radius:12px;
+  padding:18px;
+  text-align:center;
+  background:#fff;
+  position:relative;
+  color:#8a8879
+}
+.photo-upload span.icon{
+  font-size:30px;
+  display:block;
+  margin-bottom:6px
+}
+.photo-upload input{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  cursor:pointer
+}
+.photo-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:12px
+}
+.thumb{
+  position:relative;
+  aspect-ratio:1;
+  border-radius:8px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:#eee
+}
+.thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block
+}
+.thumb .rm{
+  position:absolute;
+  top:3px;
+  right:3px;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  background:rgba(0,0,0,.65);
+  color:#fff;
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:none
+}
+.hint{font-size:12px;color:#9a988c;margin-top:6px}
 
-/* 上傳進度 - 往上移，不再置中 */
-.upload-progress-screen{position:fixed;inset:0;z-index:9000;display:none;align-items:flex-start;justify-content:center;padding:22px;padding-top:14vh;background:rgba(28,31,26,.52);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);}
-.upload-progress-screen.open{display:flex;}
-.upload-progress-box{width:100%;max-width:360px;background:#fff;border-radius:16px;padding:22px 20px 20px;box-shadow:0 18px 50px rgba(0,0,0,.22);}
-.upload-progress-stage{display:flex;justify-content:center;gap:6px;margin-bottom:12px;}
-.upload-progress-stage span{font-size:10px;padding:4px 9px;border-radius:999px;background:#f0eee6;color:#a3a091;font-weight:700;letter-spacing:.03em;}
-.upload-progress-stage span.active{background:var(--accent);color:#fff;}
-.upload-progress-stage span.done{background:var(--accent-dim);color:var(--accent);}
-.upload-progress-title{font-size:17px;font-weight:800;text-align:center;margin-bottom:6px;}
-.upload-progress-count{font-size:13px;color:var(--muted);text-align:center;min-height:20px;}
-.upload-progress-track{width:100%;height:10px;margin-top:17px;border-radius:999px;overflow:hidden;background:#e8e5dc;}
-.upload-progress-fill{height:100%;width:0%;border-radius:999px;background:var(--accent);transition:width .25s ease;}
-.upload-progress-text{margin-top:11px;text-align:center;font-size:12px;color:var(--muted);min-height:18px;}
+/* 進度 */
+.upload-progress-screen{
+  position:fixed;
+  inset:0;
+  z-index:9000;
+  display:none;
+  align-items:flex-start;
+  justify-content:center;
+  padding:14vh 22px 22px;
+  background:rgba(28,31,26,.52);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px)
+}
+.upload-progress-screen.open{display:flex}
+.upload-progress-box{
+  width:100%;
+  max-width:360px;
+  background:#fff;
+  border-radius:16px;
+  padding:22px 20px 20px;
+  box-shadow:0 18px 50px rgba(0,0,0,.22)
+}
+.upload-progress-stage{
+  display:flex;
+  justify-content:center;
+  gap:6px;
+  margin-bottom:12px
+}
+.upload-progress-stage span{
+  font-size:10px;
+  padding:4px 9px;
+  border-radius:999px;
+  background:#f0eee6;
+  color:#a3a091;
+  font-weight:700
+}
+.upload-progress-stage span.active{
+  background:var(--accent);
+  color:#fff
+}
+.upload-progress-stage span.done{
+  background:var(--accent-dim);
+  color:var(--accent)
+}
+.upload-progress-title{
+  font-size:17px;
+  font-weight:800;
+  text-align:center;
+  margin-bottom:6px
+}
+.upload-progress-count{
+  font-size:13px;
+  color:var(--muted);
+  text-align:center;
+  min-height:20px
+}
+.upload-progress-track{
+  width:100%;
+  height:10px;
+  margin-top:17px;
+  border-radius:999px;
+  overflow:hidden;
+  background:#e8e5dc
+}
+.upload-progress-fill{
+  height:100%;
+  width:0;
+  border-radius:999px;
+  background:var(--accent);
+  transition:width .2s linear
+}
+.upload-progress-text{
+  margin-top:11px;
+  text-align:center;
+  font-size:12px;
+  color:var(--muted);
+  min-height:18px
+}
 
 /* 回報紀錄 */
-.history-screen{display:none;position:fixed;inset:0;z-index:200;background:var(--paper);overflow-y:auto;}
-.history-screen.open{display:block;}
-.history-wrap{max-width:480px;margin:0 auto;padding:18px 18px 40px;}
-.history-header{display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;margin-bottom:16px;border-bottom:2px solid var(--ink);}
-.history-header h2{margin:0;font-size:19px;}
-.history-close{border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px 11px;font-size:13px;}
-.history-loading{padding:25px 0;text-align:center;color:var(--muted);}
-.history-empty{padding:30px 0;text-align:center;color:var(--muted);font-size:14px;}
+.history-screen{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:200;
+  background:var(--paper);
+  overflow-y:auto
+}
+.history-screen.open{display:block}
+.history-wrap{
+  max-width:480px;
+  margin:auto;
+  padding:18px 18px 40px
+}
+.history-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding-bottom:14px;
+  margin-bottom:16px;
+  border-bottom:2px solid var(--ink)
+}
+.history-header h2{margin:0;font-size:19px}
+.history-close{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:9px;
+  padding:8px 11px;
+  font-size:13px
+}
+.history-loading{
+  padding:25px 0;
+  text-align:center;
+  color:var(--muted)
+}
+.history-empty{
+  padding:30px 0;
+  text-align:center;
+  color:var(--muted);
+  font-size:14px
+}
+.history-day{
+  border-bottom:1px solid var(--line);
+  margin-bottom:8px
+}
+.history-day-head{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  width:100%;
+  border:none;
+  background:transparent;
+  padding:14px 0;
+  color:var(--ink);
+  text-align:left
+}
+.history-arrow{
+  width:22px;
+  font-size:16px;
+  transition:transform .2s
+}
+.history-day.open .history-arrow{transform:rotate(90deg)}
+.history-date{font-size:17px;font-weight:800}
+.history-photo-all{
+  margin-left:auto;
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:8px;
+  padding:7px 9px;
+  font-size:11px;
+  white-space:nowrap
+}
+.history-day-body{
+  display:none;
+  padding-bottom:14px
+}
+.history-day.open .history-day-body{display:block}
 
-.history-day{border-bottom:1px solid var(--line);margin-bottom:8px;}
-.history-day-head{display:flex;align-items:center;gap:8px;width:100%;border:none;background:transparent;padding:14px 0;color:var(--ink);text-align:left;}
-.history-arrow{width:22px;font-size:16px;transition:transform .2s ease;}
-.history-day.open .history-arrow{transform:rotate(90deg);}
-.history-date{font-size:17px;font-weight:800;}
-.history-photo-all{margin-left:auto;border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 9px;font-size:11px;white-space:nowrap;}
-.history-day-body{display:none;padding:0 0 14px;}
-.history-day.open .history-day-body{display:block;}
+.report-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:13px;
+  margin-top:9px
+}
+.report-main{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-width:0
+}
+.report-truck{
+  font-size:20px;
+  font-weight:900;
+  line-height:1.15;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis
+}
+.report-staff{
+  font-size:13px;
+  color:#555;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis
+}
+.report-status{
+  font-size:12px;
+  font-weight:800;
+  white-space:nowrap;
+  margin-left:auto
+}
+.report-status.ok{color:var(--accent)}
+.report-status.bad{color:var(--warn)}
 
-.report-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px;margin-top:9px;}
-.report-main{display:flex;align-items:center;gap:8px;}
-.report-truck{font-size:20px;font-weight:900;line-height:1.15;min-width:0;}
-.report-staff{font-size:13px;color:#555;white-space:nowrap;}
-.report-status{font-size:12px;font-weight:800;white-space:nowrap;}
-.report-status.ok{color:var(--accent);}
-.report-status.bad{color:var(--warn);}
-.report-employee{margin-left:auto;font-size:11px;color:#8a8879;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:80px;}
-.report-time{margin-top:6px;font-size:11px;color:#9a988c;}
-.report-note{margin-top:7px;padding:8px;border-radius:8px;background:#f7f5ef;font-size:12px;line-height:1.5;}
+.report-time{
+  margin-top:6px;
+  font-size:11px;
+  color:#9a988c
+}
 
-/* 回報照片縮圖 - 完整顯示不裁切、不撐滿 */
-.report-photos{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px;}
-.report-photo{position:relative;width:100%;aspect-ratio:1;border-radius:7px;overflow:hidden;background:#f2f0e8;border:1px solid var(--line);cursor:pointer;display:flex;align-items:center;justify-content:center;}
-.report-photo img{width:100%;height:100%;object-fit:contain;display:block;}
-.report-no-photo{margin-top:8px;color:#aaa;font-size:11px;}
+/* 四格縮圖 */
+.report-photos{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:6px;
+  margin-top:10px
+}
+.report-photo{
+  position:relative;
+  width:100%;
+  aspect-ratio:1;
+  border-radius:7px;
+  overflow:hidden;
+  background:#f2f0e8;
+  border:1px solid var(--line);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center
+}
+.report-photo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block
+}
+.report-photo.loading:after{
+  content:"";
+  position:absolute;
+  width:15px;
+  height:15px;
+  border:2px solid #d8d3c4;
+  border-top-color:var(--accent);
+  border-radius:50%;
+  animation:spin .7s linear infinite
+}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-/* 大車照片 */
-.all-photo-screen{display:none;position:fixed;inset:0;z-index:400;background:rgba(20,20,18,.97);overflow-y:auto;}
-.all-photo-screen.open{display:block;}
-.all-photo-wrap{max-width:600px;margin:0 auto;padding:16px 14px 40px;}
-.all-photo-head{display:flex;align-items:center;justify-content:space-between;color:#fff;margin-bottom:15px;}
-.all-photo-head h3{margin:0;font-size:18px;}
-.all-photo-close{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;border-radius:8px;padding:7px 10px;}
-.all-photo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
-.all-photo-item{background:#111;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.all-photo-item img{display:block;width:100%;height:auto;}
+.report-note{
+  margin-top:7px;
+  padding:8px;
+  border-radius:8px;
+  background:#f7f5ef;
+  font-size:12px;
+  line-height:1.5
+}
 
-.lightbox{display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.94);align-items:center;justify-content:center;padding:15px;}
-.lightbox.open{display:flex;}
-.lightbox img{max-width:100%;max-height:90vh;object-fit:contain;}
-.lightbox-close{position:absolute;top:15px;right:15px;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-size:20px;}
+/* 卡片底部 */
+.report-footer{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:10px;
+  padding-top:9px;
+  border-top:1px solid #eee
+}
+.report-employee{
+  font-size:11px;
+  color:#8a8879;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+.report-delete{
+  margin-left:auto;
+  flex-shrink:0;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink);
+  border-radius:8px;
+  padding:7px 10px;
+  font-size:11px
+}
 
-.submit-bar{position:fixed;left:0;right:0;bottom:0;background:var(--paper);border-top:1px solid var(--line);padding:12px 18px calc(12px + env(safe-area-inset-bottom));}
-.submit-bar .inner{max-width:480px;margin:0 auto;}
-button.submit{width:100%;padding:15px 0;border:none;border-radius:12px;background:var(--ink);color:#fff;font-size:16px;font-weight:700;}
-button.submit:disabled{background:#a3a091;}
-.status{font-size:13px;text-align:center;margin-top:8px;color:var(--muted);min-height:16px;}
-.status.err{color:var(--warn);}
-.status.ok{color:var(--accent);}
-.loading{padding:18px;text-align:center;color:var(--muted);font-size:14px;}
-.hidden{display:none !important;}
+.report-no-photo{
+  margin-top:8px;
+  color:#aaa;
+  font-size:11px
+}
+
+/* 當日照片 */
+.all-photo-screen{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:400;
+  background:rgba(20,20,18,.97);
+  overflow-y:auto
+}
+.all-photo-screen.open{display:block}
+.all-photo-wrap{
+  max-width:600px;
+  margin:auto;
+  padding:16px 14px 40px
+}
+.all-photo-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  color:#fff;
+  margin-bottom:15px
+}
+.all-photo-head h3{margin:0;font-size:18px}
+.all-photo-close{
+  border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  border-radius:8px;
+  padding:7px 10px
+}
+.all-photo-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px
+}
+.all-photo-item{
+  background:#111;
+  border-radius:8px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center
+}
+.all-photo-item img{
+  display:block;
+  width:100%;
+  height:auto
+}
+
+.lightbox{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:600;
+  background:rgba(0,0,0,.94);
+  align-items:center;
+  justify-content:center;
+  padding:15px
+}
+.lightbox.open{display:flex}
+.lightbox img{
+  max-width:100%;
+  max-height:90vh;
+  object-fit:contain
+}
+.lightbox-close{
+  position:absolute;
+  top:15px;
+  right:15px;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.3);
+  background:rgba(255,255,255,.1);
+  color:#fff;
+  font-size:20px
+}
+
+.submit-bar{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  background:var(--paper);
+  border-top:1px solid var(--line);
+  padding:12px 18px calc(12px + env(safe-area-inset-bottom))
+}
+.submit-bar .inner{max-width:480px;margin:auto}
+button.submit{
+  width:100%;
+  padding:15px 0;
+  border:none;
+  border-radius:12px;
+  background:var(--ink);
+  color:#fff;
+  font-size:16px;
+  font-weight:700
+}
+button.submit:disabled{background:#a3a091}
+.status{
+  font-size:13px;
+  text-align:center;
+  margin-top:8px;
+  color:var(--muted);
+  min-height:16px
+}
+.status.err{color:var(--warn)}
+.status.ok{color:var(--accent)}
+.loading{
+  padding:18px;
+  text-align:center;
+  color:var(--muted);
+  font-size:14px
+}
+.hidden{display:none!important}
 </style>
 </head>
+
 <body>
 
 <div class="language-screen" id="languageScreen">
@@ -172,11 +731,13 @@ button.submit:disabled{background:#a3a091;}
 </div>
 
 <div class="wrap">
+
   <div class="brand">
     <div class="brand-left">
       <h1 data-i18n="title">竹北托運 下貨回報</h1>
       <span class="who" id="whoami">載入中…</span>
     </div>
+
     <div class="top-actions">
       <button type="button" class="top-btn" id="historyBtn">📋 回報紀錄</button>
       <button type="button" class="top-btn" id="languageBtn">中文</button>
@@ -185,17 +746,23 @@ button.submit:disabled{background:#a3a091;}
 
   <fieldset>
     <legend data-i18n="truck">大車</legend>
+
     <div class="truck-select-wrap" id="truckSelectWrap">
       <button type="button" class="truck-select-button" id="truckSelectButton">
         大車載入中…
         <span class="truck-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
         </span>
       </button>
+
       <div class="truck-dropdown" id="truckDropdown">
         <div class="truck-list" id="truckList">
           <div class="loading">大車資料載入中…</div>
         </div>
+
         <div class="truck-dropdown-footer">
           <button type="button" id="truckClearBtn" data-i18n="clear">清除</button>
           <button type="button" class="primary" id="truckDoneBtn" data-i18n="done">完成</button>
@@ -206,97 +773,152 @@ button.submit:disabled{background:#a3a091;}
 
   <fieldset>
     <legend data-i18n="staff">下貨人員</legend>
+
     <div class="staff-grid" id="staffGrid">
       <div class="loading">下貨人員資料載入中…</div>
     </div>
-    <div id="lineMatchHint" class="line-match-hint" style="display:none;"></div>
+
+    <div id="lineMatchHint" class="line-match-hint" style="display:none"></div>
   </fieldset>
 
   <fieldset>
     <legend data-i18n="qty">件數是否正確</legend>
+
     <div class="seg" id="qtySeg">
-      <button type="button" data-v="ok" class="active" data-i18n="qtyOk">✓ 件數正確</button>
-      <button type="button" data-v="bad" data-i18n="qtyBad">✗ 有多有少</button>
+      <button type="button" data-v="ok" class="active" data-i18n="qtyOk">
+        ✓ 件數正確
+      </button>
+      <button type="button" data-v="bad" data-i18n="qtyBad">
+        ✗ 有多有少
+      </button>
     </div>
   </fieldset>
 
   <fieldset>
     <legend data-i18n="photo">照片</legend>
+
     <div class="photo-upload">
       <span class="icon">📷</span>
       <span data-i18n="uploadPhoto">點此上傳照片（可一次選多張）</span>
       <input type="file" accept="image/*" id="photoInput" multiple>
     </div>
+
     <div class="photo-grid" id="photoGrid"></div>
-    <div class="hint" data-i18n="photoHint">至少上傳1張，可拍照或從相簿選取多張</div>
+
+    <div class="hint" data-i18n="photoHint">
+      至少上傳1張，可拍照或從相簿選取多張
+    </div>
   </fieldset>
 
   <fieldset>
     <legend data-i18n="note">備註（選填）</legend>
-    <textarea id="note" data-i18n-placeholder="notePlaceholder" placeholder="有多有少的原因、異常說明等"></textarea>
+
+    <textarea
+      id="note"
+      data-i18n-placeholder="notePlaceholder"
+      placeholder="有多有少的原因、異常說明等"></textarea>
   </fieldset>
+
 </div>
 
 <div class="submit-bar">
   <div class="inner">
-    <button class="submit" id="submitBtn" data-i18n="submit">送出回報</button>
+    <button class="submit" id="submitBtn" data-i18n="submit">
+      送出回報
+    </button>
     <div class="status" id="statusMsg"></div>
   </div>
 </div>
 
+<!-- 上傳進度 -->
 <div class="upload-progress-screen" id="uploadProgressScreen">
   <div class="upload-progress-box">
+
     <div class="upload-progress-stage" id="uploadProgressStage">
       <span data-stage="process">處理</span>
       <span data-stage="compress">壓縮</span>
       <span data-stage="upload">上傳</span>
     </div>
-    <div class="upload-progress-title" id="uploadProgressTitle">處理照片</div>
-    <div class="upload-progress-count" id="uploadProgressCount">0 / 0</div>
+
+    <div class="upload-progress-title" id="uploadProgressTitle">
+      處理照片
+    </div>
+
+    <div class="upload-progress-count" id="uploadProgressCount">
+      0 / 0
+    </div>
+
     <div class="upload-progress-track">
       <div class="upload-progress-fill" id="uploadProgressFill"></div>
     </div>
-    <div class="upload-progress-text" id="uploadProgressText">準備中…</div>
+
+    <div class="upload-progress-text" id="uploadProgressText">
+      準備中…
+    </div>
+
   </div>
 </div>
 
+<!-- 回報紀錄 -->
 <div class="history-screen" id="historyScreen">
   <div class="history-wrap">
+
     <div class="history-header">
       <h2 data-i18n="historyTitle">回報紀錄</h2>
-      <button type="button" class="history-close" id="historyClose" data-i18n="close">關閉</button>
+      <button
+        type="button"
+        class="history-close"
+        id="historyClose"
+        data-i18n="close">
+        關閉
+      </button>
     </div>
+
     <div id="historyContent">
       <div class="history-loading">回報紀錄載入中…</div>
     </div>
+
   </div>
 </div>
 
+<!-- 當日照片 -->
 <div class="all-photo-screen" id="allPhotoScreen">
   <div class="all-photo-wrap">
+
     <div class="all-photo-head">
       <h3 id="allPhotoTitle">當日照片</h3>
-      <button type="button" class="all-photo-close" id="allPhotoClose">關閉</button>
+      <button type="button" class="all-photo-close" id="allPhotoClose">
+        關閉
+      </button>
     </div>
+
     <div class="all-photo-grid" id="allPhotoGrid"></div>
+
   </div>
 </div>
 
+<!-- Lightbox -->
 <div class="lightbox" id="lightbox">
   <button type="button" class="lightbox-close" id="lightboxClose">×</button>
   <img id="lightboxImage" src="" alt="">
 </div>
 
 <script>
-/* =================================================
-   設定
-================================================= */
-const LIFF_ID = "2011084900-xvJIcgzA";
-const BACKEND_URL = "https://script.google.com/macros/s/AKfycby8oksNTRuZEty3SpTCFYi2-QLdmLAVnQql9GxdKazFrg9DBLBTmTjfjFAifrj0gkBH/exec";
 
-/* =================================================
+/* =========================================================
+   設定
+========================================================= */
+
+const LIFF_ID = "2011084900-xvJIcgzA";
+
+const BACKEND_URL =
+"https://script.google.com/macros/s/AKfycby8oksNTRuZEty3SpTCFYi2-QLdmLAVnQql9GxdKazFrg9DBLBTmTjfjFAifrj0gkBH/exec";
+
+
+/* =========================================================
    狀態
-================================================= */
+========================================================= */
+
 let userName = "未知使用者";
 let photos = [];
 let truckData = [];
@@ -304,856 +926,2320 @@ let staffData = [];
 let truckLastUsed = {};
 let selectedTrucks = new Set();
 let reportData = [];
-let currentLanguage = localStorage.getItem("zhubei_report_language") || "";
+let currentLanguage =
+  localStorage.getItem("zhubei_report_language") || "";
 let isSubmitting = false;
 
-/* =================================================
+
+/* =========================================================
    語言
-================================================= */
+========================================================= */
+
 const translations = {
-  zh: {
-    title:"竹北托運 下貨回報", truck:"大車", staff:"下貨人員", qty:"件數是否正確",
-    qtyOk:"✓ 件數正確", qtyBad:"✗ 有多有少", photo:"照片",
-    uploadPhoto:"點此上傳照片（可一次選多張）", photoHint:"至少上傳1張，可拍照或從相簿選取多張",
-    note:"備註（選填）", notePlaceholder:"有多有少的原因、異常說明等", submit:"送出回報",
-    clear:"清除", done:"完成", historyTitle:"回報紀錄", close:"關閉",
-    viewTodayPhotos:"查看當日照片", noPhotos:"這筆回報沒有照片", noHistory:"目前沒有回報紀錄",
-    historyLoading:"回報紀錄載入中…", delete:"刪除", deleteConfirm:"確定要刪除這筆回報嗎？",
-    deleting:"刪除中…", reportLoadError:"回報紀錄載入失敗", allPhotos:"當日全部照片",
+
+  zh:{
+    title:"竹北托運 下貨回報",
+    truck:"大車",
+    staff:"下貨人員",
+    qty:"件數是否正確",
+    qtyOk:"✓ 件數正確",
+    qtyBad:"✗ 有多有少",
+    photo:"照片",
+    uploadPhoto:"點此上傳照片（可一次選多張）",
+    photoHint:"至少上傳1張，可拍照或從相簿選取多張",
+    note:"備註（選填）",
+    notePlaceholder:"有多有少的原因、異常說明等",
+    submit:"送出回報",
+    clear:"清除",
+    done:"完成",
+    historyTitle:"回報紀錄",
+    close:"關閉",
+    viewTodayPhotos:"查看當日照片",
+    noPhotos:"這筆回報沒有照片",
+    noHistory:"目前沒有回報紀錄",
+    historyLoading:"回報紀錄載入中…",
+    delete:"刪除",
+    deleteConfirm:"確定要刪除這筆回報嗎？",
+    deleting:"刪除中…",
+    reportLoadError:"回報紀錄載入失敗",
+    allPhotos:"當日全部照片",
     noDayPhotos:"這天沒有照片",
-    stageProcess:"處理", stageCompress:"壓縮", stageUpload:"上傳",
-    processingPhoto:"照片處理中", compressingPhoto:"照片壓縮中",
-    preparing:"準備中…", uploading:"上傳中…", writingReport:"寫入回報中…",
-    success:"✓ 已成功寫入回報紀錄", uploadFail:"照片處理失敗",
-    needTruck:"請至少選擇1台大車", needStaff:"請至少選擇1位下貨人員", needPhoto:"請至少上傳1張照片",
+    stageProcess:"處理",
+    stageCompress:"壓縮",
+    stageUpload:"上傳",
+    processingPhoto:"照片處理中",
+    compressingPhoto:"照片壓縮中",
+    preparing:"準備上傳…",
+    uploading:"正在上傳照片…",
+    processingServer:"伺服器處理中…",
+    writingReport:"寫入回報中…",
+    success:"✓ 已成功寫入回報紀錄",
+    uploadFail:"照片處理失敗",
+    needTruck:"請至少選擇1台大車",
+    needStaff:"請至少選擇1位下貨人員",
+    needPhoto:"請至少上傳1張照片",
     lineMatch:"LINE 使用者「{user}」已自動對應下貨人員「{staff}」",
-    connectionFail:"無法連接系統：", languageName:"中文"
+    connectionFail:"無法連接系統：",
+    languageName:"中文"
   },
-  vi: {
-    title:"Báo cáo dỡ hàng Zhubei", truck:"Xe tải", staff:"Nhân viên dỡ hàng", qty:"Số lượng có chính xác không",
-    qtyOk:"✓ Số lượng chính xác", qtyBad:"✗ Thừa / thiếu", photo:"Ảnh",
-    uploadPhoto:"Nhấn để tải ảnh lên (có thể chọn nhiều ảnh)", photoHint:"Vui lòng tải ít nhất 1 ảnh",
-    note:"Ghi chú (không bắt buộc)", notePlaceholder:"Lý do thừa thiếu, tình trạng bất thường...",
-    submit:"Gửi báo cáo", clear:"Xóa", done:"Xong", historyTitle:"Lịch sử báo cáo", close:"Đóng",
-    viewTodayPhotos:"Xem ảnh trong ngày", noPhotos:"Báo cáo này không có ảnh", noHistory:"Chưa có lịch sử báo cáo",
-    historyLoading:"Đang tải lịch sử…", delete:"Xóa", deleteConfirm:"Bạn có chắc muốn xóa báo cáo này không?",
-    deleting:"Đang xóa…", reportLoadError:"Không thể tải lịch sử báo cáo", allPhotos:"Tất cả ảnh trong ngày",
+
+  vi:{
+    title:"Báo cáo dỡ hàng Zhubei",
+    truck:"Xe tải",
+    staff:"Nhân viên dỡ hàng",
+    qty:"Số lượng có chính xác không",
+    qtyOk:"✓ Số lượng chính xác",
+    qtyBad:"✗ Thừa / thiếu",
+    photo:"Ảnh",
+    uploadPhoto:"Nhấn để tải ảnh lên (có thể chọn nhiều ảnh)",
+    photoHint:"Vui lòng tải ít nhất 1 ảnh",
+    note:"Ghi chú (không bắt buộc)",
+    notePlaceholder:"Lý do thừa thiếu, tình trạng bất thường...",
+    submit:"Gửi báo cáo",
+    clear:"Xóa",
+    done:"Xong",
+    historyTitle:"Lịch sử báo cáo",
+    close:"Đóng",
+    viewTodayPhotos:"Xem ảnh trong ngày",
+    noPhotos:"Báo cáo này không có ảnh",
+    noHistory:"Chưa có lịch sử báo cáo",
+    historyLoading:"Đang tải lịch sử…",
+    delete:"Xóa",
+    deleteConfirm:"Bạn có chắc muốn xóa báo cáo này không?",
+    deleting:"Đang xóa…",
+    reportLoadError:"Không thể tải lịch sử báo cáo",
+    allPhotos:"Tất cả ảnh trong ngày",
     noDayPhotos:"Không có ảnh",
-    stageProcess:"Xử lý", stageCompress:"Nén", stageUpload:"Tải lên",
-    processingPhoto:"Đang xử lý ảnh", compressingPhoto:"Đang nén ảnh",
-    preparing:"Đang chuẩn bị…", uploading:"Đang tải lên…", writingReport:"Đang lưu báo cáo…",
-    success:"✓ Đã lưu báo cáo thành công", uploadFail:"Xử lý ảnh thất bại",
-    needTruck:"Vui lòng chọn ít nhất 1 xe tải", needStaff:"Vui lòng chọn ít nhất 1 nhân viên dỡ hàng",
+    stageProcess:"Xử lý",
+    stageCompress:"Nén",
+    stageUpload:"Tải lên",
+    processingPhoto:"Đang xử lý ảnh",
+    compressingPhoto:"Đang nén ảnh",
+    preparing:"Đang chuẩn bị tải lên…",
+    uploading:"Đang tải ảnh lên…",
+    processingServer:"Máy chủ đang xử lý…",
+    writingReport:"Đang lưu báo cáo…",
+    success:"✓ Đã lưu báo cáo thành công",
+    uploadFail:"Xử lý ảnh thất bại",
+    needTruck:"Vui lòng chọn ít nhất 1 xe tải",
+    needStaff:"Vui lòng chọn ít nhất 1 nhân viên dỡ hàng",
     needPhoto:"Vui lòng tải ít nhất 1 ảnh",
     lineMatch:"LINE「{user}」đã tự động ghép với nhân viên「{staff}」",
-    connectionFail:"Không thể kết nối hệ thống: ", languageName:"Tiếng Việt"
+    connectionFail:"Không thể kết nối hệ thống: ",
+    languageName:"Tiếng Việt"
   }
+
 };
 
-function t(key){ return (translations[currentLanguage || "zh"][key] || key); }
+function t(key){
+  return (translations[currentLanguage || "zh"][key] || key);
+}
 
 function applyLanguage(){
-  document.querySelectorAll("[data-i18n]").forEach(function(el){ el.textContent = t(el.dataset.i18n); });
-  document.querySelectorAll("[data-i18n-placeholder]").forEach(function(el){ el.placeholder = t(el.dataset.i18nPlaceholder); });
-  document.getElementById("languageBtn").textContent = t("languageName");
-  const stageEls = document.querySelectorAll("#uploadProgressStage span");
-  if(stageEls[0]) stageEls[0].textContent = t("stageProcess");
-  if(stageEls[1]) stageEls[1].textContent = t("stageCompress");
-  if(stageEls[2]) stageEls[2].textContent = t("stageUpload");
-  if(document.getElementById("historyScreen").classList.contains("open")){ renderHistory(); }
+
+  document.querySelectorAll("[data-i18n]").forEach(function(el){
+    el.textContent = t(el.dataset.i18n);
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(function(el){
+    el.placeholder = t(el.dataset.i18nPlaceholder);
+  });
+
+  document.getElementById("languageBtn").textContent =
+    t("languageName");
+
+  const stageEls =
+    document.querySelectorAll("#uploadProgressStage span");
+
+  if(stageEls[0]) stageEls[0].textContent=t("stageProcess");
+  if(stageEls[1]) stageEls[1].textContent=t("stageCompress");
+  if(stageEls[2]) stageEls[2].textContent=t("stageUpload");
+
+  if(document.getElementById("historyScreen").classList.contains("open")){
+    renderHistory();
+  }
 }
 
-function showLanguageScreen(){ document.getElementById("languageScreen").classList.add("show"); }
-function hideLanguageScreen(){ document.getElementById("languageScreen").classList.remove("show"); }
+function showLanguageScreen(){
+  document.getElementById("languageScreen").classList.add("show");
+}
+
+function hideLanguageScreen(){
+  document.getElementById("languageScreen").classList.remove("show");
+}
 
 document.querySelectorAll(".language-option").forEach(function(button){
-  button.addEventListener("click", function(){
+
+  button.addEventListener("click",function(){
+
     currentLanguage = button.dataset.lang;
-    localStorage.setItem("zhubei_report_language", currentLanguage);
+
+    localStorage.setItem(
+      "zhubei_report_language",
+      currentLanguage
+    );
+
     applyLanguage();
     hideLanguageScreen();
+
   });
+
 });
 
-document.getElementById("languageBtn").addEventListener("click", showLanguageScreen);
+document.getElementById("languageBtn")
+.addEventListener("click",showLanguageScreen);
 
-/* =================================================
-   狀態訊息
-================================================= */
+
+/* =========================================================
+   狀態
+========================================================= */
+
 function setStatus(msg,type){
-  const el = document.getElementById("statusMsg");
-  el.textContent = msg;
-  el.className = "status" + (type ? " " + type : "");
+
+  const el=document.getElementById("statusMsg");
+
+  el.textContent=msg;
+
+  el.className =
+    "status" +
+    (type ? " "+type : "");
 }
 
-/* =================================================
-   上傳進度 - 三階段：處理 / 壓縮 / 上傳
-================================================= */
+
+/* =========================================================
+   進度條
+========================================================= */
+
 function showUploadProgress(){
-  document.getElementById("uploadProgressScreen").classList.add("open");
+
+  document
+    .getElementById("uploadProgressScreen")
+    .classList.add("open");
+
   document.body.classList.add("uploading");
 }
 
 function hideUploadProgress(){
-  document.getElementById("uploadProgressScreen").classList.remove("open");
+
+  document
+    .getElementById("uploadProgressScreen")
+    .classList.remove("open");
+
   document.body.classList.remove("uploading");
 }
 
 function setProgressStage(stageName){
-  const stages = ["process","compress","upload"];
-  const idx = stages.indexOf(stageName);
-  document.querySelectorAll("#uploadProgressStage span").forEach(function(el){
-    const elIdx = stages.indexOf(el.dataset.stage);
-    el.classList.remove("active","done");
-    if(elIdx < idx){ el.classList.add("done"); }
-    else if(elIdx === idx){ el.classList.add("active"); }
-  });
+
+  const stages=[
+    "process",
+    "compress",
+    "upload"
+  ];
+
+  const idx=stages.indexOf(stageName);
+
+  document
+    .querySelectorAll("#uploadProgressStage span")
+    .forEach(function(el){
+
+      const elIdx =
+        stages.indexOf(el.dataset.stage);
+
+      el.classList.remove("active","done");
+
+      if(elIdx<idx){
+        el.classList.add("done");
+      }else if(elIdx===idx){
+        el.classList.add("active");
+      }
+
+    });
 }
 
-function updateUploadProgress(title, percent, text, count){
-  document.getElementById("uploadProgressTitle").textContent = title;
-  document.getElementById("uploadProgressFill").style.width = Math.max(0,Math.min(100,percent)) + "%";
-  document.getElementById("uploadProgressText").textContent = text || "";
-  document.getElementById("uploadProgressCount").textContent = count || "";
+function updateUploadProgress(
+  title,
+  percent,
+  text,
+  count
+){
+
+  const safePercent=
+    Math.max(
+      0,
+      Math.min(100,Number(percent)||0)
+    );
+
+  document.getElementById(
+    "uploadProgressTitle"
+  ).textContent=title;
+
+  document.getElementById(
+    "uploadProgressFill"
+  ).style.width=safePercent+"%";
+
+  document.getElementById(
+    "uploadProgressText"
+  ).textContent=text||"";
+
+  document.getElementById(
+    "uploadProgressCount"
+  ).textContent=count||"";
 }
 
-/* =================================================
+
+/* =========================================================
    LINE
-================================================= */
+========================================================= */
+
 async function initLIFF(){
+
   try{
-    await liff.init({ liffId:LIFF_ID });
-    if(!liff.isLoggedIn()){ liff.login(); return false; }
-    const profile = await liff.getProfile();
-    userName = profile.displayName || "未知使用者";
-    document.getElementById("whoami").textContent = userName;
+
+    await liff.init({
+      liffId:LIFF_ID
+    });
+
+    if(!liff.isLoggedIn()){
+      liff.login();
+      return false;
+    }
+
+    const profile=await liff.getProfile();
+
+    userName=
+      profile.displayName ||
+      "未知使用者";
+
+    document.getElementById(
+      "whoami"
+    ).textContent=userName;
+
     return true;
+
   }catch(error){
+
     console.error(error);
-    document.getElementById("whoami").textContent = "LINE 登入失敗";
-    setStatus("LINE 登入失敗：" + (error.message || error), "err");
+
+    document.getElementById(
+      "whoami"
+    ).textContent="LINE 登入失敗";
+
+    setStatus(
+      "LINE 登入失敗：" +
+      (error.message||error),
+      "err"
+    );
+
     return false;
   }
 }
 
-/* =================================================
+
+/* =========================================================
    GET
-================================================= */
+========================================================= */
+
 async function getBackend(type){
-  const response = await fetch(BACKEND_URL + "?type=" + encodeURIComponent(type) + "&t=" + Date.now(), { method:"GET", cache:"no-store" });
-  if(!response.ok){ throw new Error("HTTP " + response.status); }
-  const text = await response.text();
+
+  const response=await fetch(
+    BACKEND_URL+
+    "?type="+
+    encodeURIComponent(type)+
+    "&t="+
+    Date.now(),
+    {
+      method:"GET",
+      cache:"no-store"
+    }
+  );
+
+  if(!response.ok){
+    throw new Error("HTTP "+response.status);
+  }
+
+  const text=await response.text();
+
   let result;
-  try{ result = JSON.parse(text); }catch(error){ throw new Error("後端沒有回傳正確 JSON"); }
-  if(!result.success){ throw new Error(result.error || "後端資料取得失敗"); }
+
+  try{
+    result=JSON.parse(text);
+  }catch(error){
+    throw new Error(
+      "後端沒有回傳正確 JSON"
+    );
+  }
+
+  if(!result.success){
+    throw new Error(
+      result.error ||
+      "後端資料取得失敗"
+    );
+  }
+
   return result;
 }
 
-/* =================================================
+
+/* =========================================================
    系統資料
-================================================= */
+========================================================= */
+
 async function loadSystemData(){
+
   try{
-    const result = await getBackend("");
-    const data = result.data || {};
-    truckData = Array.isArray(data.trucks) ? data.trucks : [];
-    truckLastUsed = data.truckLastUsed || {};
-    staffData = Array.isArray(data.staff) ? data.staff : [];
+
+    const result=await getBackend("");
+
+    const data=result.data||{};
+
+    truckData=
+      Array.isArray(data.trucks)
+      ? data.trucks
+      : [];
+
+    truckLastUsed=
+      data.truckLastUsed||{};
+
+    staffData=
+      Array.isArray(data.staff)
+      ? data.staff
+      : [];
+
     renderTrucks();
     renderStaff();
     autoMatchLineStaff();
+
   }catch(error){
+
     console.error(error);
-    document.getElementById("truckList").innerHTML = '<div class="loading">大車資料載入失敗</div>';
-    document.getElementById("staffGrid").innerHTML = '<div class="loading">下貨人員資料載入失敗</div>';
-    setStatus(t("connectionFail") + (error.message || error), "err");
+
+    document.getElementById(
+      "truckList"
+    ).innerHTML=
+      '<div class="loading">大車資料載入失敗</div>';
+
+    document.getElementById(
+      "staffGrid"
+    ).innerHTML=
+      '<div class="loading">下貨人員資料載入失敗</div>';
+
+    setStatus(
+      t("connectionFail")+
+      (error.message||error),
+      "err"
+    );
   }
 }
 
 function formatTruckTime(value){
-  if(value === null || value === undefined){ return ""; }
-  const text = String(value).trim();
-  if(!text){ return ""; }
-  const simpleMatch = text.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
-  if(simpleMatch){ return String(simpleMatch[1]).padStart(2,"0") + ":" + simpleMatch[2]; }
-  const date = new Date(text);
-  if(!isNaN(date.getTime())){ return String(date.getHours()).padStart(2,"0") + ":" + String(date.getMinutes()).padStart(2,"0"); }
+
+  if(value===null||value===undefined){
+    return "";
+  }
+
+  const text=String(value).trim();
+
+  if(!text)return "";
+
+  const m=
+    text.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
+
+  if(m){
+    return String(m[1]).padStart(2,"0")+
+      ":"+
+      m[2];
+  }
+
+  const date=new Date(text);
+
+  if(!isNaN(date.getTime())){
+
+    return String(
+      date.getHours()
+    ).padStart(2,"0")+
+    ":"+
+    String(
+      date.getMinutes()
+    ).padStart(2,"0");
+  }
+
   return "";
 }
 
 function getTruckUsage(truckName){
-  const data = truckLastUsed[truckName];
-  if(!data){ return null; }
-  return { time:formatTruckTime(data.time), staff:String(data.staff || "").trim() };
+
+  const data=truckLastUsed[truckName];
+
+  if(!data)return null;
+
+  return {
+    time:formatTruckTime(data.time),
+    staff:String(data.staff||"").trim()
+  };
 }
 
 function sortedTrucks(){
-  return truckData.map(function(truck,index){ return { truck:truck, originalIndex:index }; })
-    .sort(function(a,b){
-      const truckA = a.truck, truckB = b.truck;
-      const fixedA = truckA.fixed === true, fixedB = truckB.fixed === true;
-      if(fixedA !== fixedB){ return fixedA ? -1 : 1; }
-      if(fixedA && fixedB){ return a.originalIndex - b.originalIndex; }
-      const usageA = getTruckUsage(truckA.name), usageB = getTruckUsage(truckB.name);
-      const usedA = Boolean(usageA && usageA.staff), usedB = Boolean(usageB && usageB.staff);
-      if(usedA !== usedB){ return usedA ? 1 : -1; }
-      return a.originalIndex - b.originalIndex;
+
+  return truckData
+    .map(function(truck,index){
+      return {
+        truck:truck,
+        originalIndex:index
+      };
     })
-    .map(function(item){ return item.truck; });
+    .sort(function(a,b){
+
+      const truckA=a.truck;
+      const truckB=b.truck;
+
+      const fixedA=truckA.fixed===true;
+      const fixedB=truckB.fixed===true;
+
+      if(fixedA!==fixedB){
+        return fixedA?-1:1;
+      }
+
+      if(fixedA&&fixedB){
+        return a.originalIndex-b.originalIndex;
+      }
+
+      const usageA=
+        getTruckUsage(truckA.name);
+
+      const usageB=
+        getTruckUsage(truckB.name);
+
+      const usedA=
+        Boolean(usageA&&usageA.staff);
+
+      const usedB=
+        Boolean(usageB&&usageB.staff);
+
+      if(usedA!==usedB){
+        return usedA?1:-1;
+      }
+
+      return a.originalIndex-b.originalIndex;
+
+    })
+    .map(function(item){
+      return item.truck;
+    });
 }
 
 function renderTrucks(){
-  const list = document.getElementById("truckList");
-  const button = document.getElementById("truckSelectButton");
-  list.innerHTML = "";
-  const trucks = sortedTrucks();
-  if(trucks.length === 0){
-    list.innerHTML = '<div class="loading">目前沒有啟用中的大車</div>';
+
+  const list=
+    document.getElementById("truckList");
+
+  list.innerHTML="";
+
+  const trucks=sortedTrucks();
+
+  if(trucks.length===0){
+
+    list.innerHTML=
+      '<div class="loading">目前沒有啟用中的大車</div>';
+
     return;
   }
+
   trucks.forEach(function(truck){
-    const usage = getTruckUsage(truck.name);
-    const isUsed = Boolean(usage && usage.staff);
-    const checked = selectedTrucks.has(truck.name);
-    const label = document.createElement("label");
-    label.className = "truck-option" + (isUsed ? " used" : "");
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.value = truck.name;
-    checkbox.checked = checked;
-    checkbox.addEventListener("change", function(){
-      if(checkbox.checked){ selectedTrucks.add(truck.name); }
-      else{ selectedTrucks.delete(truck.name); }
-      updateTruckButtonText();
-    });
-    const name = document.createElement("span");
-    name.className = "truck-name";
-    name.textContent = truck.name;
+
+    const usage=
+      getTruckUsage(truck.name);
+
+    const isUsed=
+      Boolean(usage&&usage.staff);
+
+    const checked=
+      selectedTrucks.has(truck.name);
+
+    const label=
+      document.createElement("label");
+
+    label.className=
+      "truck-option"+
+      (isUsed?" used":"");
+
+    const checkbox=
+      document.createElement("input");
+
+    checkbox.type="checkbox";
+    checkbox.value=truck.name;
+    checkbox.checked=checked;
+
+    checkbox.addEventListener(
+      "change",
+      function(){
+
+        if(checkbox.checked){
+          selectedTrucks.add(truck.name);
+        }else{
+          selectedTrucks.delete(truck.name);
+        }
+
+        updateTruckButtonText();
+      }
+    );
+
+    const name=
+      document.createElement("span");
+
+    name.className="truck-name";
+    name.textContent=truck.name;
+
     label.appendChild(checkbox);
     label.appendChild(name);
-    if(isUsed && usage.staff){
-      const staffTag = document.createElement("span");
-      staffTag.className = "used-staff";
-      staffTag.textContent = usage.staff;
+
+    if(isUsed&&usage.staff){
+
+      const staffTag=
+        document.createElement("span");
+
+      staffTag.className="used-staff";
+      staffTag.textContent=usage.staff;
+
       label.appendChild(staffTag);
     }
+
     list.appendChild(label);
   });
+
   updateTruckButtonText();
 }
 
 function updateTruckButtonText(){
-  const button = document.getElementById("truckSelectButton");
-  const arrow = button.querySelector(".truck-arrow");
-  const names = Array.from(selectedTrucks);
-  let text = "請選擇大車…";
-  if(names.length === 1){ text = names[0]; }
-  else if(names.length > 1){ text = "已選 " + names.length + " 台：" + names.join("、"); }
-  button.childNodes[0].textContent = text;
-  if(!button.contains(arrow)){ button.appendChild(arrow); }
+
+  const button=
+    document.getElementById(
+      "truckSelectButton"
+    );
+
+  const arrow=
+    button.querySelector(".truck-arrow");
+
+  const names=
+    Array.from(selectedTrucks);
+
+  let text="請選擇大車…";
+
+  if(names.length===1){
+    text=names[0];
+  }else if(names.length>1){
+    text=
+      "已選 "+
+      names.length+
+      " 台："+names.join("、");
+  }
+
+  button.childNodes[0].textContent=text;
+
+  if(!button.contains(arrow)){
+    button.appendChild(arrow);
+  }
 }
 
 function renderStaff(){
-  const grid = document.getElementById("staffGrid");
-  grid.innerHTML = "";
-  if(staffData.length === 0){
-    grid.innerHTML = '<div class="loading">目前沒有啟用中的下貨人員</div>';
+
+  const grid=
+    document.getElementById("staffGrid");
+
+  grid.innerHTML="";
+
+  if(staffData.length===0){
+
+    grid.innerHTML=
+      '<div class="loading">目前沒有啟用中的下貨人員</div>';
+
     return;
   }
+
   staffData.forEach(function(staff){
-    const label = document.createElement("label");
-    label.className = "staff-item";
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.value = staff.name;
-    const span = document.createElement("span");
-    span.textContent = staff.name;
-    checkbox.addEventListener("change", function(){ label.classList.toggle("selected", checkbox.checked); });
+
+    const label=
+      document.createElement("label");
+
+    label.className="staff-item";
+
+    const checkbox=
+      document.createElement("input");
+
+    checkbox.type="checkbox";
+    checkbox.value=staff.name;
+
+    const span=
+      document.createElement("span");
+
+    span.textContent=staff.name;
+
+    checkbox.addEventListener(
+      "change",
+      function(){
+        label.classList.toggle(
+          "selected",
+          checkbox.checked
+        );
+      }
+    );
+
     label.appendChild(checkbox);
     label.appendChild(span);
+
     grid.appendChild(label);
   });
 }
 
 function autoMatchLineStaff(){
-  const hint = document.getElementById("lineMatchHint");
-  hint.style.display = "none";
-  if(!userName || userName === "未知使用者"){ return; }
-  const currentUser = String(userName).trim().toLowerCase();
-  const matched = staffData.find(function(staff){
-    const lineName = String(staff.lineName || "").trim().toLowerCase();
-    return lineName && lineName === currentUser;
+
+  const hint=
+    document.getElementById(
+      "lineMatchHint"
+    );
+
+  hint.style.display="none";
+
+  if(
+    !userName||
+    userName==="未知使用者"
+  ){
+    return;
+  }
+
+  const currentUser=
+    String(userName)
+      .trim()
+      .toLowerCase();
+
+  const matched=
+    staffData.find(function(staff){
+
+      const lineName=
+        String(staff.lineName||"")
+          .trim()
+          .toLowerCase();
+
+      return lineName&&
+        lineName===currentUser;
+    });
+
+  if(!matched)return;
+
+  const inputs=
+    document.querySelectorAll(
+      "#staffGrid input[type=checkbox]"
+    );
+
+  let target=null;
+
+  inputs.forEach(function(input){
+
+    if(
+      String(input.value).trim()===
+      String(matched.name).trim()
+    ){
+      target=input;
+    }
   });
-  if(!matched){ return; }
-  const inputs = document.querySelectorAll("#staffGrid input[type=checkbox]");
-  let target = null;
-  inputs.forEach(function(input){ if(String(input.value).trim() === String(matched.name).trim()){ target = input; } });
-  if(!target){ return; }
-  target.checked = true;
-  const item = target.closest(".staff-item");
-  if(item){ item.classList.add("selected"); }
-  hint.style.display = "block";
-  hint.textContent = t("lineMatch").replace("{user}", userName).replace("{staff}", matched.name);
+
+  if(!target)return;
+
+  target.checked=true;
+
+  const item=
+    target.closest(".staff-item");
+
+  if(item){
+    item.classList.add("selected");
+  }
+
+  hint.style.display="block";
+
+  hint.textContent=
+    t("lineMatch")
+      .replace("{user}",userName)
+      .replace("{staff}",matched.name);
 }
 
-/* =================================================
+
+/* =========================================================
    大車下拉
-================================================= */
-document.getElementById("truckSelectButton").addEventListener("click", function(){
-  if(isSubmitting){ return; }
-  document.getElementById("truckDropdown").classList.toggle("open");
-  document.getElementById("truckSelectWrap").classList.toggle("open");
-});
-document.getElementById("truckDoneBtn").addEventListener("click", function(){
-  document.getElementById("truckDropdown").classList.remove("open");
-  document.getElementById("truckSelectWrap").classList.remove("open");
-});
-document.getElementById("truckClearBtn").addEventListener("click", function(){
-  if(isSubmitting){ return; }
-  selectedTrucks.clear();
-  renderTrucks();
-});
-document.addEventListener("click", function(event){
-  const wrap = document.querySelector(".truck-select-wrap");
-  if(!wrap.contains(event.target)){
-    document.getElementById("truckDropdown").classList.remove("open");
-    wrap.classList.remove("open");
+========================================================= */
+
+document
+  .getElementById("truckSelectButton")
+  .addEventListener(
+    "click",
+    function(){
+
+      if(isSubmitting)return;
+
+      document
+        .getElementById("truckDropdown")
+        .classList.toggle("open");
+
+      document
+        .getElementById("truckSelectWrap")
+        .classList.toggle("open");
+    }
+  );
+
+document
+  .getElementById("truckDoneBtn")
+  .addEventListener(
+    "click",
+    function(){
+
+      document
+        .getElementById("truckDropdown")
+        .classList.remove("open");
+
+      document
+        .getElementById("truckSelectWrap")
+        .classList.remove("open");
+    }
+  );
+
+document
+  .getElementById("truckClearBtn")
+  .addEventListener(
+    "click",
+    function(){
+
+      if(isSubmitting)return;
+
+      selectedTrucks.clear();
+      renderTrucks();
+    }
+  );
+
+document.addEventListener(
+  "click",
+  function(event){
+
+    const wrap=
+      document.querySelector(
+        ".truck-select-wrap"
+      );
+
+    if(!wrap.contains(event.target)){
+
+      document
+        .getElementById("truckDropdown")
+        .classList.remove("open");
+
+      wrap.classList.remove("open");
+    }
   }
-});
+);
 
-/* =================================================
+
+/* =========================================================
    件數
-================================================= */
-document.getElementById("qtySeg").addEventListener("click", function(event){
-  if(isSubmitting){ return; }
-  if(event.target.tagName !== "BUTTON"){ return; }
-  [...event.currentTarget.children].forEach(function(button){ button.classList.remove("active"); });
-  event.target.classList.add("active");
-});
+========================================================= */
 
-/* =================================================
-   照片壓縮 - 分兩個可回報的階段：讀取(process) / 壓縮(compress)
-================================================= */
+document
+  .getElementById("qtySeg")
+  .addEventListener(
+    "click",
+    function(event){
+
+      if(isSubmitting)return;
+
+      if(event.target.tagName!=="BUTTON"){
+        return;
+      }
+
+      [...event.currentTarget.children]
+        .forEach(function(button){
+          button.classList.remove("active");
+        });
+
+      event.target.classList.add("active");
+    }
+  );
+
+
+/* =========================================================
+   圖片讀取／壓縮
+========================================================= */
+
 function readFileAsDataURL(file){
+
   return new Promise(function(resolve,reject){
-    const reader = new FileReader();
-    reader.onload = function(event){ resolve(event.target.result); };
-    reader.onerror = reject;
+
+    const reader=new FileReader();
+
+    reader.onload=function(event){
+      resolve(event.target.result);
+    };
+
+    reader.onerror=reject;
+
     reader.readAsDataURL(file);
   });
 }
 
-function compressDataURL(rawDataUrl, maxW, quality){
+function compressDataURL(
+  rawDataUrl,
+  maxW,
+  quality
+){
+
   return new Promise(function(resolve,reject){
-    const img = new Image();
-    img.onload = function(){
-      const scale = Math.min(1, maxW / img.width);
-      const canvas = document.createElement("canvas");
-      canvas.width = Math.round(img.width * scale);
-      canvas.height = Math.round(img.height * scale);
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      resolve(canvas.toDataURL("image/jpeg", quality));
+
+    const img=new Image();
+
+    img.onload=function(){
+
+      const scale=
+        Math.min(
+          1,
+          maxW/img.width
+        );
+
+      const canvas=
+        document.createElement("canvas");
+
+      canvas.width=
+        Math.round(img.width*scale);
+
+      canvas.height=
+        Math.round(img.height*scale);
+
+      const ctx=
+        canvas.getContext("2d");
+
+      ctx.drawImage(
+        img,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      resolve(
+        canvas.toDataURL(
+          "image/jpeg",
+          quality
+        )
+      );
     };
-    img.onerror = reject;
-    img.src = rawDataUrl;
+
+    img.onerror=reject;
+
+    img.src=rawDataUrl;
   });
 }
 
-/* =================================================
-   選照片 - 顯示「處理」與「壓縮」兩個真實階段
-================================================= */
-document.getElementById("photoInput").addEventListener("change", async function(event){
-  if(isSubmitting){ event.target.value = ""; return; }
-  const files = [...event.target.files];
-  if(files.length === 0){ return; }
 
-  try{
-    const imageFiles = files.filter(function(file){ return file.type.startsWith("image/"); });
-    const total = imageFiles.length;
-    if(total === 0){ return; }
+/* =========================================================
+   選照片
+========================================================= */
 
-    showUploadProgress();
+document
+  .getElementById("photoInput")
+  .addEventListener(
+    "change",
+    async function(event){
 
-    for(let i = 0; i < total; i++){
-      /* 階段一：處理（讀取檔案） */
-      setProgressStage("process");
-      const processPercent = ((i / total) * 50);
-      updateUploadProgress(t("processingPhoto"), processPercent, t("processingPhoto"), (i+1) + " / " + total);
-      const rawDataUrl = await readFileAsDataURL(imageFiles[i]);
+      if(isSubmitting){
 
-      /* 階段二：壓縮 */
-      setProgressStage("compress");
-      const compressPercent = 50 + ((i / total) * 50);
-      updateUploadProgress(t("compressingPhoto"), compressPercent, t("compressingPhoto"), (i+1) + " / " + total);
-      const compressed = await compressDataURL(rawDataUrl, 1200, 0.72);
+        event.target.value="";
+        return;
+      }
 
-      photos.push(compressed);
+      const files=
+        [...event.target.files];
 
-      const donePercent = 50 + (((i+1) / total) * 50);
-      updateUploadProgress(t("compressingPhoto"), donePercent, t("compressingPhoto"), (i+1) + " / " + total);
+      if(files.length===0)return;
+
+      try{
+
+        const imageFiles=
+          files.filter(function(file){
+            return file.type.startsWith("image/");
+          });
+
+        const total=imageFiles.length;
+
+        if(total===0)return;
+
+        showUploadProgress();
+
+        for(let i=0;i<total;i++){
+
+          /* 處理 */
+          setProgressStage("process");
+
+          const processStart=
+            (i/total)*45;
+
+          updateUploadProgress(
+            t("processingPhoto"),
+            processStart,
+            t("processingPhoto"),
+            (i+1)+" / "+total
+          );
+
+          const rawDataUrl=
+            await readFileAsDataURL(
+              imageFiles[i]
+            );
+
+          /*
+           * 讀取完成後不要直接跳到下一階段的 50%。
+           * 給瀏覽器一個 repaint 時間，讓使用者真的看得到階段變化。
+           */
+          await new Promise(function(resolve){
+            requestAnimationFrame(resolve);
+          });
+
+          /* 壓縮 */
+          setProgressStage("compress");
+
+          updateUploadProgress(
+            t("compressingPhoto"),
+            45+(i/total)*50,
+            t("compressingPhoto"),
+            (i+1)+" / "+total
+          );
+
+          const compressed=
+            await compressDataURL(
+              rawDataUrl,
+              1200,
+              0.72
+            );
+
+          photos.push(compressed);
+
+          const done=
+            45+
+            ((i+1)/total)*50;
+
+          updateUploadProgress(
+            t("compressingPhoto"),
+            done,
+            t("compressingPhoto"),
+            (i+1)+" / "+total
+          );
+
+          await new Promise(function(resolve){
+            setTimeout(resolve,80);
+          });
+        }
+
+        renderPhotoGrid();
+
+        /*
+         * 選照片階段完成，但不是送出。
+         * 進度條停在 95% 一瞬間再關閉，
+         * 避免視覺上瞬間跳 100%。
+         */
+        updateUploadProgress(
+          t("compressingPhoto"),
+          95,
+          t("compressingPhoto"),
+          total+" / "+total
+        );
+
+        await new Promise(function(resolve){
+          setTimeout(resolve,180);
+        });
+
+        hideUploadProgress();
+
+        setStatus("","");
+
+      }catch(error){
+
+        console.error(error);
+
+        hideUploadProgress();
+
+        setStatus(
+          t("uploadFail"),
+          "err"
+        );
+      }
+
+      event.target.value="";
     }
+  );
 
-    renderPhotoGrid();
-    hideUploadProgress();
-    setStatus("", "");
-
-  }catch(error){
-    console.error(error);
-    hideUploadProgress();
-    setStatus(t("uploadFail"), "err");
-  }
-
-  event.target.value = "";
-});
 
 function renderPhotoGrid(){
-  const grid = document.getElementById("photoGrid");
-  grid.innerHTML = "";
+
+  const grid=
+    document.getElementById("photoGrid");
+
+  grid.innerHTML="";
+
   photos.forEach(function(photo,index){
-    const div = document.createElement("div");
-    div.className = "thumb";
-    const img = document.createElement("img");
-    img.src = photo;
-    const remove = document.createElement("button");
-    remove.className = "rm";
-    remove.type = "button";
-    remove.textContent = "✕";
-    remove.disabled = isSubmitting;
-    remove.addEventListener("click", function(){
-      if(isSubmitting){ return; }
-      photos.splice(index, 1);
-      renderPhotoGrid();
-    });
+
+    const div=
+      document.createElement("div");
+
+    div.className="thumb";
+
+    const img=
+      document.createElement("img");
+
+    img.src=photo;
+
+    const remove=
+      document.createElement("button");
+
+    remove.className="rm";
+    remove.type="button";
+    remove.textContent="✕";
+    remove.disabled=isSubmitting;
+
+    remove.addEventListener(
+      "click",
+      function(){
+
+        if(isSubmitting)return;
+
+        photos.splice(index,1);
+
+        renderPhotoGrid();
+      }
+    );
+
     div.appendChild(img);
     div.appendChild(remove);
+
     grid.appendChild(div);
   });
 }
 
 function getSelectedStaff(){
-  return [...document.querySelectorAll("#staffGrid input[type=checkbox]:checked")].map(function(input){ return input.value; });
+
+  return [
+    ...document.querySelectorAll(
+      "#staffGrid input[type=checkbox]:checked"
+    )
+  ].map(function(input){
+    return input.value;
+  });
 }
 
-/* =================================================
-   POST - 使用 XHR 取得真實上傳進度
-================================================= */
-function postBackendWithProgress(payload, onProgress){
+
+/* =========================================================
+   POST
+   注意：
+   XHR upload 進度只代表瀏覽器把資料送出的進度，
+   不代表 Apps Script 後端已完成。
+========================================================= */
+
+function postBackendWithProgress(
+  payload,
+  onProgress
+){
+
   return new Promise(function(resolve,reject){
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", BACKEND_URL, true);
-    xhr.setRequestHeader("Content-Type", "text/plain;charset=utf-8");
 
-    xhr.upload.onprogress = function(event){
-      if(event.lengthComputable && onProgress){
-        const percent = (event.loaded / event.total) * 100;
-        onProgress(percent);
-      }
-    };
+    const xhr=
+      new XMLHttpRequest();
 
-    xhr.onload = function(){
+    xhr.open(
+      "POST",
+      BACKEND_URL,
+      true
+    );
+
+    xhr.setRequestHeader(
+      "Content-Type",
+      "text/plain;charset=utf-8"
+    );
+
+    xhr.upload.onprogress=
+      function(event){
+
+        if(
+          event.lengthComputable &&
+          onProgress
+        ){
+
+          const percent=
+            event.total>0
+            ? (event.loaded/event.total)*100
+            : 0;
+
+          onProgress(percent);
+        }
+      };
+
+    xhr.onload=function(){
+
       let result;
+
       try{
-        result = JSON.parse(xhr.responseText);
+        result=
+          JSON.parse(
+            xhr.responseText
+          );
       }catch(error){
-        reject(new Error("Apps Script 沒有回傳正確 JSON"));
+
+        reject(
+          new Error(
+            "Apps Script 沒有回傳正確 JSON"
+          )
+        );
+
         return;
       }
+
       if(!result.success){
-        reject(new Error(result.error || "Apps Script 執行失敗"));
+
+        reject(
+          new Error(
+            result.error||
+            "Apps Script 執行失敗"
+          )
+        );
+
         return;
       }
+
       resolve(result);
     };
 
-    xhr.onerror = function(){ reject(new Error("網路連線失敗")); };
+    xhr.onerror=function(){
+      reject(
+        new Error("網路連線失敗")
+      );
+    };
 
-    xhr.send(JSON.stringify(payload));
+    xhr.ontimeout=function(){
+      reject(
+        new Error("連線逾時")
+      );
+    };
+
+    xhr.send(
+      JSON.stringify(payload)
+    );
   });
 }
 
 async function postBackend(payload){
-  return postBackendWithProgress(payload, null);
+  return postBackendWithProgress(
+    payload,
+    null
+  );
 }
 
-/* =================================================
-   鎖定 / 解鎖表單
-================================================= */
+
+/* =========================================================
+   鎖定
+========================================================= */
+
 function setSubmittingState(locked){
-  isSubmitting = locked;
-  document.getElementById("submitBtn").disabled = locked;
-  document.getElementById("truckSelectButton").disabled = locked;
-  document.getElementById("photoInput").disabled = locked;
-  document.querySelectorAll("#staffGrid input, #qtySeg button, #truckList input, #truckClearBtn, #truckDoneBtn").forEach(function(el){ el.disabled = locked; });
+
+  isSubmitting=locked;
+
+  document.getElementById(
+    "submitBtn"
+  ).disabled=locked;
+
+  document.getElementById(
+    "truckSelectButton"
+  ).disabled=locked;
+
+  document.getElementById(
+    "photoInput"
+  ).disabled=locked;
+
+  document
+    .querySelectorAll(
+      "#staffGrid input,#qtySeg button,#truckList input,#truckClearBtn,#truckDoneBtn"
+    )
+    .forEach(function(el){
+      el.disabled=locked;
+    });
+
   renderPhotoGrid();
 }
 
-/* =================================================
-   送出 - 三階段真實進度：處理(已完成) → 壓縮(已完成) → 上傳(即時進度)
-================================================= */
-document.getElementById("submitBtn").addEventListener("click", async function(){
-  if(isSubmitting){ return; }
 
-  const trucks = Array.from(selectedTrucks);
-  const staff = getSelectedStaff();
-  const qtyButton = document.querySelector("#qtySeg button.active");
-  const qtyStatus = qtyButton ? qtyButton.dataset.v : "ok";
-  const note = document.getElementById("note").value.trim();
+/* =========================================================
+   送出
+========================================================= */
 
-  if(trucks.length === 0){ setStatus(t("needTruck"), "err"); return; }
-  if(staff.length === 0){ setStatus(t("needStaff"), "err"); return; }
-  if(photos.length === 0){ setStatus(t("needPhoto"), "err"); return; }
+document
+  .getElementById("submitBtn")
+  .addEventListener(
+    "click",
+    async function(){
 
-  const submitPhotos = photos.slice();
-  setSubmittingState(true);
-  showUploadProgress();
+      if(isSubmitting)return;
 
-  /* 照片已經在選取時完成「處理」與「壓縮」，這裡直接進入上傳階段 */
-  setProgressStage("upload");
-  updateUploadProgress(t("preparing"), 0, t("preparing"), "");
+      const trucks=
+        Array.from(selectedTrucks);
 
-  try{
-    const payload = {
-      user: userName,
-      trucks: trucks,
-      staff: staff,
-      qtyStatus: qtyStatus === "ok" ? "正確" : "有多有少",
-      note: note,
-      photos: submitPhotos
-    };
+      const staff=
+        getSelectedStaff();
 
-    const result = await postBackendWithProgress(payload, function(percent){
-      updateUploadProgress(t("uploading"), percent, t("uploading"), Math.round(percent) + "%");
-    });
+      const qtyButton=
+        document.querySelector(
+          "#qtySeg button.active"
+        );
 
-    console.log(result);
+      const qtyStatus=
+        qtyButton
+        ? qtyButton.dataset.v
+        : "ok";
 
-    /* 上傳位元組送完後，Apps Script 還要寫入試算表，這段時間顯示「寫入回報」而不是瞬間跳100% */
-    updateUploadProgress(t("writingReport"), 96, t("writingReport"), "");
-    await new Promise(function(resolve){ setTimeout(resolve, 350); });
+      const note=
+        document
+          .getElementById("note")
+          .value
+          .trim();
 
-    updateUploadProgress(t("success"), 100, t("success"), "");
-    setStatus(t("success"), "ok");
+      if(trucks.length===0){
 
-    trucks.forEach(function(truck){
-      truckLastUsed[truck] = { time: new Date(), staff: staff.join("、") };
-    });
+        setStatus(
+          t("needTruck"),
+          "err"
+        );
 
-    selectedTrucks.clear();
-    photos = [];
-    renderTrucks();
-    renderPhotoGrid();
-    document.getElementById("note").value = "";
-    document.querySelectorAll("#staffGrid input[type=checkbox]").forEach(function(input){
-      input.checked = false;
-      const item = input.closest(".staff-item");
-      if(item){ item.classList.remove("selected"); }
-    });
-    document.getElementById("lineMatchHint").style.display = "none";
-    document.querySelectorAll("#qtySeg button").forEach(function(btn){ btn.classList.remove("active"); });
-    document.querySelector('#qtySeg button[data-v="ok"]').classList.add("active");
-    document.getElementById("truckDropdown").classList.remove("open");
-    document.getElementById("truckSelectWrap").classList.remove("open");
+        return;
+      }
 
-    if(document.getElementById("historyScreen").classList.contains("open")){
+      if(staff.length===0){
+
+        setStatus(
+          t("needStaff"),
+          "err"
+        );
+
+        return;
+      }
+
+      if(photos.length===0){
+
+        setStatus(
+          t("needPhoto"),
+          "err"
+        );
+
+        return;
+      }
+
+      const submitPhotos=
+        photos.slice();
+
+      setSubmittingState(true);
+      showUploadProgress();
+
+      try{
+
+        /*
+         * 0～5：準備
+         */
+        setProgressStage("upload");
+
+        updateUploadProgress(
+          t("preparing"),
+          3,
+          t("preparing"),
+          ""
+        );
+
+        await new Promise(function(resolve){
+          setTimeout(resolve,180);
+        });
+
+
+        const payload={
+          user:userName,
+          trucks:trucks,
+          staff:staff,
+          qtyStatus:
+            qtyStatus==="ok"
+            ? "正確"
+            : "有多有少",
+          note:note,
+          photos:submitPhotos
+        };
+
+
+        /*
+         * 真正 XHR upload。
+         *
+         * 注意：
+         * 不讓 XHR 的 100% 直接變成畫面 100%。
+         *
+         * XHR 0～100%
+         * 對應畫面 5～82%。
+         *
+         * 剩下 18% 留給 Apps Script
+         * 回傳、寫入 Sheet 等後端工作。
+         */
+        updateUploadProgress(
+          t("uploading"),
+          5,
+          t("uploading"),
+          "0%"
+        );
+
+        const result=
+          await postBackendWithProgress(
+            payload,
+            function(percent){
+
+              const visual=
+                5+
+                (percent*0.77);
+
+              updateUploadProgress(
+                t("uploading"),
+                visual,
+                t("uploading"),
+                Math.round(percent)+"%"
+              );
+            }
+          );
+
+        console.log(result);
+
+
+        /*
+         * request 已經送完，
+         * 但 Apps Script 已經回傳 success。
+         *
+         * 這裡才開始進最後階段。
+         */
+        updateUploadProgress(
+          t("processingServer"),
+          88,
+          t("processingServer"),
+          ""
+        );
+
+        await new Promise(function(resolve){
+          setTimeout(resolve,220);
+        });
+
+
+        updateUploadProgress(
+          t("writingReport"),
+          94,
+          t("writingReport"),
+          ""
+        );
+
+        await new Promise(function(resolve){
+          setTimeout(resolve,300);
+        });
+
+
+        /*
+         * 只有真的收到後端 success，
+         * 才允許進度變成 100。
+         */
+        updateUploadProgress(
+          t("success"),
+          100,
+          t("success"),
+          "完成"
+        );
+
+        setStatus(
+          t("success"),
+          "ok"
+        );
+
+
+        trucks.forEach(function(truck){
+
+          truckLastUsed[truck]={
+            time:new Date(),
+            staff:staff.join("、")
+          };
+
+        });
+
+
+        /* 清空表單 */
+        selectedTrucks.clear();
+        photos=[];
+
+        renderTrucks();
+        renderPhotoGrid();
+
+        document.getElementById(
+          "note"
+        ).value="";
+
+        document
+          .querySelectorAll(
+            "#staffGrid input[type=checkbox]"
+          )
+          .forEach(function(input){
+
+            input.checked=false;
+
+            const item=
+              input.closest(
+                ".staff-item"
+              );
+
+            if(item){
+              item.classList.remove(
+                "selected"
+              );
+            }
+          });
+
+        document.getElementById(
+          "lineMatchHint"
+        ).style.display="none";
+
+        document
+          .querySelectorAll(
+            "#qtySeg button"
+          )
+          .forEach(function(btn){
+            btn.classList.remove("active");
+          });
+
+        document
+          .querySelector(
+            '#qtySeg button[data-v="ok"]'
+          )
+          .classList.add("active");
+
+        document
+          .getElementById(
+            "truckDropdown"
+          )
+          .classList.remove("open");
+
+        document
+          .getElementById(
+            "truckSelectWrap"
+          )
+          .classList.remove("open");
+
+
+        if(
+          document
+            .getElementById("historyScreen")
+            .classList
+            .contains("open")
+        ){
+          await loadReports();
+        }
+
+
+        await new Promise(function(resolve){
+          setTimeout(resolve,700);
+        });
+
+        hideUploadProgress();
+
+        setSubmittingState(false);
+
+
+        setTimeout(function(){
+
+          try{
+
+            if(
+              window.liff &&
+              liff.isInClient()
+            ){
+              liff.closeWindow();
+            }
+
+          }catch(error){
+            console.log(error);
+          }
+
+        },500);
+
+
+      }catch(error){
+
+        console.error(error);
+
+        hideUploadProgress();
+
+        setSubmittingState(false);
+
+        setStatus(
+          "❌ "+(error.message||error),
+          "err"
+        );
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   回報紀錄
+========================================================= */
+
+document
+  .getElementById("historyBtn")
+  .addEventListener(
+    "click",
+    async function(){
+
+      if(isSubmitting)return;
+
+      document
+        .getElementById("historyScreen")
+        .classList.add("open");
+
       await loadReports();
     }
+  );
 
-    await new Promise(function(resolve){ setTimeout(resolve, 700); });
+document
+  .getElementById("historyClose")
+  .addEventListener(
+    "click",
+    function(){
 
-    hideUploadProgress();
-    setSubmittingState(false);
-
-    setTimeout(function(){
-      try{
-        if(window.liff && liff.isInClient()){ liff.closeWindow(); }
-      }catch(error){ console.log(error); }
-    }, 500);
-
-  }catch(error){
-    console.error(error);
-    hideUploadProgress();
-    setSubmittingState(false);
-    setStatus("❌ " + (error.message || error), "err");
-  }
-});
-
-/* =================================================
-   回報紀錄
-================================================= */
-document.getElementById("historyBtn").addEventListener("click", async function(){
-  if(isSubmitting){ return; }
-  document.getElementById("historyScreen").classList.add("open");
-  await loadReports();
-});
-
-document.getElementById("historyClose").addEventListener("click", function(){
-  document.getElementById("historyScreen").classList.remove("open");
-});
+      document
+        .getElementById("historyScreen")
+        .classList.remove("open");
+    }
+  );
 
 async function loadReports(){
-  const content = document.getElementById("historyContent");
-  content.innerHTML = '<div class="history-loading">' + t("historyLoading") + '</div>';
+
+  const content=
+    document.getElementById(
+      "historyContent"
+    );
+
+  content.innerHTML=
+    '<div class="history-loading">'+
+    t("historyLoading")+
+    "</div>";
+
   try{
-    const result = await getBackend("reports");
-    reportData = Array.isArray(result.data && result.data.reports) ? result.data.reports : [];
+
+    const result=
+      await getBackend("reports");
+
+    reportData=
+      Array.isArray(
+        result.data &&
+        result.data.reports
+      )
+      ? result.data.reports
+      : [];
+
     renderHistory();
+
   }catch(error){
+
     console.error(error);
-    content.innerHTML = '<div class="history-empty">' + t("reportLoadError") + '</div>';
+
+    content.innerHTML=
+      '<div class="history-empty">'+
+      t("reportLoadError")+
+      "</div>";
   }
 }
 
 function groupReportsByDate(){
-  const groups = {};
+
+  const groups={};
+
   reportData.forEach(function(report){
-    const date = report.date || "未知日期";
-    if(!groups[date]){ groups[date] = []; }
+
+    const date=
+      report.date ||
+      "未知日期";
+
+    if(!groups[date]){
+      groups[date]=[];
+    }
+
     groups[date].push(report);
   });
+
   return groups;
 }
 
 function formatDateLabel(date){
-  if(!date){ return ""; }
-  const parts = date.split("-");
-  if(parts.length !== 3){ return date; }
-  return parts[0] + "/" + parts[1] + "/" + parts[2];
+
+  if(!date)return "";
+
+  const parts=date.split("-");
+
+  if(parts.length!==3){
+    return date;
+  }
+
+  return(
+    parts[0]+"/"+
+    parts[1]+"/"+
+    parts[2]
+  );
 }
 
 function renderHistory(){
-  const content = document.getElementById("historyContent");
-  const groups = groupReportsByDate();
-  const dates = Object.keys(groups).sort(function(a,b){ return b.localeCompare(a); });
 
-  if(dates.length === 0){
-    content.innerHTML = '<div class="history-empty">' + t("noHistory") + '</div>';
+  const content=
+    document.getElementById(
+      "historyContent"
+    );
+
+  const groups=
+    groupReportsByDate();
+
+  const dates=
+    Object.keys(groups)
+      .sort(function(a,b){
+        return b.localeCompare(a);
+      });
+
+  if(dates.length===0){
+
+    content.innerHTML=
+      '<div class="history-empty">'+
+      t("noHistory")+
+      "</div>";
+
     return;
   }
 
-  content.innerHTML = "";
+  content.innerHTML="";
 
   dates.forEach(function(date){
-    const day = document.createElement("div");
-    day.className = "history-day";
 
-    const head = document.createElement("button");
-    head.type = "button";
-    head.className = "history-day-head";
+    const day=
+      document.createElement("div");
 
-    const arrow = document.createElement("span");
-    arrow.className = "history-arrow";
-    arrow.textContent = "▶";
+    day.className="history-day";
 
-    const dateText = document.createElement("span");
-    dateText.className = "history-date";
-    dateText.textContent = formatDateLabel(date);
+    const head=
+      document.createElement("button");
 
-    const allPhotoBtn = document.createElement("button");
-    allPhotoBtn.type = "button";
-    allPhotoBtn.className = "history-photo-all";
-    allPhotoBtn.textContent = "📷 " + t("viewTodayPhotos");
-    allPhotoBtn.addEventListener("click", function(event){
-      event.stopPropagation();
-      showAllDayPhotos(date, groups[date]);
-    });
+    head.type="button";
+    head.className="history-day-head";
+
+    const arrow=
+      document.createElement("span");
+
+    arrow.className="history-arrow";
+    arrow.textContent="▶";
+
+    const dateText=
+      document.createElement("span");
+
+    dateText.className="history-date";
+    dateText.textContent=
+      formatDateLabel(date);
+
+    const allPhotoBtn=
+      document.createElement("button");
+
+    allPhotoBtn.type="button";
+    allPhotoBtn.className=
+      "history-photo-all";
+
+    allPhotoBtn.textContent=
+      "📷 "+
+      t("viewTodayPhotos");
+
+    allPhotoBtn.addEventListener(
+      "click",
+      function(event){
+
+        event.stopPropagation();
+
+        showAllDayPhotos(
+          date,
+          groups[date]
+        );
+      }
+    );
 
     head.appendChild(arrow);
     head.appendChild(dateText);
     head.appendChild(allPhotoBtn);
 
-    const body = document.createElement("div");
-    body.className = "history-day-body";
+    const body=
+      document.createElement("div");
 
-    groups[date].forEach(function(report){ body.appendChild(createReportCard(report)); });
+    body.className=
+      "history-day-body";
 
-    head.addEventListener("click", function(){ day.classList.toggle("open"); });
+    groups[date].forEach(
+      function(report){
+        body.appendChild(
+          createReportCard(report)
+        );
+      }
+    );
+
+    head.addEventListener(
+      "click",
+      function(){
+        day.classList.toggle("open");
+      }
+    );
 
     day.appendChild(head);
     day.appendChild(body);
+
     content.appendChild(day);
   });
 }
 
+
+/* =========================================================
+   建立回報卡片
+========================================================= */
+
 function createReportCard(report){
-  const card = document.createElement("div");
-  card.className = "report-card";
 
-  const main = document.createElement("div");
-  main.className = "report-main";
+  const card=
+    document.createElement("div");
 
-  const truck = document.createElement("div");
-  truck.className = "report-truck";
-  truck.textContent = report.trucks || "未指定大車";
+  card.className="report-card";
 
-  const staff = document.createElement("div");
-  staff.className = "report-staff";
-  staff.textContent = report.staff || "";
 
-  const status = document.createElement("div");
-  const isOK = report.qtyStatus === "正確";
-  status.className = "report-status " + (isOK ? "ok" : "bad");
-  status.textContent = isOK ? "✓ 正確" : "✗ " + (report.qtyStatus || "有多有少");
+  /* 上方：只放大車、人員、件數 */
+  const main=
+    document.createElement("div");
 
-  const employee = document.createElement("div");
-  employee.className = "report-employee";
-  employee.textContent = report.employee || "";
+  main.className="report-main";
+
+
+  const truck=
+    document.createElement("div");
+
+  truck.className="report-truck";
+  truck.textContent=
+    report.trucks ||
+    "未指定大車";
+
+
+  const staff=
+    document.createElement("div");
+
+  staff.className="report-staff";
+  staff.textContent=
+    report.staff || "";
+
+
+  const status=
+    document.createElement("div");
+
+  const isOK=
+    report.qtyStatus==="正確";
+
+  status.className=
+    "report-status "+
+    (isOK?"ok":"bad");
+
+  status.textContent=
+    isOK
+    ? "✓ 正確"
+    : "✗ "+
+      (report.qtyStatus||"有多有少");
+
 
   main.appendChild(truck);
-  if(report.staff){ main.appendChild(staff); }
+
+  if(report.staff){
+    main.appendChild(staff);
+  }
+
   main.appendChild(status);
-  main.appendChild(employee);
+
   card.appendChild(main);
 
-  const time = document.createElement("div");
-  time.className = "report-time";
-  time.textContent = report.time || "";
+
+  /* 時間 */
+  const time=
+    document.createElement("div");
+
+  time.className="report-time";
+  time.textContent=
+    report.time || "";
+
   card.appendChild(time);
 
-  /* 照片：使用 Apps Script 回傳的 thumbnailUrl（小縮圖），完整顯示不裁切 */
-  if(Array.isArray(report.photos) && report.photos.length > 0){
-    const photoGrid = document.createElement("div");
-    photoGrid.className = "report-photos";
+
+  /* =======================================================
+     照片
+     
+     這裡特別修改：
+     1. 四格
+     2. thumbnailUrl 優先
+     3. 不使用 lazy
+     4. 縮圖載入失敗才 fallback 原圖
+  ======================================================= */
+
+  if(
+    Array.isArray(report.photos) &&
+    report.photos.length>0
+  ){
+
+    const photoGrid=
+      document.createElement("div");
+
+    photoGrid.className=
+      "report-photos";
+
 
     report.photos.forEach(function(photo){
-      const photoItem = document.createElement("div");
-      photoItem.className = "report-photo";
 
-      const img = document.createElement("img");
-      img.src = photo.thumbnailUrl || photo.url;
-      img.loading = "lazy";
-      img.alt = photo.name || "";
+      const photoItem=
+        document.createElement("div");
 
-      img.addEventListener("click", function(){
-        openLightbox(photo.url || photo.thumbnailUrl);
-      });
+      photoItem.className=
+        "report-photo loading";
+
+
+      const img=
+        document.createElement("img");
+
+      /*
+       * 優先 thumbnailUrl。
+       * 不使用 loading="lazy"，
+       * 讓回報紀錄一開啟就開始載入縮圖。
+       */
+      const thumbnail=
+        photo.thumbnailUrl ||
+        photo.thumbnail ||
+        photo.url ||
+        "";
+
+      const original=
+        photo.url ||
+        photo.thumbnailUrl ||
+        photo.thumbnail ||
+        "";
+
+      img.src=thumbnail;
+
+      img.alt=
+        photo.name || "";
+
+      img.decoding="async";
+
+
+      img.addEventListener(
+        "load",
+        function(){
+          photoItem.classList.remove(
+            "loading"
+          );
+        }
+      );
+
+
+      img.addEventListener(
+        "error",
+        function(){
+
+          /*
+           * 如果 thumbnailUrl 失效，
+           * 只 fallback 一次原圖，
+           * 避免無限觸發 error。
+           */
+          if(
+            original &&
+            img.src!==original
+          ){
+
+            photoItem.classList.add(
+              "loading"
+            );
+
+            img.src=original;
+
+          }else{
+
+            photoItem.classList.remove(
+              "loading"
+            );
+          }
+        }
+      );
+
+
+      img.addEventListener(
+        "click",
+        function(){
+
+          openLightbox(
+            original ||
+            thumbnail
+          );
+        }
+      );
+
 
       photoItem.appendChild(img);
       photoGrid.appendChild(photoItem);
+
     });
 
     card.appendChild(photoGrid);
+
   }else{
-    const noPhoto = document.createElement("div");
-    noPhoto.className = "report-no-photo";
-    noPhoto.textContent = t("noPhotos");
+
+    const noPhoto=
+      document.createElement("div");
+
+    noPhoto.className=
+      "report-no-photo";
+
+    noPhoto.textContent=
+      t("noPhotos");
+
     card.appendChild(noPhoto);
   }
 
+
+  /* 備註 */
   if(report.note){
-    const note = document.createElement("div");
-    note.className = "report-note";
-    note.textContent = report.note;
+
+    const note=
+      document.createElement("div");
+
+    note.className="report-note";
+
+    note.textContent=
+      report.note;
+
     card.appendChild(note);
   }
 
-  if(String(report.employee || "").trim() === String(userName || "").trim()){
-    const deleteButton = document.createElement("button");
-    deleteButton.type = "button";
-    deleteButton.textContent = t("delete");
-    deleteButton.style.marginTop = "9px";
-    deleteButton.style.border = "1px solid var(--line)";
-    deleteButton.style.background = "#fff";
-    deleteButton.style.borderRadius = "8px";
-    deleteButton.style.padding = "7px 10px";
-    deleteButton.style.fontSize = "11px";
-    deleteButton.addEventListener("click", function(){ deleteReportFromHistory(report, deleteButton); });
-    card.appendChild(deleteButton);
+
+  /*
+   * ======================================================
+   * 最下面：
+   * 誰傳的 + 刪除
+   *
+   * 不再放在大車那一排。
+   * ======================================================
+   */
+
+  const footer=
+    document.createElement("div");
+
+  footer.className=
+    "report-footer";
+
+
+  const employee=
+    document.createElement("div");
+
+  employee.className=
+    "report-employee";
+
+  employee.textContent=
+    report.employee
+    ? "👤 "+report.employee
+    : "";
+
+
+  footer.appendChild(employee);
+
+
+  if(
+    String(report.employee||"").trim()===
+    String(userName||"").trim()
+  ){
+
+    const deleteButton=
+      document.createElement("button");
+
+    deleteButton.type="button";
+    deleteButton.className=
+      "report-delete";
+
+    deleteButton.textContent=
+      t("delete");
+
+    deleteButton.addEventListener(
+      "click",
+      function(event){
+
+        event.stopPropagation();
+
+        deleteReportFromHistory(
+          report,
+          deleteButton
+        );
+      }
+    );
+
+    footer.appendChild(deleteButton);
   }
+
+
+  if(
+    employee.textContent ||
+    String(report.employee||"").trim()===
+    String(userName||"").trim()
+  ){
+
+    card.appendChild(footer);
+  }
+
 
   return card;
 }
 
-async function deleteReportFromHistory(report, button){
-  if(!confirm(t("deleteConfirm"))){ return; }
-  button.disabled = true;
-  button.textContent = t("deleting");
+
+/* =========================================================
+   刪除
+========================================================= */
+
+async function deleteReportFromHistory(
+  report,
+  button
+){
+
+  if(
+    !confirm(
+      t("deleteConfirm")
+    )
+  ){
+    return;
+  }
+
+  button.disabled=true;
+  button.textContent=
+    t("deleting");
+
   try{
-    await postBackend({ action:"deleteReport", row:report.row, user:userName });
-    reportData = reportData.filter(function(item){ return item.row !== report.row; });
+
+    await postBackend({
+      action:"deleteReport",
+      row:report.row,
+      user:userName
+    });
+
+    reportData=
+      reportData.filter(
+        function(item){
+          return item.row!==report.row;
+        }
+      );
+
     renderHistory();
+
   }catch(error){
+
     console.error(error);
-    button.disabled = false;
-    button.textContent = t("delete");
-    alert(error.message || "刪除失敗");
+
+    button.disabled=false;
+    button.textContent=
+      t("delete");
+
+    alert(
+      error.message ||
+      "刪除失敗"
+    );
   }
 }
 
-/* =================================================
-   當日全部照片 - 也用完整顯示不裁切
-================================================= */
-function showAllDayPhotos(date, reports){
-  const screen = document.getElementById("allPhotoScreen");
-  const title = document.getElementById("allPhotoTitle");
-  const grid = document.getElementById("allPhotoGrid");
 
-  title.textContent = formatDateLabel(date) + " · " + t("allPhotos");
-  grid.innerHTML = "";
+/* =========================================================
+   當日全部照片
+========================================================= */
 
-  let count = 0;
+function showAllDayPhotos(
+  date,
+  reports
+){
+
+  const screen=
+    document.getElementById(
+      "allPhotoScreen"
+    );
+
+  const title=
+    document.getElementById(
+      "allPhotoTitle"
+    );
+
+  const grid=
+    document.getElementById(
+      "allPhotoGrid"
+    );
+
+  title.textContent=
+    formatDateLabel(date)+
+    " · "+
+    t("allPhotos");
+
+  grid.innerHTML="";
+
+  let count=0;
 
   reports.forEach(function(report){
-    if(!Array.isArray(report.photos)){ return; }
+
+    if(!Array.isArray(report.photos)){
+      return;
+    }
+
     report.photos.forEach(function(photo){
+
       count++;
-      const item = document.createElement("div");
-      item.className = "all-photo-item";
-      const img = document.createElement("img");
-      img.src = photo.url || photo.thumbnailUrl;
-      img.loading = "lazy";
-      img.addEventListener("click", function(){ openLightbox(photo.url || photo.thumbnailUrl); });
+
+      const item=
+        document.createElement("div");
+
+      item.className=
+        "all-photo-item";
+
+      const img=
+        document.createElement("img");
+
+      const url=
+        photo.url ||
+        photo.thumbnailUrl ||
+        photo.thumbnail ||
+        "";
+
+      img.src=url;
+      img.decoding="async";
+
+      img.addEventListener(
+        "click",
+        function(){
+          openLightbox(url);
+        }
+      );
+
       item.appendChild(img);
       grid.appendChild(item);
     });
   });
 
-  if(count === 0){
-    grid.innerHTML = '<div style="color:#aaa;padding:30px;text-align:center;grid-column:1/-1;">' + t("noDayPhotos") + '</div>';
+  if(count===0){
+
+    grid.innerHTML=
+      '<div style="color:#aaa;padding:30px;text-align:center;grid-column:1/-1;">'+
+      t("noDayPhotos")+
+      "</div>";
   }
 
   screen.classList.add("open");
 }
 
-document.getElementById("allPhotoClose").addEventListener("click", function(){
-  document.getElementById("allPhotoScreen").classList.remove("open");
-});
+document
+  .getElementById("allPhotoClose")
+  .addEventListener(
+    "click",
+    function(){
 
-/* =================================================
-   圖片放大
-================================================= */
+      document
+        .getElementById(
+          "allPhotoScreen"
+        )
+        .classList.remove("open");
+    }
+  );
+
+
+/* =========================================================
+   Lightbox
+========================================================= */
+
 function openLightbox(url){
-  document.getElementById("lightboxImage").src = url;
-  document.getElementById("lightbox").classList.add("open");
-}
-function closeLightbox(){
-  document.getElementById("lightbox").classList.remove("open");
-  document.getElementById("lightboxImage").src = "";
-}
-document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
-document.getElementById("lightbox").addEventListener("click", function(event){ if(event.target === this){ closeLightbox(); } });
 
-/* =================================================
+  if(!url)return;
+
+  document.getElementById(
+    "lightboxImage"
+  ).src=url;
+
+  document.getElementById(
+    "lightbox"
+  ).classList.add("open");
+}
+
+function closeLightbox(){
+
+  document
+    .getElementById("lightbox")
+    .classList.remove("open");
+
+  document.getElementById(
+    "lightboxImage"
+  ).src="";
+}
+
+document
+  .getElementById("lightboxClose")
+  .addEventListener(
+    "click",
+    closeLightbox
+  );
+
+document
+  .getElementById("lightbox")
+  .addEventListener(
+    "click",
+    function(event){
+
+      if(event.target===this){
+        closeLightbox();
+      }
+    }
+  );
+
+
+/* =========================================================
    啟動
-================================================= */
+========================================================= */
+
 async function init(){
+
   if(!currentLanguage){
-    currentLanguage = "zh";
+
+    currentLanguage="zh";
+
     applyLanguage();
+
     showLanguageScreen();
+
   }else{
+
     applyLanguage();
   }
 
-  document.getElementById("truckSelectButton").childNodes[0].textContent = "大車載入中…";
 
-  const loginOK = await initLIFF();
-  if(!loginOK){ return; }
+  document
+    .getElementById(
+      "truckSelectButton"
+    )
+    .childNodes[0]
+    .textContent=
+      "大車載入中…";
+
+
+  const loginOK=
+    await initLIFF();
+
+  if(!loginOK)return;
+
 
   await loadSystemData();
 }
 
 init();
+
 </script>
 </body>
 </html>
