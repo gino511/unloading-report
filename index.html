@@ -76,12 +76,9 @@ textarea{
   display:flex;
   align-items:center;
   justify-content:space-between;
-
   gap:10px;
-
   margin-bottom:22px;
   padding-bottom:14px;
-
   border-bottom:2px solid var(--ink);
 }
 
@@ -91,22 +88,17 @@ textarea{
 
 .brand h1{
   margin:0;
-
   font-size:19px;
   letter-spacing:.02em;
 }
 
 .brand .who{
   display:block;
-
   margin-top:5px;
-
   max-width:160px;
-
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
-
   font-size:12px;
   color:var(--muted);
 }
@@ -114,23 +106,17 @@ textarea{
 .top-actions{
   display:flex;
   align-items:center;
-
   gap:6px;
-
   flex-shrink:0;
 }
 
 .top-btn{
   padding:8px 9px;
-
   border:1px solid var(--line);
   border-radius:9px;
-
   background:#fff;
   color:var(--ink);
-
   font-size:12px;
-
   white-space:nowrap;
 }
 
@@ -146,16 +132,11 @@ textarea{
 .language-screen{
   position:fixed;
   inset:0;
-
   z-index:1000;
-
   display:none;
-
   align-items:center;
   justify-content:center;
-
   padding:24px;
-
   background:var(--paper);
 }
 
@@ -166,21 +147,17 @@ textarea{
 .language-box{
   width:100%;
   max-width:380px;
-
   text-align:center;
 }
 
 .language-box h2{
   margin:0 0 8px;
-
   font-size:23px;
 }
 
 .language-box p{
   margin:0 0 24px;
-
   color:var(--muted);
-
   font-size:13px;
 }
 
@@ -191,18 +168,17 @@ textarea{
 
 .language-option{
   width:100%;
-
   padding:16px;
-
   border:1.5px solid var(--line);
   border-radius:12px;
-
   background:#fff;
-
   color:var(--ink);
-
   font-size:16px;
   font-weight:700;
+}
+
+.language-option:active{
+  background:var(--accent-dim);
 }
 
 
@@ -213,18 +189,14 @@ textarea{
 fieldset{
   margin:0 0 22px;
   padding:0;
-
   border:none;
 }
 
 legend{
   margin-bottom:8px;
-
   color:var(--muted);
-
   font-size:12px;
   font-weight:700;
-
   letter-spacing:.12em;
 }
 
@@ -239,42 +211,32 @@ legend{
 
 .truck-select-button{
   position:relative;
-
   width:100%;
-
   padding:14px 42px 14px 14px;
-
   border:1.5px solid var(--line);
   border-radius:10px;
-
   background:#fff;
   color:var(--ink);
-
   text-align:left;
-
   font-size:16px;
+}
+
+.truck-select-button:active{
+  background:#faf9f5;
 }
 
 .truck-arrow{
   position:absolute;
-
   right:14px;
   top:50%;
-
   width:18px;
   height:18px;
-
   display:flex;
-
   align-items:center;
   justify-content:center;
-
   transform:translateY(-50%);
-
   color:#8a8879;
-
   pointer-events:none;
-
   transition:transform .2s ease;
 }
 
@@ -293,25 +255,16 @@ legend{
 
 .truck-dropdown{
   position:absolute;
-
   z-index:50;
-
   display:none;
-
   left:0;
   right:0;
-
   margin-top:6px;
-
   overflow:hidden;
-
   border:1.5px solid var(--line);
   border-radius:12px;
-
   background:#fff;
-
-  box-shadow:
-    0 8px 25px rgba(0,0,0,.12);
+  box-shadow:0 8px 25px rgba(0,0,0,.12);
 }
 
 .truck-dropdown.open{
@@ -320,21 +273,15 @@ legend{
 
 .truck-list{
   max-height:320px;
-
   overflow-y:auto;
 }
 
 .truck-option{
   display:flex;
-
   align-items:center;
-
   gap:10px;
-
   padding:13px 14px;
-
   border-bottom:1px solid #eee;
-
   font-size:15px;
 }
 
@@ -345,7 +292,6 @@ legend{
 .truck-option input{
   width:20px;
   height:20px;
-
   accent-color:var(--accent);
 }
 
@@ -359,51 +305,36 @@ legend{
 
 .used-staff{
   margin-left:auto;
-
   max-width:150px;
-
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
-
   padding:3px 7px;
-
   border-radius:20px;
-
   background:#e9e7df;
   color:#6f6d62;
-
   font-size:11px;
 }
 
 .truck-dropdown-footer{
   display:flex;
-
   gap:8px;
-
   padding:10px;
-
   border-top:1px solid var(--line);
-
   background:#faf9f5;
 }
 
 .truck-dropdown-footer button{
   flex:1;
-
   padding:10px;
-
   border:1px solid var(--line);
   border-radius:8px;
-
   background:#fff;
-
   font-size:14px;
 }
 
 .truck-dropdown-footer button.primary{
   border-color:var(--ink);
-
   background:var(--ink);
   color:#fff;
 }
@@ -415,54 +346,38 @@ legend{
 
 .staff-grid{
   display:grid;
-
-  grid-template-columns:
-    repeat(2,1fr);
-
+  grid-template-columns:repeat(2,1fr);
   gap:8px;
 }
 
 .staff-item{
   display:flex;
-
   align-items:center;
-
   gap:8px;
-
   padding:13px 10px;
-
   border:1.5px solid var(--line);
   border-radius:10px;
-
   background:#fff;
-
   font-size:15px;
 }
 
 .staff-item input{
   width:20px;
   height:20px;
-
   accent-color:var(--accent);
 }
 
 .staff-item.selected{
   border-color:var(--accent);
-
   background:var(--accent-dim);
 }
 
 .line-match-hint{
   margin-top:8px;
-
   padding:8px 10px;
-
   border-radius:8px;
-
   background:var(--accent-dim);
-
   color:var(--accent);
-
   font-size:12px;
   line-height:1.5;
 }
@@ -474,35 +389,28 @@ legend{
 
 .seg{
   display:flex;
-
   gap:8px;
 }
 
 .seg button{
   flex:1;
-
   padding:14px 0;
-
   border:1.5px solid var(--line);
   border-radius:10px;
-
   background:#fff;
   color:var(--ink);
-
   font-size:15px;
   font-weight:700;
 }
 
 .seg button[data-v="ok"].active{
   border-color:var(--accent);
-
   background:var(--accent);
   color:#fff;
 }
 
 .seg button[data-v="bad"].active{
   border-color:var(--warn);
-
   background:var(--warn);
   color:#fff;
 }
@@ -514,123 +422,86 @@ legend{
 
 textarea{
   width:100%;
-
   min-height:80px;
-
   padding:12px;
-
   border:1.5px solid var(--line);
   border-radius:10px;
-
   background:#fff;
-
   color:var(--ink);
-
   font-size:16px;
-
   resize:vertical;
 }
 
 textarea:focus{
   outline:none;
-
   border-color:var(--accent);
 }
 
 .photo-upload{
   position:relative;
-
   padding:18px;
-
   border:1.5px dashed var(--line);
   border-radius:12px;
-
   background:#fff;
-
   color:#8a8879;
-
   text-align:center;
 }
 
 .photo-upload span.icon{
   display:block;
-
   margin-bottom:6px;
-
   font-size:30px;
 }
 
 .photo-upload input{
   position:absolute;
   inset:0;
-
   opacity:0;
-
   cursor:pointer;
 }
 
 .photo-grid{
   display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
+  grid-template-columns:repeat(3,1fr);
   gap:8px;
-
   margin-top:12px;
 }
 
 .thumb{
   position:relative;
-
   aspect-ratio:1;
-
   overflow:hidden;
-
   border:1px solid var(--line);
   border-radius:8px;
-
   background:#eee;
 }
 
 .thumb img{
   width:100%;
   height:100%;
-
   display:block;
-
   object-fit:cover;
 }
 
 .thumb .rm{
   position:absolute;
-
   top:3px;
   right:3px;
-
   width:24px;
   height:24px;
-
   display:flex;
-
   align-items:center;
   justify-content:center;
-
   border:none;
   border-radius:50%;
-
   background:rgba(0,0,0,.65);
-
   color:#fff;
-
   font-size:13px;
 }
 
 .hint{
   margin-top:6px;
-
   color:#9a988c;
-
   font-size:12px;
 }
 
@@ -642,27 +513,14 @@ textarea:focus{
 .upload-progress-screen{
   position:fixed;
   inset:0;
-
   z-index:9000;
-
   display:none;
-
   align-items:flex-start;
   justify-content:center;
-
-  padding:
-    12vh
-    22px
-    22px;
-
-  background:
-    rgba(28,31,26,.52);
-
-  backdrop-filter:
-    blur(4px);
-
-  -webkit-backdrop-filter:
-    blur(4px);
+  padding:12vh 22px 22px;
+  background:rgba(28,31,26,.52);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
 }
 
 .upload-progress-screen.open{
@@ -672,105 +530,74 @@ textarea:focus{
 .upload-progress-box{
   width:100%;
   max-width:360px;
-
   padding:22px 20px 20px;
-
   border-radius:16px;
-
   background:#fff;
-
-  box-shadow:
-    0 18px 50px rgba(0,0,0,.22);
+  box-shadow:0 18px 50px rgba(0,0,0,.22);
 }
 
 .upload-progress-stage{
   display:flex;
-
   justify-content:center;
-
   gap:6px;
-
   margin-bottom:12px;
 }
 
 .upload-progress-stage span{
   padding:4px 9px;
-
   border-radius:999px;
-
   background:#f0eee6;
-
   color:#a3a091;
-
   font-size:10px;
   font-weight:700;
 }
 
 .upload-progress-stage span.active{
   background:var(--accent);
-
   color:#fff;
 }
 
 .upload-progress-stage span.done{
   background:var(--accent-dim);
-
   color:var(--accent);
 }
 
 .upload-progress-title{
   margin-bottom:6px;
-
   font-size:17px;
   font-weight:800;
-
   text-align:center;
 }
 
 .upload-progress-count{
   min-height:20px;
-
   color:var(--muted);
-
   font-size:13px;
-
   text-align:center;
 }
 
 .upload-progress-track{
   width:100%;
   height:10px;
-
   margin-top:17px;
-
   overflow:hidden;
-
   border-radius:999px;
-
   background:#e8e5dc;
 }
 
 .upload-progress-fill{
   width:0%;
   height:100%;
-
   border-radius:999px;
-
   background:var(--accent);
-
-  transition:
-    width .25s ease;
+  transition:width .25s ease;
 }
 
 .upload-progress-text{
   min-height:18px;
-
   margin-top:11px;
-
   color:var(--muted);
-
   font-size:12px;
-
   text-align:center;
 }
 
@@ -782,13 +609,9 @@ textarea:focus{
 .history-screen{
   position:fixed;
   inset:0;
-
   z-index:200;
-
   display:none;
-
   overflow-y:auto;
-
   background:var(--paper);
 }
 
@@ -798,85 +621,61 @@ textarea:focus{
 
 .history-wrap{
   max-width:480px;
-
   margin:0 auto;
-
   padding:18px 18px 40px;
 }
 
 .history-header{
   display:flex;
-
   align-items:center;
   justify-content:space-between;
-
   margin-bottom:16px;
   padding-bottom:14px;
-
   border-bottom:2px solid var(--ink);
 }
 
 .history-header h2{
   margin:0;
-
   font-size:19px;
 }
 
 .history-close{
   padding:8px 11px;
-
   border:1px solid var(--line);
   border-radius:9px;
-
   background:#fff;
-
   font-size:13px;
 }
 
 .history-loading,
 .history-empty{
   padding:30px 0;
-
   color:var(--muted);
-
   font-size:14px;
-
   text-align:center;
 }
 
 .history-day{
   margin-bottom:8px;
-
   border-bottom:1px solid var(--line);
 }
 
 .history-day-head{
   width:100%;
-
   display:flex;
-
   align-items:center;
-
   gap:8px;
-
   padding:14px 0;
-
   border:none;
-
   background:transparent;
-
   color:var(--ink);
-
   text-align:left;
 }
 
 .history-arrow{
   width:22px;
-
   font-size:16px;
-
-  transition:
-    transform .2s ease;
+  transition:transform .2s ease;
 }
 
 .history-day.open .history-arrow{
@@ -890,22 +689,16 @@ textarea:focus{
 
 .history-photo-all{
   margin-left:auto;
-
   padding:7px 9px;
-
   border:1px solid var(--line);
   border-radius:8px;
-
   background:#fff;
-
   font-size:11px;
-
   white-space:nowrap;
 }
 
 .history-day-body{
   display:none;
-
   padding-bottom:14px;
 }
 
@@ -920,60 +713,43 @@ textarea:focus{
 
 .report-card{
   margin-top:9px;
-
   padding:13px;
-
   border:1px solid var(--line);
   border-radius:12px;
-
   background:#fff;
 }
 
 .report-main{
   display:flex;
-
   align-items:center;
-
   gap:8px;
-
   min-width:0;
 }
 
 .report-truck{
   min-width:0;
-
   overflow:hidden;
-
   font-size:20px;
   font-weight:900;
-
   line-height:1.15;
-
   text-overflow:ellipsis;
   white-space:nowrap;
 }
 
 .report-staff{
   min-width:0;
-
   overflow:hidden;
-
   color:#555;
-
   font-size:13px;
-
   text-overflow:ellipsis;
   white-space:nowrap;
 }
 
 .report-status{
   margin-left:auto;
-
   flex-shrink:0;
-
   font-size:12px;
   font-weight:800;
-
   white-space:nowrap;
 }
 
@@ -987,168 +763,102 @@ textarea:focus{
 
 .report-time{
   margin-top:6px;
-
   color:#9a988c;
-
   font-size:11px;
 }
 
 .report-note{
   margin-top:8px;
-
   padding:8px;
-
   border-radius:8px;
-
   background:#f7f5ef;
-
   font-size:12px;
-
   line-height:1.5;
 }
 
 
 /* =================================================
    回報紀錄照片
-   四格、無外框、直接填滿
+   四格、無框、直接填滿
 ================================================= */
 
 .report-photos{
   display:grid;
-
-  grid-template-columns:
-    repeat(4,minmax(0,1fr));
-
+  grid-template-columns:repeat(4,minmax(0,1fr));
   gap:6px;
-
   margin-top:10px;
 }
 
 .report-photo{
   position:relative;
-
   width:100%;
-
   aspect-ratio:1;
-
-  display:flex;
-
-  align-items:center;
-  justify-content:center;
-
   overflow:hidden;
-
   border:none;
   border-radius:7px;
-
   background:transparent;
-
   cursor:pointer;
 }
 
 .report-photo img{
   width:100%;
   height:100%;
-
   display:block;
-
   object-fit:cover;
-}
-
-.report-photo.loading::after{
-  content:"";
-
-  position:absolute;
-
-  width:14px;
-  height:14px;
-
-  border:2px solid rgba(255,255,255,.7);
-  border-top-color:var(--accent);
-  border-radius:50%;
-
-  animation:
-    thumbnailSpin .7s linear infinite;
-}
-
-@keyframes thumbnailSpin{
-  to{
-    transform:rotate(360deg);
-  }
 }
 
 .report-no-photo{
   margin-top:8px;
-
   color:#aaa;
-
   font-size:11px;
 }
 
 
 /* =================================================
-   卡片底部
+   回報人與刪除
 ================================================= */
 
 .report-footer{
   display:flex;
-
   align-items:center;
-
   gap:8px;
-
   margin-top:10px;
   padding-top:9px;
-
   border-top:1px solid #eee;
 }
 
 .report-employee{
   min-width:0;
-
   overflow:hidden;
-
   color:#8a8879;
-
   font-size:11px;
-
   text-overflow:ellipsis;
   white-space:nowrap;
 }
 
 .report-delete{
   margin-left:auto;
-
   padding:6px 10px;
-
   border:1px solid var(--line);
   border-radius:8px;
-
   background:#fff;
-
   color:var(--warn);
-
   font-size:11px;
 }
 
 
 /* =================================================
    當日全部照片
-   三格、無外框、直接填滿
+   三格、無框、直接填滿
 ================================================= */
 
 .all-photo-screen{
   position:fixed;
   inset:0;
-
   z-index:400;
-
   display:none;
-
   overflow-y:auto;
-
-  background:
-    rgba(20,20,18,.97);
+  background:rgba(20,20,18,.97);
 }
 
 .all-photo-screen.open{
@@ -1157,99 +867,69 @@ textarea:focus{
 
 .all-photo-wrap{
   max-width:600px;
-
   margin:0 auto;
-
   padding:16px 14px 40px;
 }
 
 .all-photo-head{
   display:flex;
-
   align-items:center;
   justify-content:space-between;
-
   margin-bottom:15px;
-
   color:#fff;
 }
 
 .all-photo-head h3{
   margin:0;
-
   font-size:18px;
 }
 
 .all-photo-close{
   padding:7px 10px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.25);
-
+  border:1px solid rgba(255,255,255,.25);
   border-radius:8px;
-
-  background:
-    rgba(255,255,255,.08);
-
+  background:rgba(255,255,255,.08);
   color:#fff;
 }
 
 .all-photo-grid{
   display:grid;
-
-  grid-template-columns:
-    repeat(3,minmax(0,1fr));
-
+  grid-template-columns:repeat(3,minmax(0,1fr));
   gap:6px;
 }
 
 .all-photo-item{
   position:relative;
-
   width:100%;
-
   aspect-ratio:1;
-
   overflow:hidden;
-
   border:none;
   border-radius:7px;
-
   background:transparent;
-
   cursor:pointer;
 }
 
 .all-photo-item img{
   width:100%;
   height:100%;
-
   display:block;
-
   object-fit:cover;
 }
 
 
 /* =================================================
-   Lightbox
+   圖片放大
 ================================================= */
 
 .lightbox{
   position:fixed;
   inset:0;
-
   z-index:600;
-
   display:none;
-
   align-items:center;
   justify-content:center;
-
   padding:15px;
-
-  background:
-    rgba(0,0,0,.94);
+  background:rgba(0,0,0,.94);
 }
 
 .lightbox.open{
@@ -1259,30 +939,19 @@ textarea:focus{
 .lightbox img{
   max-width:100%;
   max-height:90vh;
-
   object-fit:contain;
 }
 
 .lightbox-close{
   position:absolute;
-
   top:15px;
   right:15px;
-
   width:38px;
   height:38px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.3);
-
+  border:1px solid rgba(255,255,255,.3);
   border-radius:50%;
-
-  background:
-    rgba(255,255,255,.1);
-
+  background:rgba(255,255,255,.1);
   color:#fff;
-
   font-size:20px;
 }
 
@@ -1293,11 +962,9 @@ textarea:focus{
 
 .submit-bar{
   position:fixed;
-
   left:0;
   right:0;
   bottom:0;
-
   padding:
     12px
     18px
@@ -1305,32 +972,22 @@ textarea:focus{
       12px +
       env(safe-area-inset-bottom)
     );
-
-  border-top:
-    1px solid
-    var(--line);
-
+  border-top:1px solid var(--line);
   background:var(--paper);
 }
 
 .submit-bar .inner{
   max-width:480px;
-
   margin:0 auto;
 }
 
 button.submit{
   width:100%;
-
   padding:15px 0;
-
   border:none;
   border-radius:12px;
-
   background:var(--ink);
-
   color:#fff;
-
   font-size:16px;
   font-weight:700;
 }
@@ -1341,13 +998,9 @@ button.submit:disabled{
 
 .status{
   min-height:16px;
-
   margin-top:8px;
-
   color:var(--muted);
-
   font-size:13px;
-
   text-align:center;
 }
 
@@ -1361,11 +1014,8 @@ button.submit:disabled{
 
 .loading{
   padding:18px;
-
   color:var(--muted);
-
   font-size:14px;
-
   text-align:center;
 }
 
@@ -1476,7 +1126,6 @@ button.submit:disabled{
       大車
     </legend>
 
-
     <div
       class="truck-select-wrap"
       id="truckSelectWrap"
@@ -1502,11 +1151,9 @@ button.submit:disabled{
             stroke-linecap="round"
             stroke-linejoin="round"
           >
-
             <polyline
               points="6 9 12 15 18 9"
             ></polyline>
-
           </svg>
 
         </span>
@@ -1559,14 +1206,13 @@ button.submit:disabled{
   </fieldset>
 
 
-  <!-- 人員 -->
+  <!-- 下貨人員 -->
 
   <fieldset>
 
     <legend data-i18n="staff">
       下貨人員
     </legend>
-
 
     <div
       class="staff-grid"
@@ -1578,7 +1224,6 @@ button.submit:disabled{
       </div>
 
     </div>
-
 
     <div
       id="lineMatchHint"
@@ -1597,7 +1242,6 @@ button.submit:disabled{
       件數是否正確
     </legend>
 
-
     <div
       class="seg"
       id="qtySeg"
@@ -1611,7 +1255,6 @@ button.submit:disabled{
       >
         ✓ 件數正確
       </button>
-
 
       <button
         type="button"
@@ -1634,7 +1277,6 @@ button.submit:disabled{
       照片
     </legend>
 
-
     <div class="photo-upload">
 
       <span class="icon">
@@ -1654,12 +1296,10 @@ button.submit:disabled{
 
     </div>
 
-
     <div
       class="photo-grid"
       id="photoGrid"
     ></div>
-
 
     <div
       class="hint"
@@ -1678,7 +1318,6 @@ button.submit:disabled{
     <legend data-i18n="note">
       備註（選填）
     </legend>
-
 
     <textarea
       id="note"
@@ -1707,7 +1346,6 @@ button.submit:disabled{
       送出回報
     </button>
 
-
     <div
       class="status"
       id="statusMsg"
@@ -1729,7 +1367,6 @@ button.submit:disabled{
 
   <div class="upload-progress-box">
 
-
     <div
       class="upload-progress-stage"
       id="uploadProgressStage"
@@ -1749,7 +1386,6 @@ button.submit:disabled{
 
     </div>
 
-
     <div
       class="upload-progress-title"
       id="uploadProgressTitle"
@@ -1757,12 +1393,10 @@ button.submit:disabled{
       處理照片
     </div>
 
-
     <div
       class="upload-progress-count"
       id="uploadProgressCount"
     ></div>
-
 
     <div class="upload-progress-track">
 
@@ -1772,7 +1406,6 @@ button.submit:disabled{
       ></div>
 
     </div>
-
 
     <div
       class="upload-progress-text"
@@ -1801,7 +1434,6 @@ button.submit:disabled{
         回報紀錄
       </h2>
 
-
       <button
         type="button"
         class="history-close"
@@ -1812,7 +1444,6 @@ button.submit:disabled{
       </button>
 
     </div>
-
 
     <div
       id="historyContent"
@@ -1846,7 +1477,6 @@ button.submit:disabled{
         當日照片
       </h3>
 
-
       <button
         type="button"
         class="all-photo-close"
@@ -1856,7 +1486,6 @@ button.submit:disabled{
       </button>
 
     </div>
-
 
     <div
       class="all-photo-grid"
@@ -1869,7 +1498,7 @@ button.submit:disabled{
 
 
 <!-- =================================================
-     Lightbox
+     圖片放大
 ================================================= -->
 
 <div
@@ -1884,7 +1513,6 @@ button.submit:disabled{
   >
     ×
   </button>
-
 
   <img
     id="lightboxImage"
@@ -1994,7 +1622,6 @@ const translations = {
     languageName:"中文"
 
   },
-
 
   vi:{
 
@@ -2113,12 +1740,10 @@ function applyLanguage(){
       t("stageProcess");
   }
 
-
   if(stages[1]){
     stages[1].textContent =
       t("stageCompress");
   }
-
 
   if(stages[2]){
     stages[2].textContent =
@@ -2572,54 +2197,67 @@ async function getBackend(
 
 /* =================================================
    系統資料
+   大車與人員同時抓
+   但大車先處理、先顯示
 ================================================= */
 
 async function loadSystemData(){
 
+  /*
+   * 兩個請求一起開始。
+   *
+   * 這樣不需要等大車抓完
+   * 才開始抓下貨人員。
+   */
+
+  const truckPromise =
+    getBackend(
+      "trucks"
+    );
+
+
+  const staffPromise =
+    getBackend(
+      "staff"
+    );
+
+
+  /*
+   * 先等大車。
+   * 大車一回來立即顯示。
+   */
+
   try{
 
-    const result =
-      await getBackend(
-        ""
-      );
+    const truckResult =
+      await truckPromise;
 
 
-    const data =
-      result.data ||
+    const truckInfo =
+      truckResult.data ||
       {};
 
 
     truckData =
       Array.isArray(
-        data.trucks
+        truckInfo.trucks
       )
-        ? data.trucks
+        ? truckInfo.trucks
         : [];
 
 
     truckLastUsed =
-      data.truckLastUsed ||
+      truckInfo.truckLastUsed ||
       {};
 
 
-    staffData =
-      Array.isArray(
-        data.staff
-      )
-        ? data.staff
-        : [];
-
-
     renderTrucks();
-
-    renderStaff();
-
-    autoMatchLineStaff();
 
 
   }catch(error){
 
     console.error(
+      "大車載入失敗：",
       error
     );
 
@@ -2629,7 +2267,65 @@ async function loadSystemData(){
         "truckList"
       )
       .innerHTML =
-      '<div class="loading">大車資料載入失敗</div>';
+      `
+      <div class="loading">
+        大車資料載入失敗
+      </div>
+      `;
+
+
+    document
+      .getElementById(
+        "truckSelectText"
+      )
+      .textContent =
+      "大車資料載入失敗";
+
+  }
+
+
+  /*
+   * 大車處理完後，
+   * 再處理已經同時在背景請求的人員資料。
+   */
+
+  try{
+
+    const staffResult =
+      await staffPromise;
+
+
+    const staffInfo =
+      staffResult.data ||
+      {};
+
+
+    staffData =
+      Array.isArray(
+        staffInfo.staff
+      )
+        ? staffInfo.staff
+        : [];
+
+
+    renderStaff();
+
+
+    /*
+     * LINE 比對只需要 staffData。
+     * 所以人員一出來後才做，
+     * 不再卡住大車。
+     */
+
+    autoMatchLineStaff();
+
+
+  }catch(error){
+
+    console.error(
+      "下貨人員載入失敗：",
+      error
+    );
 
 
     document
@@ -2637,7 +2333,11 @@ async function loadSystemData(){
         "staffGrid"
       )
       .innerHTML =
-      '<div class="loading">下貨人員資料載入失敗</div>';
+      `
+      <div class="loading">
+        下貨人員資料載入失敗
+      </div>
+      `;
 
 
     setStatus(
@@ -2931,10 +2631,20 @@ function renderTrucks(){
   ){
 
     list.innerHTML =
-      '<div class="loading">目前沒有啟用中的大車</div>';
+      `
+      <div class="loading">
+        目前沒有啟用中的大車
+      </div>
+      `;
 
 
-    updateTruckButtonText();
+    document
+      .getElementById(
+        "truckSelectText"
+      )
+      .textContent =
+      "目前沒有啟用中的大車";
+
 
     return;
 
@@ -3134,7 +2844,7 @@ function updateTruckButtonText(){
 
 
 /* =================================================
-   人員
+   下貨人員
 ================================================= */
 
 function renderStaff(){
@@ -3155,7 +2865,11 @@ function renderStaff(){
   ){
 
     grid.innerHTML =
-      '<div class="loading">目前沒有啟用中的下貨人員</div>';
+      `
+      <div class="loading">
+        目前沒有啟用中的下貨人員
+      </div>
+      `;
 
     return;
 
@@ -3231,6 +2945,10 @@ function renderStaff(){
 
 }
 
+
+/* =================================================
+   LINE 自動對應
+================================================= */
 
 function autoMatchLineStaff(){
 
@@ -5125,7 +4843,7 @@ function renderHistory(){
 
 
 /* =================================================
-   照片 URL
+   照片網址
 ================================================= */
 
 function getThumbnailUrl(
@@ -5138,16 +4856,6 @@ function getThumbnailUrl(
   ){
 
     return photo.thumbnailUrl;
-
-  }
-
-
-  if(
-    photo &&
-    photo.thumbnail
-  ){
-
-    return photo.thumbnail;
 
   }
 
@@ -5377,7 +5085,7 @@ function createReportCard(
 
 
         item.className =
-          "report-photo loading";
+          "report-photo";
 
 
         const img =
@@ -5402,6 +5110,10 @@ function createReportCard(
           thumbnailUrl;
 
 
+        img.loading =
+          "lazy";
+
+
         img.decoding =
           "async";
 
@@ -5411,46 +5123,18 @@ function createReportCard(
           "";
 
 
-        let fallbackUsed =
-          false;
-
-
-        img.addEventListener(
-          "load",
-          function(){
-
-            item.classList.remove(
-              "loading"
-            );
-
-          }
-        );
-
-
         img.addEventListener(
           "error",
           function(){
 
             if(
-              !fallbackUsed &&
               fullUrl &&
-              fullUrl !==
-              thumbnailUrl
+              img.src !==
+              fullUrl
             ){
-
-              fallbackUsed =
-                true;
-
 
               img.src =
                 fullUrl;
-
-
-            }else{
-
-              item.classList.remove(
-                "loading"
-              );
 
             }
 
@@ -5823,8 +5507,31 @@ function showAllDayPhotos(
             thumb;
 
 
+          img.loading =
+            "lazy";
+
+
           img.decoding =
             "async";
+
+
+          img.addEventListener(
+            "error",
+            function(){
+
+              if(
+                full &&
+                img.src !==
+                full
+              ){
+
+                img.src =
+                  full;
+
+              }
+
+            }
+          );
 
 
           img.addEventListener(
@@ -5899,7 +5606,7 @@ document
 
 
 /* =================================================
-   Lightbox
+   圖片放大
 ================================================= */
 
 function openLightbox(
@@ -6021,6 +5728,10 @@ async function init(){
     "大車載入中…";
 
 
+  /*
+   * 先取得 LINE 身分。
+   */
+
   const loginOK =
     await initLIFF();
 
@@ -6033,6 +5744,11 @@ async function init(){
 
   }
 
+
+  /*
+   * 大車、人員分開取得。
+   * 大車先畫面顯示。
+   */
 
   await loadSystemData();
 
