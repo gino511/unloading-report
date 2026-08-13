@@ -24,6 +24,7 @@
   --accent-dim:#e4ede7;
   --warn:#b5452e;
   --muted:#6b6a5f;
+  --soft:#faf9f5;
 }
 
 *{
@@ -50,9 +51,7 @@ body{
   -webkit-tap-highlight-color:transparent;
 }
 
-button,
-textarea,
-input{
+button{
   font-family:inherit;
 }
 
@@ -62,16 +61,11 @@ input{
   padding:20px 18px 110px;
 }
 
-/* =================================================
-   頂部
-================================================= */
-
 .brand{
   display:flex;
-  align-items:center;
+  align-items:baseline;
   justify-content:space-between;
-  gap:10px;
-  margin-bottom:16px;
+  margin-bottom:20px;
   padding-bottom:14px;
   border-bottom:2px solid var(--ink);
 }
@@ -87,68 +81,22 @@ input{
 }
 
 .brand .who{
-  display:block;
-  margin-top:4px;
   font-size:12px;
   color:var(--muted);
-  max-width:170px;
+  max-width:130px;
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
 }
 
-.brand-actions{
-  display:flex;
-  gap:6px;
-  flex-shrink:0;
-}
-
-.top-btn{
+.language-button{
   border:1px solid var(--line);
   background:#fff;
-  color:var(--ink);
   border-radius:8px;
-  padding:7px 9px;
+  padding:6px 9px;
   font-size:12px;
-}
-
-/* =================================================
-   頁面導覽
-================================================= */
-
-.page-nav{
-  display:flex;
-  gap:8px;
-  margin-bottom:22px;
-}
-
-.page-nav button{
-  flex:1;
-  padding:11px 8px;
-  border:1.5px solid var(--line);
-  border-radius:10px;
-  background:#fff;
-  color:var(--ink);
-  font-size:14px;
-  font-weight:700;
-}
-
-.page-nav button.active{
-  background:var(--ink);
-  border-color:var(--ink);
-  color:#fff;
-}
-
-/* =================================================
-   回報頁
-================================================= */
-
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
+  color:var(--muted);
+  white-space:nowrap;
 }
 
 fieldset{
@@ -165,10 +113,6 @@ legend{
   margin-bottom:8px;
 }
 
-/* =================================================
-   大車
-================================================= */
-
 .truck-select-wrap{
   position:relative;
 }
@@ -182,6 +126,7 @@ legend{
   color:var(--ink);
   text-align:left;
   font-size:16px;
+  font-family:inherit;
   position:relative;
 }
 
@@ -272,6 +217,7 @@ legend{
   border:1px solid var(--line);
   border-radius:8px;
   background:#fff;
+  font-family:inherit;
   font-size:14px;
 }
 
@@ -280,10 +226,6 @@ legend{
   color:#fff;
   border-color:var(--ink);
 }
-
-/* =================================================
-   下貨人員
-================================================= */
 
 .staff-grid{
   display:grid;
@@ -323,10 +265,6 @@ legend{
   line-height:1.5;
 }
 
-/* =================================================
-   件數
-================================================= */
-
 .seg{
   display:flex;
   gap:8px;
@@ -355,10 +293,6 @@ legend{
   color:#fff;
 }
 
-/* =================================================
-   備註
-================================================= */
-
 textarea{
   width:100%;
   padding:12px;
@@ -367,6 +301,7 @@ textarea{
   font-size:16px;
   background:#fff;
   color:var(--ink);
+  font-family:inherit;
   resize:vertical;
   min-height:80px;
 }
@@ -375,10 +310,6 @@ textarea:focus{
   outline:none;
   border-color:var(--accent);
 }
-
-/* =================================================
-   照片上傳
-================================================= */
 
 .photo-upload{
   border:1.5px dashed var(--line);
@@ -447,226 +378,6 @@ textarea:focus{
   margin-top:6px;
 }
 
-/* =================================================
-   回報紀錄
-================================================= */
-
-.record-toolbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:8px;
-  margin-bottom:14px;
-}
-
-.record-title{
-  font-size:15px;
-  font-weight:700;
-}
-
-.refresh-btn{
-  border:1px solid var(--line);
-  background:#fff;
-  border-radius:8px;
-  padding:7px 10px;
-  font-size:12px;
-}
-
-.record-date{
-  border:1.5px solid var(--line);
-  border-radius:12px;
-  background:#fff;
-  margin-bottom:10px;
-  overflow:hidden;
-}
-
-.record-date-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px;
-  padding:13px 13px;
-  background:#faf9f5;
-}
-
-.record-date-name{
-  font-weight:700;
-  font-size:15px;
-}
-
-.photo-day-btn{
-  border:none;
-  border-radius:8px;
-  background:var(--accent);
-  color:#fff;
-  padding:7px 9px;
-  font-size:12px;
-  white-space:nowrap;
-}
-
-.record-items{
-  border-top:1px solid var(--line);
-}
-
-.record-item{
-  padding:13px;
-  border-bottom:1px solid #eee;
-}
-
-.record-item:last-child{
-  border-bottom:none;
-}
-
-.record-item-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:8px;
-}
-
-.record-employee{
-  font-weight:700;
-  font-size:15px;
-}
-
-.record-time{
-  color:var(--muted);
-  font-size:12px;
-  white-space:nowrap;
-}
-
-.record-info{
-  margin-top:7px;
-  font-size:13px;
-  line-height:1.7;
-  color:#44443d;
-}
-
-.record-note{
-  margin-top:6px;
-  padding:7px 9px;
-  background:#f5f3ed;
-  border-radius:7px;
-  color:#66645a;
-  font-size:12px;
-}
-
-.record-actions{
-  display:flex;
-  gap:7px;
-  margin-top:10px;
-}
-
-.record-actions button{
-  border:1px solid var(--line);
-  background:#fff;
-  border-radius:7px;
-  padding:6px 9px;
-  font-size:12px;
-}
-
-.record-actions button.delete{
-  color:var(--warn);
-  border-color:#dfb6ab;
-}
-
-.record-photo-link{
-  color:var(--accent);
-  text-decoration:none;
-  font-size:12px;
-  margin-left:5px;
-}
-
-.empty-record{
-  padding:25px 10px;
-  text-align:center;
-  color:var(--muted);
-  font-size:14px;
-}
-
-/* =================================================
-   照片 Modal
-================================================= */
-
-.modal{
-  display:none;
-  position:fixed;
-  z-index:100;
-  inset:0;
-  background:rgba(0,0,0,.72);
-  padding:20px 12px;
-  overflow-y:auto;
-}
-
-.modal.open{
-  display:block;
-}
-
-.modal-box{
-  max-width:600px;
-  margin:0 auto;
-  background:var(--paper);
-  border-radius:14px;
-  overflow:hidden;
-}
-
-.modal-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:13px 14px;
-  background:#fff;
-  border-bottom:1px solid var(--line);
-}
-
-.modal-head strong{
-  font-size:15px;
-}
-
-.modal-close{
-  border:none;
-  background:#f1efe8;
-  width:32px;
-  height:32px;
-  border-radius:50%;
-  font-size:18px;
-}
-
-.modal-body{
-  padding:12px;
-}
-
-.day-photo-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:8px;
-}
-
-.day-photo{
-  background:#fff;
-  border-radius:8px;
-  overflow:hidden;
-  border:1px solid var(--line);
-}
-
-.day-photo img{
-  width:100%;
-  aspect-ratio:1;
-  object-fit:cover;
-  display:block;
-}
-
-.day-photo-caption{
-  padding:7px;
-  font-size:11px;
-  line-height:1.5;
-  color:var(--muted);
-}
-
-/* =================================================
-   送出
-================================================= */
-
 .submit-bar{
   position:fixed;
   left:0;
@@ -678,7 +389,6 @@ textarea:focus{
     12px
     18px
     calc(12px + env(safe-area-inset-bottom));
-  z-index:20;
 }
 
 .submit-bar .inner{
@@ -724,23 +434,365 @@ button.submit:disabled{
   font-size:14px;
 }
 
+
+/* =================================================
+   回報紀錄入口
+================================================= */
+
+.history-entry{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:14px 15px;
+  border:1.5px solid var(--line);
+  border-radius:10px;
+  background:#fff;
+  color:var(--ink);
+  font-size:15px;
+  text-align:left;
+}
+
+.history-entry .arrow{
+  color:#8a8879;
+  font-size:18px;
+}
+
+
+/* =================================================
+   回報紀錄頁
+================================================= */
+
+.history-page{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:var(--paper);
+  overflow-y:auto;
+}
+
+.history-page.open{
+  display:block;
+}
+
+.history-inner{
+  max-width:480px;
+  margin:0 auto;
+  padding:18px 18px 50px;
+}
+
+.history-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding-bottom:14px;
+  border-bottom:2px solid var(--ink);
+  margin-bottom:16px;
+}
+
+.history-title{
+  font-size:20px;
+  font-weight:800;
+}
+
+.history-close{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:8px;
+  padding:7px 10px;
+  font-size:13px;
+}
+
+.history-date{
+  margin-bottom:18px;
+}
+
+.history-date-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:9px;
+}
+
+.history-date-button{
+  flex:1;
+  border:none;
+  background:transparent;
+  padding:0;
+  text-align:left;
+  font-size:18px;
+  font-weight:800;
+  color:var(--ink);
+}
+
+.day-photo-button{
+  flex:none;
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:8px;
+  padding:7px 9px;
+  font-size:12px;
+}
+
+.history-date-body{
+  display:none;
+}
+
+.history-date.open .history-date-body{
+  display:block;
+}
+
+.report-card{
+  background:#fff;
+  border:1.5px solid var(--line);
+  border-radius:11px;
+  padding:11px 11px 9px;
+  margin-bottom:8px;
+}
+
+.report-main{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-width:0;
+}
+
+.report-truck{
+  font-size:20px;
+  line-height:1.2;
+  font-weight:900;
+  flex:1;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.report-staff{
+  font-size:14px;
+  font-weight:700;
+  color:var(--muted);
+  white-space:nowrap;
+  max-width:90px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.report-qty{
+  font-size:12px;
+  font-weight:800;
+  padding:4px 7px;
+  border-radius:7px;
+  white-space:nowrap;
+}
+
+.report-qty.ok{
+  background:var(--accent-dim);
+  color:var(--accent);
+}
+
+.report-qty.bad{
+  background:#f6e5e0;
+  color:var(--warn);
+}
+
+.report-photo-button{
+  width:34px;
+  height:34px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:#fff;
+  font-size:17px;
+  flex:none;
+}
+
+.report-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-top:8px;
+  padding-top:7px;
+  border-top:1px solid #eee;
+}
+
+.report-time{
+  font-size:11px;
+  color:#969387;
+}
+
+.report-employee{
+  font-size:11px;
+  color:var(--muted);
+}
+
+.report-note{
+  margin-top:7px;
+  font-size:12px;
+  line-height:1.5;
+  color:#6b6a5f;
+  white-space:pre-wrap;
+}
+
+.report-delete{
+  border:none;
+  background:none;
+  color:var(--warn);
+  font-size:11px;
+  padding:2px 0;
+}
+
+
+/* =================================================
+   照片查看器
+================================================= */
+
+.photo-viewer{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:300;
+  background:rgba(0,0,0,.92);
+  padding:55px 12px 20px;
+  overflow-y:auto;
+}
+
+.photo-viewer.open{
+  display:block;
+}
+
+.photo-viewer-close{
+  position:fixed;
+  top:15px;
+  right:15px;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  border:none;
+  background:rgba(255,255,255,.18);
+  color:#fff;
+  font-size:20px;
+  z-index:310;
+}
+
+.photo-viewer-title{
+  color:#fff;
+  text-align:center;
+  font-size:14px;
+  margin-bottom:14px;
+}
+
+.photo-viewer-grid{
+  max-width:480px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+}
+
+.photo-viewer-grid img{
+  width:100%;
+  border-radius:7px;
+  display:block;
+  background:#222;
+}
+
+.photo-empty{
+  color:#fff;
+  text-align:center;
+  padding:40px 10px;
+  font-size:14px;
+}
+
+
+/* =================================================
+   語言選擇
+================================================= */
+
+.language-modal{
+  position:fixed;
+  inset:0;
+  z-index:500;
+  background:rgba(28,31,26,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.language-modal.open{
+  display:flex;
+}
+
+.language-box{
+  width:100%;
+  max-width:360px;
+  background:var(--paper);
+  border-radius:16px;
+  padding:24px 20px 20px;
+  box-shadow:0 15px 50px rgba(0,0,0,.25);
+}
+
+.language-box h2{
+  margin:0 0 7px;
+  font-size:20px;
+}
+
+.language-box p{
+  margin:0 0 18px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.language-options{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.language-option{
+  width:100%;
+  padding:15px;
+  border:1.5px solid var(--line);
+  border-radius:11px;
+  background:#fff;
+  text-align:left;
+  font-size:16px;
+  font-weight:700;
+}
+
+.language-option:active{
+  background:var(--accent-dim);
+  border-color:var(--accent);
+}
+
+
+/* =================================================
+   當日照片頁提示
+================================================= */
+
+.day-photo-list{
+  color:#fff;
+}
+
 </style>
 
 </head>
 
 <body>
 
-<div class="wrap">
 
-  <!-- =================================================
-       頂部
-  ================================================= -->
+<div class="wrap">
 
   <div class="brand">
 
     <div class="brand-left">
 
-      <h1 id="pageTitle">
+      <h1 id="titleText">
         竹北托運 下貨回報
       </h1>
 
@@ -753,310 +805,240 @@ button.submit:disabled{
 
     </div>
 
-    <div class="brand-actions">
+    <button
+      type="button"
+      class="language-button"
+      id="languageButton"
+    >
+      🌐 語言
+    </button>
+
+  </div>
+
+
+  <!-- ==========================================
+       大車
+  =========================================== -->
+
+  <fieldset>
+
+    <legend data-i18n="truck">
+      大車
+    </legend>
+
+    <div class="truck-select-wrap">
 
       <button
         type="button"
-        class="top-btn"
-        id="languageBtn"
+        class="truck-select-button"
+        id="truckSelectButton"
       >
-        語言
+        大車載入中…
       </button>
 
-    </div>
-
-  </div>
-
-
-  <!-- =================================================
-       頁面切換
-  ================================================= -->
-
-  <div class="page-nav">
-
-    <button
-      type="button"
-      id="navReport"
-      class="active"
-    >
-      下貨回報
-    </button>
-
-    <button
-      type="button"
-      id="navHistory"
-    >
-      回報紀錄
-    </button>
-
-  </div>
-
-
-  <!-- =================================================
-       下貨回報頁
-  ================================================= -->
-
-  <div
-    class="page active"
-    id="reportPage"
-  >
-
-    <fieldset>
-
-      <legend data-i18n="truckLegend">
-        大車
-      </legend>
-
-      <div class="truck-select-wrap">
-
-        <button
-          type="button"
-          class="truck-select-button"
-          id="truckSelectButton"
-        >
-          大車載入中…
-        </button>
+      <div
+        class="truck-dropdown"
+        id="truckDropdown"
+      >
 
         <div
-          class="truck-dropdown"
-          id="truckDropdown"
+          class="truck-list"
+          id="truckList"
         >
+          <div class="loading">
+            大車資料載入中…
+          </div>
+        </div>
 
-          <div
-            class="truck-list"
-            id="truckList"
+        <div class="truck-dropdown-footer">
+
+          <button
+            type="button"
+            id="truckClearBtn"
+            data-i18n="clear"
           >
+            清除
+          </button>
 
-            <div class="loading">
-              大車資料載入中…
-            </div>
-
-          </div>
-
-          <div class="truck-dropdown-footer">
-
-            <button
-              type="button"
-              id="truckClearBtn"
-              data-i18n="clear"
-            >
-              清除
-            </button>
-
-            <button
-              type="button"
-              class="primary"
-              id="truckDoneBtn"
-              data-i18n="done"
-            >
-              完成
-            </button>
-
-          </div>
+          <button
+            type="button"
+            class="primary"
+            id="truckDoneBtn"
+            data-i18n="done"
+          >
+            完成
+          </button>
 
         </div>
 
       </div>
-
-    </fieldset>
-
-
-    <fieldset>
-
-      <legend data-i18n="staffLegend">
-        下貨人員
-      </legend>
-
-      <div
-        class="staff-grid"
-        id="staffGrid"
-      >
-
-        <div class="loading">
-          下貨人員資料載入中…
-        </div>
-
-      </div>
-
-      <div
-        id="lineMatchHint"
-        class="line-match-hint"
-        style="display:none;"
-      ></div>
-
-    </fieldset>
-
-
-    <fieldset>
-
-      <legend data-i18n="qtyLegend">
-        件數是否正確
-      </legend>
-
-      <div
-        class="seg"
-        id="qtySeg"
-      >
-
-        <button
-          type="button"
-          data-v="ok"
-          class="active"
-          data-i18n="qtyOk"
-        >
-          ✓ 件數正確
-        </button>
-
-        <button
-          type="button"
-          data-v="bad"
-          data-i18n="qtyBad"
-        >
-          ✗ 有多有少
-        </button>
-
-      </div>
-
-    </fieldset>
-
-
-    <fieldset>
-
-      <legend data-i18n="photoLegend">
-        照片
-      </legend>
-
-      <div class="photo-upload">
-
-        <span class="icon">📷</span>
-
-        <span data-i18n="uploadPhoto">
-          點此上傳照片（可一次選多張）
-        </span>
-
-        <input
-          type="file"
-          accept="image/*"
-          id="photoInput"
-          multiple
-        >
-
-      </div>
-
-      <div
-        class="photo-grid"
-        id="photoGrid"
-      ></div>
-
-      <div
-        class="hint"
-        data-i18n="photoHint"
-      >
-        至少上傳1張，可拍照或從相簿選取多張
-      </div>
-
-    </fieldset>
-
-
-    <fieldset>
-
-      <legend data-i18n="noteLegend">
-        備註（選填）
-      </legend>
-
-      <textarea
-        id="note"
-        data-i18n-placeholder="notePlaceholder"
-        placeholder="有多有少的原因、異常說明等"
-      ></textarea>
-
-    </fieldset>
-
-  </div>
-
-
-  <!-- =================================================
-       回報紀錄頁
-  ================================================= -->
-
-  <div
-    class="page"
-    id="historyPage"
-  >
-
-    <div class="record-toolbar">
-
-      <div
-        class="record-title"
-        data-i18n="historyTitle"
-      >
-        全部回報紀錄
-      </div>
-
-      <button
-        type="button"
-        class="refresh-btn"
-        id="refreshHistoryBtn"
-        data-i18n="refresh"
-      >
-        重新整理
-      </button>
 
     </div>
 
-    <div id="historyList">
+  </fieldset>
 
+
+  <!-- ==========================================
+       下貨人員
+  =========================================== -->
+
+  <fieldset>
+
+    <legend data-i18n="staff">
+      下貨人員
+    </legend>
+
+    <div
+      class="staff-grid"
+      id="staffGrid"
+    >
       <div class="loading">
-        回報紀錄載入中…
+        下貨人員資料載入中…
       </div>
-
     </div>
 
-  </div>
+    <div
+      id="lineMatchHint"
+      class="line-match-hint"
+      style="display:none;"
+    ></div>
 
-</div>
+  </fieldset>
 
 
-<!-- =================================================
-     照片 Modal
-================================================= -->
+  <!-- ==========================================
+       件數
+  =========================================== -->
 
-<div
-  class="modal"
-  id="photoModal"
->
+  <fieldset>
 
-  <div class="modal-box">
+    <legend data-i18n="qty">
+      件數是否正確
+    </legend>
 
-    <div class="modal-head">
-
-      <strong id="modalTitle">
-        當日照片
-      </strong>
+    <div
+      class="seg"
+      id="qtySeg"
+    >
 
       <button
         type="button"
-        class="modal-close"
-        id="modalCloseBtn"
+        data-v="ok"
+        class="active"
+        data-i18n="qtyOk"
       >
-        ×
+        ✓ 件數正確
       </button>
+
+      <button
+        type="button"
+        data-v="bad"
+        data-i18n="qtyBad"
+      >
+        ✗ 有多有少
+      </button>
+
+    </div>
+
+  </fieldset>
+
+
+  <!-- ==========================================
+       照片
+  =========================================== -->
+
+  <fieldset>
+
+    <legend data-i18n="photo">
+      照片
+    </legend>
+
+    <div class="photo-upload">
+
+      <span class="icon">
+        📷
+      </span>
+
+      <span id="photoUploadText">
+        點此上傳照片（可一次選多張）
+      </span>
+
+      <input
+        type="file"
+        accept="image/*"
+        id="photoInput"
+        multiple
+      >
 
     </div>
 
     <div
-      class="modal-body"
-      id="modalBody"
+      class="photo-grid"
+      id="photoGrid"
     ></div>
 
-  </div>
+    <div
+      class="hint"
+      id="photoHint"
+    >
+      至少上傳1張，可拍照或從相簿選取多張
+    </div>
+
+  </fieldset>
+
+
+  <!-- ==========================================
+       備註
+  =========================================== -->
+
+  <fieldset>
+
+    <legend data-i18n="note">
+      備註（選填）
+    </legend>
+
+    <textarea
+      id="note"
+      placeholder="有多有少的原因、異常說明等"
+    ></textarea>
+
+  </fieldset>
+
+
+  <!-- ==========================================
+       回報紀錄
+       只是一行入口
+  =========================================== -->
+
+  <fieldset>
+
+    <button
+      type="button"
+      class="history-entry"
+      id="historyEntry"
+    >
+
+      <span>
+        📋
+        <span data-i18n="history">
+          回報紀錄
+        </span>
+      </span>
+
+      <span class="arrow">
+        →
+      </span>
+
+    </button>
+
+  </fieldset>
 
 </div>
 
 
-<!-- =================================================
+<!-- ==========================================
      送出
-================================================= -->
+=========================================== -->
 
 <div class="submit-bar">
 
@@ -1065,6 +1047,7 @@ button.submit:disabled{
     <button
       class="submit"
       id="submitBtn"
+      data-i18n="submit"
     >
       送出回報
     </button>
@@ -1073,6 +1056,126 @@ button.submit:disabled{
       class="status"
       id="statusMsg"
     ></div>
+
+  </div>
+
+</div>
+
+
+<!-- ==========================================
+     回報紀錄頁
+=========================================== -->
+
+<div
+  class="history-page"
+  id="historyPage"
+>
+
+  <div class="history-inner">
+
+    <div class="history-header">
+
+      <div
+        class="history-title"
+        data-i18n="history"
+      >
+        回報紀錄
+      </div>
+
+      <button
+        type="button"
+        class="history-close"
+        id="historyClose"
+        data-i18n="close"
+      >
+        關閉
+      </button>
+
+    </div>
+
+    <div id="historyContent">
+
+      <div class="loading">
+        載入中…
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ==========================================
+     照片查看器
+=========================================== -->
+
+<div
+  class="photo-viewer"
+  id="photoViewer"
+>
+
+  <button
+    type="button"
+    class="photo-viewer-close"
+    id="photoViewerClose"
+  >
+    ×
+  </button>
+
+  <div
+    class="photo-viewer-title"
+    id="photoViewerTitle"
+  ></div>
+
+  <div
+    class="photo-viewer-grid"
+    id="photoViewerGrid"
+  ></div>
+
+</div>
+
+
+<!-- ==========================================
+     語言選擇
+=========================================== -->
+
+<div
+  class="language-modal"
+  id="languageModal"
+>
+
+  <div class="language-box">
+
+    <h2>
+      <span id="languageTitle">
+        選擇語言
+      </span>
+    </h2>
+
+    <p id="languageDescription">
+      請選擇系統語言
+    </p>
+
+    <div class="language-options">
+
+      <button
+        type="button"
+        class="language-option"
+        data-language="zh-TW"
+      >
+        🇹🇼 中文
+      </button>
+
+      <button
+        type="button"
+        class="language-option"
+        data-language="vi"
+      >
+        🇻🇳 Tiếng Việt
+      </button>
+
+    </div>
 
   </div>
 
@@ -1093,16 +1196,44 @@ const BACKEND_URL =
 
 
 /* =================================================
-   語言
+   狀態
 ================================================= */
 
-const LANG_KEY =
-  "zhubei_delivery_language";
+let userName =
+  "未知使用者";
+
+let photos =
+  [];
+
+let truckData =
+  [];
+
+let staffData =
+  [];
+
+let truckLastUsed =
+  {};
+
+let selectedTrucks =
+  new Set();
+
+let reportData =
+  null;
+
+let currentLanguage =
+  localStorage.getItem(
+    "zhubei_transport_language"
+  );
 
 
-const translations = {
+/* =================================================
+   翻譯
+================================================= */
 
-  zh: {
+const LANG =
+{
+
+  "zh-TW": {
 
     title:
       "竹北托運 下貨回報",
@@ -1110,29 +1241,29 @@ const translations = {
     loading:
       "載入中…",
 
-    navReport:
-      "下貨回報",
-
-    navHistory:
-      "回報紀錄",
-
-    language:
-      "語言",
-
-    truckLegend:
+    truck:
       "大車",
 
-    staffLegend:
+    staff:
       "下貨人員",
 
-    qtyLegend:
+    qty:
       "件數是否正確",
 
-    photoLegend:
+    qtyOk:
+      "✓ 件數正確",
+
+    qtyBad:
+      "✗ 有多有少",
+
+    photo:
       "照片",
 
-    noteLegend:
+    note:
       "備註（選填）",
+
+    submit:
+      "送出回報",
 
     clear:
       "清除",
@@ -1140,11 +1271,20 @@ const translations = {
     done:
       "完成",
 
-    qtyOk:
-      "✓ 件數正確",
+    history:
+      "回報紀錄",
 
-    qtyBad:
-      "✗ 有多有少",
+    close:
+      "關閉",
+
+    language:
+      "🌐 語言",
+
+    chooseLanguage:
+      "選擇語言",
+
+    chooseLanguageDescription:
+      "請選擇系統語言",
 
     uploadPhoto:
       "點此上傳照片（可一次選多張）",
@@ -1155,65 +1295,35 @@ const translations = {
     notePlaceholder:
       "有多有少的原因、異常說明等",
 
-    submit:
-      "送出回報",
+    selectTruck:
+      "請選擇大車…",
 
-    historyTitle:
-      "全部回報紀錄",
+    truckLoading:
+      "大車載入中…",
 
-    refresh:
-      "重新整理",
+    staffLoading:
+      "下貨人員資料載入中…",
 
-    viewPhotos:
-      "查看當日照片",
+    noTruck:
+      "目前沒有啟用中的大車",
 
-    noRecords:
-      "目前沒有回報紀錄",
+    noStaff:
+      "目前沒有啟用中的下貨人員",
 
-    noPhotos:
-      "這一天沒有照片",
+    truckLoadError:
+      "大車資料載入失敗",
 
-    delete:
-      "刪除",
+    staffLoadError:
+      "下貨人員資料載入失敗",
 
-    viewPhoto:
-      "查看照片",
+    lineMatched:
+      "LINE 使用者「{user}」已自動對應下貨人員「{staff}」",
 
-    deleteConfirm:
-      "確定要刪除這筆回報嗎？",
-
-    deleteSuccess:
-      "✓ 回報已刪除",
-
-    deleteFailed:
-      "❌ 刪除失敗：",
-
-    loadingHistory:
-      "回報紀錄載入中…",
-
-    loadingPhotos:
-      "照片載入中…",
-
-    reportLoadFailed:
-      "回報紀錄載入失敗：",
-
-    photoLoadFailed:
-      "照片載入失敗",
-
-    photoProcess:
+    processingPhoto:
       "照片處理中…",
 
-    photoProcessFailed:
+    photoProcessError:
       "照片處理失敗",
-
-    submitting:
-      "照片上傳及回報送出中…",
-
-    submitSuccess:
-      "✓ 已成功寫入回報紀錄",
-
-    submitFailed:
-      "❌ 送出失敗：",
 
     needTruck:
       "請至少選擇1台大車",
@@ -1224,93 +1334,115 @@ const translations = {
     needPhoto:
       "請至少上傳1張照片",
 
-    lineMatched:
-      "LINE 使用者「{user}」已自動對應下貨人員「{staff}」",
+    sending:
+      "照片上傳及回報送出中…",
 
-    truckLoading:
-      "大車載入中…",
+    success:
+      "✓ 已成功寫入回報紀錄",
 
-    truckFailed:
-      "大車資料載入失敗",
+    sendFailed:
+      "❌ 送出失敗：{error}",
 
-    noTruck:
-      "目前沒有啟用中的大車",
-
-    noStaff:
-      "目前沒有啟用中的下貨人員",
-
-    selectTruck:
-      "請選擇大車…",
-
-    selectedTruck:
-      "已選 {count} 台：{names}",
-
-    selectedOne:
-      "{name}",
-
-    loginFailed:
+    lineLoginFailed:
       "LINE 登入失敗",
 
-    languageTitle:
-      "選擇語言",
+    connectionFailed:
+      "無法連接系統：{error}",
 
-    chinese:
-      "中文",
+    historyLoading:
+      "回報紀錄載入中…",
 
-    vietnamese:
-      "Tiếng Việt",
+    historyEmpty:
+      "目前沒有回報紀錄",
 
-    languageSaved:
-      "語言已切換",
+    todayPhotos:
+      "查看當日照片",
 
-    unknownUser:
-      "未知使用者"
+    noPhotos:
+      "這筆回報沒有照片",
+
+    noDayPhotos:
+      "這一天沒有照片",
+
+    report:
+      "回報：{employee}",
+
+    delete:
+      "刪除",
+
+    deleteConfirm:
+      "確定要刪除這筆回報嗎？",
+
+    deleteSuccess:
+      "已刪除回報",
+
+    deleteFailed:
+      "刪除失敗：{error}",
+
+    photoTitle:
+      "{date} 照片",
+
+    reportPhotoTitle:
+      "{truck}｜{staff}｜{employee}",
+
+    noHistoryData:
+      "目前沒有資料"
 
   },
 
-  vi: {
+
+  "vi": {
 
     title:
-      "Zhubei Transport - Báo cáo dỡ hàng",
+      "Báo cáo dỡ hàng Zhubei",
 
     loading:
       "Đang tải…",
 
-    navReport:
-      "Báo cáo dỡ hàng",
+    truck:
+      "Xe tải",
 
-    navHistory:
-      "Lịch sử báo cáo",
-
-    language:
-      "Ngôn ngữ",
-
-    truckLegend:
-      "Xe tải lớn",
-
-    staffLegend:
+    staff:
       "Nhân viên dỡ hàng",
 
-    qtyLegend:
+    qty:
       "Số lượng có chính xác không",
-
-    photoLegend:
-      "Ảnh",
-
-    noteLegend:
-      "Ghi chú (không bắt buộc)",
-
-    clear:
-      "Xóa",
-
-    done:
-      "Xong",
 
     qtyOk:
       "✓ Số lượng chính xác",
 
     qtyBad:
       "✗ Thừa / thiếu",
+
+    photo:
+      "Ảnh",
+
+    note:
+      "Ghi chú (không bắt buộc)",
+
+    submit:
+      "Gửi báo cáo",
+
+    clear:
+      "Xóa",
+
+    done:
+      "Hoàn tất",
+
+    history:
+      "Lịch sử báo cáo",
+
+    close:
+      "Đóng",
+
+    language:
+      "🌐 Ngôn ngữ",
+
+    chooseLanguage:
+      "Chọn ngôn ngữ",
+
+    chooseLanguageDescription:
+      "Vui lòng chọn ngôn ngữ hệ thống",
 
     uploadPhoto:
       "Nhấn để tải ảnh lên (có thể chọn nhiều ảnh)",
@@ -1319,171 +1451,163 @@ const translations = {
       "Vui lòng tải ít nhất 1 ảnh",
 
     notePlaceholder:
-      "Lý do thừa thiếu, tình trạng bất thường…",
+      "Lý do thừa thiếu hoặc ghi chú bất thường",
 
-    submit:
-      "Gửi báo cáo",
+    selectTruck:
+      "Vui lòng chọn xe…",
 
-    historyTitle:
-      "Tất cả lịch sử báo cáo",
+    truckLoading:
+      "Đang tải danh sách xe…",
 
-    refresh:
-      "Làm mới",
+    staffLoading:
+      "Đang tải nhân viên…",
 
-    viewPhotos:
+    noTruck:
+      "Không có xe đang hoạt động",
+
+    noStaff:
+      "Không có nhân viên đang hoạt động",
+
+    truckLoadError:
+      "Không thể tải danh sách xe",
+
+    staffLoadError:
+      "Không thể tải nhân viên",
+
+    lineMatched:
+      "LINE「{user}」đã tự động ghép với「{staff}」",
+
+    processingPhoto:
+      "Đang xử lý ảnh…",
+
+    photoProcessError:
+      "Xử lý ảnh thất bại",
+
+    needTruck:
+      "Vui lòng chọn ít nhất 1 xe",
+
+    needStaff:
+      "Vui lòng chọn ít nhất 1 nhân viên",
+
+    needPhoto:
+      "Vui lòng tải ít nhất 1 ảnh",
+
+    sending:
+      "Đang tải ảnh và gửi báo cáo…",
+
+    success:
+      "✓ Đã lưu báo cáo thành công",
+
+    sendFailed:
+      "❌ Gửi thất bại: {error}",
+
+    lineLoginFailed:
+      "Đăng nhập LINE thất bại",
+
+    connectionFailed:
+      "Không thể kết nối hệ thống: {error}",
+
+    historyLoading:
+      "Đang tải lịch sử…",
+
+    historyEmpty:
+      "Chưa có lịch sử báo cáo",
+
+    todayPhotos:
       "Xem ảnh trong ngày",
 
-    noRecords:
-      "Hiện chưa có báo cáo",
-
     noPhotos:
+      "Báo cáo này không có ảnh",
+
+    noDayPhotos:
       "Ngày này không có ảnh",
+
+    report:
+      "Người báo cáo: {employee}",
 
     delete:
       "Xóa",
-
-    viewPhoto:
-      "Xem ảnh",
 
     deleteConfirm:
       "Bạn có chắc muốn xóa báo cáo này không?",
 
     deleteSuccess:
-      "✓ Đã xóa báo cáo",
+      "Đã xóa báo cáo",
 
     deleteFailed:
-      "❌ Xóa thất bại: ",
+      "Xóa thất bại: {error}",
 
-    loadingHistory:
-      "Đang tải lịch sử báo cáo…",
+    photoTitle:
+      "Ảnh ngày {date}",
 
-    loadingPhotos:
-      "Đang tải ảnh…",
+    reportPhotoTitle:
+      "{truck}｜{staff}｜{employee}",
 
-    reportLoadFailed:
-      "Tải lịch sử báo cáo thất bại: ",
-
-    photoLoadFailed:
-      "Tải ảnh thất bại",
-
-    photoProcess:
-      "Đang xử lý ảnh…",
-
-    photoProcessFailed:
-      "Xử lý ảnh thất bại",
-
-    submitting:
-      "Đang tải ảnh và gửi báo cáo…",
-
-    submitSuccess:
-      "✓ Đã lưu báo cáo thành công",
-
-    submitFailed:
-      "❌ Gửi thất bại: ",
-
-    needTruck:
-      "Vui lòng chọn ít nhất 1 xe tải",
-
-    needStaff:
-      "Vui lòng chọn ít nhất 1 nhân viên dỡ hàng",
-
-    needPhoto:
-      "Vui lòng tải ít nhất 1 ảnh",
-
-    lineMatched:
-      "Tài khoản LINE 「{user}」 đã tự động ghép với nhân viên 「{staff}」",
-
-    truckLoading:
-      "Đang tải xe tải…",
-
-    truckFailed:
-      "Không thể tải dữ liệu xe tải",
-
-    noTruck:
-      "Hiện không có xe tải đang hoạt động",
-
-    noStaff:
-      "Hiện không có nhân viên đang hoạt động",
-
-    selectTruck:
-      "Vui lòng chọn xe tải…",
-
-    selectedTruck:
-      "Đã chọn {count} xe: {names}",
-
-    selectedOne:
-      "{name}",
-
-    loginFailed:
-      "Đăng nhập LINE thất bại",
-
-    languageTitle:
-      "Chọn ngôn ngữ",
-
-    chinese:
-      "中文",
-
-    vietnamese:
-      "Tiếng Việt",
-
-    languageSaved:
-      "Đã chuyển ngôn ngữ",
-
-    unknownUser:
-      "Người dùng không xác định"
+    noHistoryData:
+      "Không có dữ liệu"
 
   }
 
 };
 
 
-let currentLanguage =
-  localStorage.getItem(
-    LANG_KEY
-  );
-
-
 /* =================================================
-   狀態
+   翻譯函式
 ================================================= */
 
-let userName = "未知使用者";
-
-let photos = [];
-
-let truckData = [];
-
-let staffData = [];
-
-let truckLastUsed = {};
-
-let selectedTrucks = new Set();
-
-let reportRecords = [];
-
-let currentPage =
-  "report";
-
-
-/* =================================================
-   語言工具
-================================================= */
-
-function t(key){
+function t(
+  key,
+  vars
+){
 
   const lang =
-    translations[
-      currentLanguage || "zh"
-    ] || translations.zh;
+    LANG[
+      currentLanguage ||
+      "zh-TW"
+    ] ||
+    LANG["zh-TW"];
 
-  return (
-    lang[key] ??
-    translations.zh[key] ??
-    key
-  );
+
+  let text =
+    lang[key] ||
+    LANG["zh-TW"][key] ||
+    key;
+
+
+  if(vars){
+
+    Object.keys(
+      vars
+    ).forEach(
+      function(name){
+
+        text =
+          text.replace(
+            new RegExp(
+              "\\{" +
+              name +
+              "\\}",
+              "g"
+            ),
+            String(
+              vars[name]
+            )
+          );
+
+      }
+    );
+
+  }
+
+
+  return text;
 
 }
 
+
+/* =================================================
+   套用語言
+================================================= */
 
 function applyLanguage(){
 
@@ -1497,152 +1621,192 @@ function applyLanguage(){
     t("title");
 
 
-  document.getElementById(
-    "pageTitle"
-  ).textContent =
+  document
+    .getElementById(
+      "titleText"
+    )
+    .textContent =
     t("title");
 
 
-  document.getElementById(
-    "languageBtn"
-  ).textContent =
+  document
+    .getElementById(
+      "languageButton"
+    )
+    .textContent =
     t("language");
 
 
-  document.querySelectorAll(
-    "[data-i18n]"
-  ).forEach(
-    function(el){
+  document
+    .querySelectorAll(
+      "[data-i18n]"
+    )
+    .forEach(
+      function(el){
 
-      const key =
-        el.dataset.i18n;
-
-      el.textContent =
-        t(key);
-
-    }
-  );
+        const key =
+          el.dataset.i18n;
 
 
-  document.querySelectorAll(
-    "[data-i18n-placeholder]"
-  ).forEach(
-    function(el){
+        el.textContent =
+          t(key);
 
-      const key =
-        el.dataset.i18nPlaceholder;
+      }
+    );
 
-      el.placeholder =
-        t(key);
 
-    }
-  );
+  document
+    .getElementById(
+      "photoUploadText"
+    )
+    .textContent =
+    t("uploadPhoto");
+
+
+  document
+    .getElementById(
+      "photoHint"
+    )
+    .textContent =
+    t("photoHint");
+
+
+  document
+    .getElementById(
+      "note"
+    )
+    .placeholder =
+    t("notePlaceholder");
 
 
   updateTruckButtonText();
 
-  renderHistory();
+
+  if(
+    reportData
+  ){
+
+    renderHistory();
+
+  }
 
 }
 
 
-function chooseLanguage(){
+/* =================================================
+   語言選擇
+================================================= */
 
-  const result =
-    window.prompt(
-      t("languageTitle") +
-      "\n\n1. " +
-      t("chinese") +
-      "\n2. " +
-      t("vietnamese") +
-      "\n\n請輸入 1 或 2"
+function openLanguageModal(){
+
+  document
+    .getElementById(
+      "languageTitle"
+    )
+    .textContent =
+    t("chooseLanguage");
+
+
+  document
+    .getElementById(
+      "languageDescription"
+    )
+    .textContent =
+    t("chooseLanguageDescription");
+
+
+  document
+    .getElementById(
+      "languageModal"
+    )
+    .classList
+    .add(
+      "open"
     );
 
+}
+
+
+function setLanguage(
+  language
+){
 
   if(
-    result === "1"
+    !LANG[language]
   ){
-
-    currentLanguage =
-      "zh";
-
-  }else if(
-    result === "2"
-  ){
-
-    currentLanguage =
-      "vi";
-
-  }else{
 
     return;
 
   }
 
 
+  currentLanguage =
+    language;
+
+
   localStorage.setItem(
-    LANG_KEY,
-    currentLanguage
+    "zhubei_transport_language",
+    language
   );
+
+
+  document
+    .getElementById(
+      "languageModal"
+    )
+    .classList
+    .remove(
+      "open"
+    );
 
 
   applyLanguage();
 
-  setStatus(
-    t("languageSaved"),
-    "ok"
-  );
-
 }
 
 
 /* =================================================
-   第一次語言
+   語言按鈕
 ================================================= */
 
-function ensureLanguage(){
+document
+  .getElementById(
+    "languageButton"
+  )
+  .addEventListener(
+    "click",
+    function(){
 
-  if(
-    currentLanguage === "zh" ||
-    currentLanguage === "vi"
-  ){
+      openLanguageModal();
 
-    return;
-
-  }
-
-
-  const result =
-    window.prompt(
-      "請選擇語言 / Chọn ngôn ngữ\n\n1. 中文\n2. Tiếng Việt"
-    );
-
-
-  if(
-    result === "2"
-  ){
-
-    currentLanguage =
-      "vi";
-
-  }else{
-
-    currentLanguage =
-      "zh";
-
-  }
-
-
-  localStorage.setItem(
-    LANG_KEY,
-    currentLanguage
+    }
   );
 
-}
+
+document
+  .querySelectorAll(
+    ".language-option"
+  )
+  .forEach(
+    function(button){
+
+      button.addEventListener(
+        "click",
+        function(){
+
+          setLanguage(
+            button.dataset.language
+          );
+
+        }
+      );
+
+    }
+  );
 
 
 /* =================================================
-   狀態訊息
+   狀態
 ================================================= */
 
 function setStatus(
@@ -1655,8 +1819,10 @@ function setStatus(
       "statusMsg"
     );
 
+
   el.textContent =
     msg;
+
 
   el.className =
     "status" +
@@ -1670,7 +1836,7 @@ function setStatus(
 
 
 /* =================================================
-   LINE LIFF
+   LINE
 ================================================= */
 
 async function initLIFF(){
@@ -1678,11 +1844,14 @@ async function initLIFF(){
   try{
 
     await liff.init({
-      liffId:LIFF_ID
+      liffId:
+        LIFF_ID
     });
 
 
-    if(!liff.isLoggedIn()){
+    if(
+      !liff.isLoggedIn()
+    ){
 
       liff.login();
 
@@ -1697,12 +1866,14 @@ async function initLIFF(){
 
     userName =
       profile.displayName ||
-      t("unknownUser");
+      "未知使用者";
 
 
-    document.getElementById(
-      "whoami"
-    ).textContent =
+    document
+      .getElementById(
+        "whoami"
+      )
+      .textContent =
       userName;
 
 
@@ -1712,19 +1883,20 @@ async function initLIFF(){
   }catch(error){
 
     console.error(
-      "LIFF 初始化失敗：",
       error
     );
 
 
-    document.getElementById(
-      "whoami"
-    ).textContent =
-      t("loginFailed");
+    document
+      .getElementById(
+        "whoami"
+      )
+      .textContent =
+      t("lineLoginFailed");
 
 
     setStatus(
-      t("loginFailed") +
+      t("lineLoginFailed") +
       "：" +
       (
         error.message ||
@@ -1742,38 +1914,37 @@ async function initLIFF(){
 
 
 /* =================================================
-   後端 GET
+   GET
 ================================================= */
 
 async function getBackend(
-  params={}
+  query
 ){
-
-  const query =
-    new URLSearchParams(
-      params
-    );
-
-
-  query.set(
-    "t",
-    Date.now()
-  );
-
 
   const response =
     await fetch(
       BACKEND_URL +
-      "?" +
-      query.toString(),
+      query +
+      (
+        query.indexOf("?") >= 0
+          ? "&"
+          : "?"
+      ) +
+      "t=" +
+      Date.now(),
       {
-        method:"GET",
-        cache:"no-store"
+        method:
+          "GET",
+
+        cache:
+          "no-store"
       }
     );
 
 
-  if(!response.ok){
+  if(
+    !response.ok
+  ){
 
     throw new Error(
       "HTTP " +
@@ -1799,12 +1970,6 @@ async function getBackend(
 
   }catch(error){
 
-    console.error(
-      "後端不是 JSON：",
-      text
-    );
-
-
     throw new Error(
       "Apps Script 回傳格式錯誤"
     );
@@ -1818,7 +1983,7 @@ async function getBackend(
 
     throw new Error(
       result.error ||
-      "後端處理失敗"
+      "後端錯誤"
     );
 
   }
@@ -1838,11 +2003,14 @@ async function loadSystemData(){
   try{
 
     const result =
-      await getBackend();
+      await getBackend(
+        ""
+      );
 
 
     const data =
-      result.data || {};
+      result.data ||
+      {};
 
 
     truckData =
@@ -1854,7 +2022,8 @@ async function loadSystemData(){
 
 
     truckLastUsed =
-      data.truckLastUsed || {};
+      data.truckLastUsed ||
+      {};
 
 
     staffData =
@@ -1875,40 +2044,51 @@ async function loadSystemData(){
   }catch(error){
 
     console.error(
-      "讀取系統資料失敗：",
       error
     );
 
 
-    document.getElementById(
-      "truckList"
-    ).innerHTML =
+    document
+      .getElementById(
+        "truckList"
+      )
+      .innerHTML =
       `
       <div class="loading">
-        ${escapeHtml(t("truckFailed"))}
+        ${t("truckLoadError")}
       </div>
       `;
 
 
-    document.getElementById(
-      "truckSelectButton"
-    ).textContent =
-      t("truckFailed");
+    document
+      .getElementById(
+        "truckSelectButton"
+      )
+      .textContent =
+      t("truckLoadError");
 
 
-    document.getElementById(
-      "staffGrid"
-    ).innerHTML =
+    document
+      .getElementById(
+        "staffGrid"
+      )
+      .innerHTML =
       `
       <div class="loading">
-        ${escapeHtml(t("noStaff"))}
+        ${t("staffLoadError")}
       </div>
       `;
 
 
     setStatus(
-      error.message ||
-      "Error",
+      t(
+        "connectionFailed",
+        {
+          error:
+            error.message ||
+            error
+        }
+      ),
       "err"
     );
 
@@ -1918,7 +2098,7 @@ async function loadSystemData(){
 
 
 /* =================================================
-   時間整理
+   大車時間
 ================================================= */
 
 function formatTruckTime(
@@ -1936,7 +2116,9 @@ function formatTruckTime(
 
 
   const text =
-    String(value).trim();
+    String(
+      value
+    ).trim();
 
 
   if(!text){
@@ -1957,8 +2139,10 @@ function formatTruckTime(
     return (
       String(
         simpleMatch[1]
-      ).padStart(2,"0")
-      +
+      ).padStart(
+        2,
+        "0"
+      ) +
       ":" +
       simpleMatch[2]
     );
@@ -1967,7 +2151,9 @@ function formatTruckTime(
 
 
   const date =
-    new Date(text);
+    new Date(
+      text
+    );
 
 
   if(
@@ -1979,12 +2165,17 @@ function formatTruckTime(
     return (
       String(
         date.getHours()
-      ).padStart(2,"0")
-      +
+      ).padStart(
+        2,
+        "0"
+      ) +
       ":" +
       String(
         date.getMinutes()
-      ).padStart(2,"0")
+      ).padStart(
+        2,
+        "0"
+      )
     );
 
   }
@@ -1996,7 +2187,7 @@ function formatTruckTime(
 
 
 /* =================================================
-   大車最後使用
+   大車使用
 ================================================= */
 
 function getTruckUsage(
@@ -2017,7 +2208,8 @@ function getTruckUsage(
 
 
   if(
-    typeof data === "string"
+    typeof data ===
+    "string"
   ){
 
     return {
@@ -2027,7 +2219,8 @@ function getTruckUsage(
           data
         ),
 
-      staff:""
+      staff:
+        ""
 
     };
 
@@ -2043,7 +2236,8 @@ function getTruckUsage(
 
     staff:
       String(
-        data.staff || ""
+        data.staff ||
+        ""
       ).trim()
 
   };
@@ -2059,13 +2253,18 @@ function sortedTrucks(){
 
   return truckData
     .map(
-      function(truck,index){
+      function(
+        truck,
+        index
+      ){
 
         return {
 
-          truck:truck,
+          truck:
+            truck,
 
-          originalIndex:index
+          originalIndex:
+            index
 
         };
 
@@ -2082,14 +2281,18 @@ function sortedTrucks(){
 
 
         const fixedA =
-          truckA.fixed === true;
+          truckA.fixed ===
+          true;
+
 
         const fixedB =
-          truckB.fixed === true;
+          truckB.fixed ===
+          true;
 
 
         if(
-          fixedA !== fixedB
+          fixedA !==
+          fixedB
         ){
 
           return fixedA
@@ -2117,6 +2320,7 @@ function sortedTrucks(){
             truckA.name
           );
 
+
         const usageB =
           getTruckUsage(
             truckB.name
@@ -2129,6 +2333,7 @@ function sortedTrucks(){
             usageA.staff
           );
 
+
         const usedB =
           Boolean(
             usageB &&
@@ -2137,7 +2342,8 @@ function sortedTrucks(){
 
 
         if(
-          usedA !== usedB
+          usedA !==
+          usedB
         ){
 
           return usedA
@@ -2183,7 +2389,8 @@ function renderTrucks(){
     );
 
 
-  list.innerHTML = "";
+  list.innerHTML =
+    "";
 
 
   const trucks =
@@ -2191,13 +2398,14 @@ function renderTrucks(){
 
 
   if(
-    trucks.length === 0
+    trucks.length ===
+    0
   ){
 
     list.innerHTML =
       `
       <div class="loading">
-        ${escapeHtml(t("noTruck"))}
+        ${t("noTruck")}
       </div>
       `;
 
@@ -2336,10 +2544,6 @@ function renderTrucks(){
           usage.staff;
 
 
-        staffTag.title =
-          usage.staff;
-
-
         label.appendChild(
           staffTag
         );
@@ -2361,7 +2565,7 @@ function renderTrucks(){
 
 
 /* =================================================
-   大車按鈕文字
+   大車按鈕
 ================================================= */
 
 function updateTruckButtonText(){
@@ -2379,11 +2583,13 @@ function updateTruckButtonText(){
 
 
   if(
-    names.length === 0
+    names.length ===
+    0
   ){
 
     button.textContent =
       t("selectTruck");
+
 
     return;
 
@@ -2391,15 +2597,13 @@ function updateTruckButtonText(){
 
 
   if(
-    names.length === 1
+    names.length ===
+    1
   ){
 
     button.textContent =
-      t("selectedOne")
-        .replace(
-          "{name}",
-          names[0]
-        );
+      names[0];
+
 
     return;
 
@@ -2407,15 +2611,16 @@ function updateTruckButtonText(){
 
 
   button.textContent =
-    t("selectedTruck")
-      .replace(
-        "{count}",
-        names.length
-      )
-      .replace(
-        "{names}",
+    currentLanguage ===
+    "vi"
+      ? "Đã chọn " +
+        names.length +
+        " xe: " +
         names.join("、")
-      );
+      : "已選 " +
+        names.length +
+        " 台：" +
+        names.join("、");
 
 }
 
@@ -2432,17 +2637,19 @@ function renderStaff(){
     );
 
 
-  grid.innerHTML = "";
+  grid.innerHTML =
+    "";
 
 
   if(
-    staffData.length === 0
+    staffData.length ===
+    0
   ){
 
     grid.innerHTML =
       `
       <div class="loading">
-        ${escapeHtml(t("noStaff"))}
+        ${t("noStaff")}
       </div>
       `;
 
@@ -2463,10 +2670,6 @@ function renderStaff(){
 
       label.className =
         "staff-item";
-
-
-      label.dataset.staffName =
-        staff.name;
 
 
       const checkbox =
@@ -2544,7 +2747,8 @@ function autoMatchLineStaff(){
 
   if(
     !userName ||
-    userName === t("unknownUser")
+    userName ===
+    "未知使用者"
   ){
 
     return;
@@ -2566,7 +2770,8 @@ function autoMatchLineStaff(){
 
         const lineName =
           String(
-            staff.lineName || ""
+            staff.lineName ||
+            ""
           )
             .trim()
             .toLowerCase();
@@ -2650,20 +2855,17 @@ function autoMatchLineStaff(){
     "block";
 
 
-  hint.className =
-    "line-match-hint";
-
-
   hint.textContent =
-    t("lineMatched")
-      .replace(
-        "{user}",
-        userName
-      )
-      .replace(
-        "{staff}",
-        matched.name
-      );
+    t(
+      "lineMatched",
+      {
+        user:
+          userName,
+
+        staff:
+          matched.name
+      }
+    );
 
 }
 
@@ -2757,125 +2959,6 @@ document.addEventListener(
 
   }
 );
-
-
-/* =================================================
-   頁面切換
-================================================= */
-
-function showPage(
-  page
-){
-
-  currentPage =
-    page;
-
-
-  document
-    .getElementById(
-      "reportPage"
-    )
-    .classList.toggle(
-      "active",
-      page === "report"
-    );
-
-
-  document
-    .getElementById(
-      "historyPage"
-    )
-    .classList.toggle(
-      "active",
-      page === "history"
-    );
-
-
-  document
-    .getElementById(
-      "navReport"
-    )
-    .classList.toggle(
-      "active",
-      page === "report"
-    );
-
-
-  document
-    .getElementById(
-      "navHistory"
-    )
-    .classList.toggle(
-      "active",
-      page === "history"
-    );
-
-
-  document
-    .getElementById(
-      "submitBtn"
-    )
-    .style.display =
-      page === "report"
-        ? "block"
-        : "none";
-
-
-  if(
-    page === "history"
-  ){
-
-    loadHistory();
-
-  }
-
-}
-
-
-document
-  .getElementById(
-    "navReport"
-  )
-  .addEventListener(
-    "click",
-    function(){
-
-      showPage(
-        "report"
-      );
-
-    }
-  );
-
-
-document
-  .getElementById(
-    "navHistory"
-  )
-  .addEventListener(
-    "click",
-    function(){
-
-      showPage(
-        "history"
-      );
-
-    }
-  );
-
-
-/* =================================================
-   語言按鈕
-================================================= */
-
-document
-  .getElementById(
-    "languageBtn"
-  )
-  .addEventListener(
-    "click",
-    chooseLanguage
-  );
 
 
 /* =================================================
@@ -3037,11 +3120,15 @@ function renderPhotoGrid(){
     );
 
 
-  grid.innerHTML = "";
+  grid.innerHTML =
+    "";
 
 
   photos.forEach(
-    function(photo,index){
+    function(
+      photo,
+      index
+    ){
 
       const div =
         document.createElement(
@@ -3130,11 +3217,14 @@ document
     async function(event){
 
       const files =
-        [...event.target.files];
+        [
+          ...event.target.files
+        ];
 
 
       if(
-        files.length === 0
+        files.length ===
+        0
       ){
 
         return;
@@ -3143,7 +3233,7 @@ document
 
 
       setStatus(
-        t("photoProcess"),
+        t("processingPhoto"),
         ""
       );
 
@@ -3190,27 +3280,29 @@ document
       }catch(error){
 
         console.error(
-          "照片處理失敗：",
           error
         );
 
 
         setStatus(
-          t("photoProcessFailed"),
+          t(
+            "photoProcessError"
+          ),
           "err"
         );
 
       }
 
 
-      event.target.value = "";
+      event.target.value =
+        "";
 
     }
   );
 
 
 /* =================================================
-   取得選取人員
+   選取人員
 ================================================= */
 
 function getSelectedStaff(){
@@ -3242,7 +3334,9 @@ async function submitReport(
     await fetch(
       BACKEND_URL,
       {
-        method:"POST",
+
+        method:
+          "POST",
 
         headers:{
           "Content-Type":
@@ -3258,7 +3352,9 @@ async function submitReport(
     );
 
 
-  if(!response.ok){
+  if(
+    !response.ok
+  ){
 
     throw new Error(
       "Apps Script HTTP " +
@@ -3283,12 +3379,6 @@ async function submitReport(
       );
 
   }catch(error){
-
-    console.error(
-      "Apps Script 回傳內容：",
-      text
-    );
-
 
     throw new Error(
       "Apps Script 沒有回傳正確 JSON"
@@ -3358,7 +3448,8 @@ document
 
 
       if(
-        trucks.length === 0
+        trucks.length ===
+        0
       ){
 
         setStatus(
@@ -3372,7 +3463,8 @@ document
 
 
       if(
-        staff.length === 0
+        staff.length ===
+        0
       ){
 
         setStatus(
@@ -3386,7 +3478,8 @@ document
 
 
       if(
-        photos.length === 0
+        photos.length ===
+        0
       ){
 
         setStatus(
@@ -3410,7 +3503,7 @@ document
 
 
       setStatus(
-        t("submitting"),
+        t("sending"),
         ""
       );
 
@@ -3427,7 +3520,8 @@ document
           staff,
 
         qtyStatus:
-          qtyStatus === "ok"
+          qtyStatus ===
+          "ok"
             ? "正確"
             : "有多有少",
 
@@ -3448,14 +3542,8 @@ document
           );
 
 
-        console.log(
-          "回報成功：",
-          result
-        );
-
-
         setStatus(
-          t("submitSuccess"),
+          t("success"),
           "ok"
         );
 
@@ -3484,7 +3572,8 @@ document
         renderTrucks();
 
 
-        photos = [];
+        photos =
+          [];
 
         renderPhotoGrid();
 
@@ -3493,7 +3582,8 @@ document
           .getElementById(
             "note"
           )
-          .value = "";
+          .value =
+          "";
 
 
         document
@@ -3604,16 +3694,18 @@ document
       }catch(error){
 
         console.error(
-          "送出失敗：",
           error
         );
 
 
         setStatus(
-          t("submitFailed") +
-          (
-            error.message ||
-            error
+          t(
+            "sendFailed",
+            {
+              error:
+                error.message ||
+                error
+            }
           ),
           "err"
         );
@@ -3632,18 +3724,54 @@ document
    回報紀錄
 ================================================= */
 
-async function loadHistory(){
+document
+  .getElementById(
+    "historyEntry"
+  )
+  .addEventListener(
+    "click",
+    async function(){
 
-  const list =
-    document.getElementById(
-      "historyList"
+      openHistory();
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "historyClose"
+  )
+  .addEventListener(
+    "click",
+    function(){
+
+      closeHistory();
+
+    }
+  );
+
+
+async function openHistory(){
+
+  document
+    .getElementById(
+      "historyPage"
+    )
+    .classList
+    .add(
+      "open"
     );
 
 
-  list.innerHTML =
+  document
+    .getElementById(
+      "historyContent"
+    )
+    .innerHTML =
     `
     <div class="loading">
-      ${escapeHtml(t("loadingHistory"))}
+      ${t("historyLoading")}
     </div>
     `;
 
@@ -3651,18 +3779,16 @@ async function loadHistory(){
   try{
 
     const result =
-      await getBackend({
-        type:"reports"
-      });
+      await getBackend(
+        "?type=reports"
+      );
 
 
-    reportRecords =
-      Array.isArray(
-        result.data &&
-        result.data.records
-      )
-        ? result.data.records
-        : [];
+    reportData =
+      result.data ||
+      {
+        dates:[]
+      };
 
 
     renderHistory();
@@ -3670,17 +3796,21 @@ async function loadHistory(){
 
   }catch(error){
 
-    console.error(
-      "回報紀錄載入失敗：",
-      error
-    );
-
-
-    list.innerHTML =
+    document
+      .getElementById(
+        "historyContent"
+      )
+      .innerHTML =
       `
-      <div class="empty-record">
-        ${escapeHtml(t("reportLoadFailed"))}
-        ${escapeHtml(error.message || String(error))}
+      <div class="loading">
+        ${t(
+          "connectionFailed",
+          {
+            error:
+              error.message ||
+              error
+          }
+        )}
       </div>
       `;
 
@@ -3689,160 +3819,49 @@ async function loadHistory(){
 }
 
 
-/* =================================================
-   日期分組
-================================================= */
+function closeHistory(){
 
-function groupReportsByDate(
-  records
-){
-
-  const groups =
-    {};
-
-
-  records.forEach(
-    function(record){
-
-      const date =
-        String(
-          record.date || ""
-        ).trim();
-
-
-      if(!date){
-
-        return;
-
-      }
-
-
-      if(
-        !groups[date]
-      ){
-
-        groups[date] = [];
-
-      }
-
-
-      groups[date].push(
-        record
-      );
-
-    }
-  );
-
-
-  return groups;
-
-}
-
-
-/* =================================================
-   日期排序
-================================================= */
-
-function sortedDates(
-  groups
-){
-
-  return Object.keys(
-    groups
-  ).sort(
-    function(a,b){
-
-      return (
-        String(b)
-          .localeCompare(
-            String(a)
-          )
-      );
-
-    }
-  );
-
-}
-
-
-/* =================================================
-   日期顯示
-================================================= */
-
-function displayDate(
-  dateText
-){
-
-  const parts =
-    String(
-      dateText
-    ).split("-");
-
-
-  if(
-    parts.length === 3
-  ){
-
-    return (
-      parts[0] +
-      "/" +
-      parts[1] +
-      "/" +
-      parts[2]
+  document
+    .getElementById(
+      "historyPage"
+    )
+    .classList
+    .remove(
+      "open"
     );
 
-  }
-
-
-  return dateText;
-
 }
 
 
 /* =================================================
-   回報紀錄
+   顯示回報紀錄
 ================================================= */
 
 function renderHistory(){
 
-  const list =
+  const container =
     document.getElementById(
-      "historyList"
+      "historyContent"
     );
 
 
+  container.innerHTML =
+    "";
+
+
   if(
+    !reportData ||
     !Array.isArray(
-      reportRecords
-    )
+      reportData.dates
+    ) ||
+    reportData.dates.length ===
+    0
   ){
 
-    reportRecords =
-      [];
-
-  }
-
-
-  const groups =
-    groupReportsByDate(
-      reportRecords
-    );
-
-
-  const dates =
-    sortedDates(
-      groups
-    );
-
-
-  if(
-    dates.length === 0
-  ){
-
-    list.innerHTML =
+    container.innerHTML =
       `
-      <div class="empty-record">
-        ${escapeHtml(t("noRecords"))}
+      <div class="loading">
+        ${t("historyEmpty")}
       </div>
       `;
 
@@ -3851,176 +3870,356 @@ function renderHistory(){
   }
 
 
-  list.innerHTML = "";
+  reportData
+    .dates
+    .forEach(
+      function(day){
 
-
-  dates.forEach(
-    function(date){
-
-      const records =
-        groups[date];
-
-
-      const dateBox =
-        document.createElement(
-          "div"
-        );
-
-
-      dateBox.className =
-        "record-date";
-
-
-      const header =
-        document.createElement(
-          "div"
-        );
-
-
-      header.className =
-        "record-date-header";
-
-
-      const dateName =
-        document.createElement(
-          "div"
-        );
-
-
-      dateName.className =
-        "record-date-name";
-
-
-      dateName.textContent =
-        displayDate(
-          date
-        );
-
-
-      const photoButton =
-        document.createElement(
-          "button"
-        );
-
-
-      photoButton.type =
-        "button";
-
-
-      photoButton.className =
-        "photo-day-btn";
-
-
-      photoButton.textContent =
-        t("viewPhotos");
-
-
-      photoButton.addEventListener(
-        "click",
-        function(){
-
-          openDayPhotos(
-            date
+        const dateBox =
+          document.createElement(
+            "div"
           );
 
-        }
-      );
+
+        dateBox.className =
+          "history-date";
 
 
-      header.appendChild(
-        dateName
-      );
+        const head =
+          document.createElement(
+            "div"
+          );
 
 
-      header.appendChild(
-        photoButton
-      );
+        head.className =
+          "history-date-head";
 
 
-      const items =
-        document.createElement(
-          "div"
+        const dateButton =
+          document.createElement(
+            "button"
+          );
+
+
+        dateButton.type =
+          "button";
+
+
+        dateButton.className =
+          "history-date-button";
+
+
+        dateButton.textContent =
+          formatDisplayDate(
+            day.date
+          );
+
+
+        const dayPhotoButton =
+          document.createElement(
+            "button"
+          );
+
+
+        dayPhotoButton.type =
+          "button";
+
+
+        dayPhotoButton.className =
+          "day-photo-button";
+
+
+        dayPhotoButton.textContent =
+          t("todayPhotos");
+
+
+        dayPhotoButton.addEventListener(
+          "click",
+          function(event){
+
+            event.stopPropagation();
+
+
+            showDayPhotos(
+              day
+            );
+
+          }
         );
 
 
-      items.className =
-        "record-items";
+        head.appendChild(
+          dateButton
+        );
 
 
-      records.forEach(
-        function(record){
+        head.appendChild(
+          dayPhotoButton
+        );
 
-          items.appendChild(
-            createRecordItem(
-              record
-            )
+
+        const body =
+          document.createElement(
+            "div"
           );
 
+
+        body.className =
+          "history-date-body";
+
+
+        dateButton.addEventListener(
+          "click",
+          function(){
+
+            dateBox.classList.toggle(
+              "open"
+            );
+
+          }
+        );
+
+
+        if(
+          day.reports &&
+          day.reports.length
+        ){
+
+          day.reports.forEach(
+            function(report){
+
+              body.appendChild(
+                createReportCard(
+                  report,
+                  day.date
+                )
+              );
+
+            }
+          );
+
+        }else{
+
+          body.innerHTML =
+            `
+            <div class="loading">
+              ${t("noHistoryData")}
+            </div>
+            `;
+
         }
-      );
 
 
-      dateBox.appendChild(
-        header
-      );
+        dateBox.appendChild(
+          head
+        );
 
 
-      dateBox.appendChild(
-        items
-      );
+        dateBox.appendChild(
+          body
+        );
 
 
-      list.appendChild(
-        dateBox
-      );
+        container.appendChild(
+          dateBox
+        );
 
-    }
+      }
+    );
+
+}
+
+
+/* =================================================
+   日期顯示
+================================================= */
+
+function formatDisplayDate(
+  dateText
+){
+
+  const match =
+    String(
+      dateText
+    ).match(
+      /^(\d{4})-(\d{2})-(\d{2})$/
+    );
+
+
+  if(!match){
+
+    return dateText;
+
+  }
+
+
+  if(
+    currentLanguage ===
+    "vi"
+  ){
+
+    return (
+      match[3] +
+      "/" +
+      match[2] +
+      "/" +
+      match[1]
+    );
+
+  }
+
+
+  return (
+    match[1] +
+    "年" +
+    match[2] +
+    "月" +
+    match[3] +
+    "日"
   );
 
 }
 
 
 /* =================================================
-   建立單筆回報
+   單筆回報
 ================================================= */
 
-function createRecordItem(
-  record
+function createReportCard(
+  report,
+  date
 ){
 
-  const item =
+  const card =
     document.createElement(
       "div"
     );
 
 
-  item.className =
-    "record-item";
+  card.className =
+    "report-card";
 
 
-  const top =
+  const main =
     document.createElement(
       "div"
     );
 
 
-  top.className =
-    "record-item-top";
+  main.className =
+    "report-main";
 
 
-  const employee =
+  const truck =
     document.createElement(
       "div"
     );
 
 
-  employee.className =
-    "record-employee";
+  truck.className =
+    "report-truck";
 
 
-  employee.textContent =
-    record.employee ||
-    "";
+  truck.textContent =
+    report.trucks ||
+    "—";
+
+
+  const staff =
+    document.createElement(
+      "div"
+    );
+
+
+  staff.className =
+    "report-staff";
+
+
+  staff.textContent =
+    report.staff ||
+    "—";
+
+
+  const qty =
+    document.createElement(
+      "div"
+    );
+
+
+  qty.className =
+    "report-qty " +
+    (
+      report.qtyStatus ===
+      "正確"
+        ? "ok"
+        : "bad"
+    );
+
+
+  qty.textContent =
+    report.qtyStatus ||
+    "—";
+
+
+  const photoButton =
+    document.createElement(
+      "button"
+    );
+
+
+  photoButton.type =
+    "button";
+
+
+  photoButton.className =
+    "report-photo-button";
+
+
+  photoButton.textContent =
+    "📷";
+
+
+  photoButton.addEventListener(
+    "click",
+    function(){
+
+      showReportPhotos(
+        report,
+        date
+      );
+
+    }
+  );
+
+
+  main.appendChild(
+    truck
+  );
+
+
+  main.appendChild(
+    staff
+  );
+
+
+  main.appendChild(
+    qty
+  );
+
+
+  main.appendChild(
+    photoButton
+  );
+
+
+  const bottom =
+    document.createElement(
+      "div"
+    );
+
+
+  bottom.className =
+    "report-bottom";
 
 
   const time =
@@ -4030,125 +4229,78 @@ function createRecordItem(
 
 
   time.className =
-    "record-time";
+    "report-time";
 
 
   time.textContent =
-    record.time ||
+    report.time ||
     "";
 
 
-  top.appendChild(
-    employee
-  );
-
-
-  top.appendChild(
-    time
-  );
-
-
-  const info =
+  const employee =
     document.createElement(
       "div"
     );
 
 
-  info.className =
-    "record-info";
+  employee.className =
+    "report-employee";
 
 
-  info.innerHTML =
-    `
-    <div>
-      <strong>${escapeHtml(record.trucks || "")}</strong>
-    </div>
-
-    <div>
-      ${escapeHtml(record.staff || "")}
-    </div>
-
-    <div>
-      ${escapeHtml(record.qtyStatus || "")}
-      ${
-        record.photoUrl
-          ? `
-            <a
-              class="record-photo-link"
-              href="${escapeAttribute(record.photoUrl)}"
-              target="_blank"
-              rel="noopener"
-            >
-              ${escapeHtml(t("viewPhoto"))}
-            </a>
-          `
-          : ""
+  employee.textContent =
+    t(
+      "report",
+      {
+        employee:
+          report.employee ||
+          "—"
       }
-    </div>
-    `;
-
-
-  item.appendChild(
-    top
-  );
-
-
-  item.appendChild(
-    info
-  );
-
-
-  if(
-    record.note
-  ){
-
-    const note =
-      document.createElement(
-        "div"
-      );
-
-
-    note.className =
-      "record-note";
-
-
-    note.textContent =
-      record.note;
-
-
-    item.appendChild(
-      note
     );
 
-  }
+
+  bottom.appendChild(
+    time
+  );
+
+
+  const right =
+    document.createElement(
+      "div"
+    );
+
+
+  right.style.display =
+    "flex";
+
+
+  right.style.alignItems =
+    "center";
+
+
+  right.style.gap =
+    "9px";
+
+
+  right.appendChild(
+    employee
+  );
 
 
   /*
-   * C 欄員工名稱
-   *
-   * 直接判斷是不是目前 LINE 使用者。
-   *
-   * 不新增任何欄位。
+   * 只有 C 欄員工名稱等於目前 LINE 名稱
+   * 才顯示刪除。
    */
 
   if(
     String(
-      record.employee || ""
+      report.employee ||
+      ""
     ).trim() ===
     String(
-      userName || ""
+      userName ||
+      ""
     ).trim()
   ){
-
-    const actions =
-      document.createElement(
-        "div"
-      );
-
-
-    actions.className =
-      "record-actions";
-
 
     const deleteButton =
       document.createElement(
@@ -4161,7 +4313,7 @@ function createRecordItem(
 
 
     deleteButton.className =
-      "delete";
+      "report-delete";
 
 
     deleteButton.textContent =
@@ -4172,46 +4324,354 @@ function createRecordItem(
       "click",
       function(){
 
-        deleteReport(
-          record
+        deleteReportFromHistory(
+          report
         );
 
       }
     );
 
 
-    actions.appendChild(
+    right.appendChild(
       deleteButton
-    );
-
-
-    item.appendChild(
-      actions
     );
 
   }
 
 
-  return item;
+  bottom.appendChild(
+    right
+  );
+
+
+  card.appendChild(
+    main
+  );
+
+
+  if(
+    report.note
+  ){
+
+    const note =
+      document.createElement(
+        "div"
+      );
+
+
+    note.className =
+      "report-note";
+
+
+    note.textContent =
+      report.note;
+
+
+    card.appendChild(
+      note
+    );
+
+  }
+
+
+  card.appendChild(
+    bottom
+  );
+
+
+  return card;
 
 }
+
+
+/* =================================================
+   單筆照片
+================================================= */
+
+function showReportPhotos(
+  report,
+  date
+){
+
+  const photos =
+    Array.isArray(
+      report.photos
+    )
+      ? report.photos
+      : [];
+
+
+  const title =
+    t(
+      "reportPhotoTitle",
+      {
+
+        truck:
+          report.trucks ||
+          "—",
+
+        staff:
+          report.staff ||
+          "—",
+
+        employee:
+          report.employee ||
+          "—"
+
+      }
+    );
+
+
+  openPhotoViewer(
+    title,
+    photos
+  );
+
+}
+
+
+/* =================================================
+   當日全部照片
+ *
+ * 不是新增報表。
+ * 直接把該日期所有回報的照片合併顯示。
+================================================= */
+
+function showDayPhotos(
+  day
+){
+
+  const allPhotos =
+    [];
+
+
+  if(
+    day &&
+    Array.isArray(
+      day.reports
+    )
+  ){
+
+    day.reports.forEach(
+      function(report){
+
+        if(
+          Array.isArray(
+            report.photos
+          )
+        ){
+
+          report.photos.forEach(
+            function(photo){
+
+              allPhotos.push(
+                photo
+              );
+
+            }
+          );
+
+        }
+
+      }
+    );
+
+  }
+
+
+  openPhotoViewer(
+    t(
+      "photoTitle",
+      {
+        date:
+          formatDisplayDate(
+            day.date
+          )
+      }
+    ),
+    allPhotos
+  );
+
+}
+
+
+/* =================================================
+   開啟照片查看器
+================================================= */
+
+function openPhotoViewer(
+  title,
+  photos
+){
+
+  const viewer =
+    document.getElementById(
+      "photoViewer"
+    );
+
+
+  const titleEl =
+    document.getElementById(
+      "photoViewerTitle"
+    );
+
+
+  const grid =
+    document.getElementById(
+      "photoViewerGrid"
+    );
+
+
+  titleEl.textContent =
+    title;
+
+
+  grid.innerHTML =
+    "";
+
+
+  if(
+    !photos ||
+    photos.length ===
+    0
+  ){
+
+    grid.innerHTML =
+      `
+      <div class="photo-empty">
+        ${t("noPhotos")}
+      </div>
+      `;
+
+  }else{
+
+    photos.forEach(
+      function(photo){
+
+        const img =
+          document.createElement(
+            "img"
+          );
+
+
+        img.src =
+          photo.previewUrl ||
+          photo.url;
+
+
+        img.loading =
+          "lazy";
+
+
+        img.addEventListener(
+          "click",
+          function(){
+
+            if(
+              photo.url
+            ){
+
+              window.open(
+                photo.url,
+                "_blank"
+              );
+
+            }
+
+          }
+        );
+
+
+        grid.appendChild(
+          img
+        );
+
+      }
+    );
+
+  }
+
+
+  viewer.classList.add(
+    "open"
+  );
+
+}
+
+
+document
+  .getElementById(
+    "photoViewerClose"
+  )
+  .addEventListener(
+    "click",
+    function(){
+
+      document
+        .getElementById(
+          "photoViewer"
+        )
+        .classList
+        .remove(
+          "open"
+        );
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "photoViewer"
+  )
+  .addEventListener(
+    "click",
+    function(event){
+
+      if(
+        event.target ===
+        this
+      ){
+
+        this.classList.remove(
+          "open"
+        );
+
+      }
+
+    }
+  );
 
 
 /* =================================================
    刪除回報
 ================================================= */
 
-async function deleteReport(
-  record
+async function deleteReportFromHistory(
+  report
 ){
 
-  const ok =
-    window.confirm(
+  if(
+    String(
+      report.employee ||
+      ""
+    ).trim() !==
+    String(
+      userName ||
+      ""
+    ).trim()
+  ){
+
+    return;
+
+  }
+
+
+  if(
+    !confirm(
       t("deleteConfirm")
-    );
-
-
-  if(!ok){
+    )
+  ){
 
     return;
 
@@ -4220,17 +4680,58 @@ async function deleteReport(
 
   try{
 
-    const result =
-      await postBackend({
-        action:
-          "deleteReport",
+    const response =
+      await fetch(
+        BACKEND_URL,
+        {
 
-        row:
-          record.row,
+          method:
+            "POST",
 
-        employee:
-          userName
-      });
+          headers:{
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
+
+          body:
+            JSON.stringify({
+
+              action:
+                "deleteReport",
+
+              row:
+                report.row,
+
+              user:
+                userName
+
+            })
+
+        }
+      );
+
+
+    const text =
+      await response.text();
+
+
+    let result;
+
+
+    try{
+
+      result =
+        JSON.parse(
+          text
+        );
+
+    }catch(error){
+
+      throw new Error(
+        "Apps Script 回傳格式錯誤"
+      );
+
+    }
 
 
     if(
@@ -4239,7 +4740,7 @@ async function deleteReport(
 
       throw new Error(
         result.error ||
-        "Delete failed"
+        "刪除失敗"
       );
 
     }
@@ -4251,22 +4752,24 @@ async function deleteReport(
     );
 
 
-    await loadHistory();
+    await openHistory();
 
 
   }catch(error){
 
     console.error(
-      "刪除失敗：",
       error
     );
 
 
     setStatus(
-      t("deleteFailed") +
-      (
-        error.message ||
-        error
+      t(
+        "deleteFailed",
+        {
+          error:
+            error.message ||
+            error
+        }
       ),
       "err"
     );
@@ -4277,415 +4780,26 @@ async function deleteReport(
 
 
 /* =================================================
-   POST 後端
-================================================= */
-
-async function postBackend(
-  payload
-){
-
-  const response =
-    await fetch(
-      BACKEND_URL,
-      {
-        method:"POST",
-
-        headers:{
-          "Content-Type":
-            "text/plain;charset=utf-8"
-        },
-
-        body:
-          JSON.stringify(
-            payload
-          )
-
-      }
-    );
-
-
-  if(!response.ok){
-
-    throw new Error(
-      "HTTP " +
-      response.status
-    );
-
-  }
-
-
-  const text =
-    await response.text();
-
-
-  let result;
-
-
-  try{
-
-    result =
-      JSON.parse(
-        text
-      );
-
-  }catch(error){
-
-    throw new Error(
-      "Apps Script 回傳格式錯誤"
-    );
-
-  }
-
-
-  return result;
-
-}
-
-
-/* =================================================
-   當日照片
-================================================= */
-
-async function openDayPhotos(
-  date
-){
-
-  const modal =
-    document.getElementById(
-      "photoModal"
-    );
-
-
-  const body =
-    document.getElementById(
-      "modalBody"
-    );
-
-
-  const title =
-    document.getElementById(
-      "modalTitle"
-    );
-
-
-  title.textContent =
-    displayDate(
-      date
-    );
-
-
-  body.innerHTML =
-    `
-    <div class="loading">
-      ${escapeHtml(t("loadingPhotos"))}
-    </div>
-    `;
-
-
-  modal.classList.add(
-    "open"
-  );
-
-
-  try{
-
-    const result =
-      await getBackend({
-
-        type:
-          "dayPhotos",
-
-        date:
-          date
-
-      });
-
-
-    const photos =
-      Array.isArray(
-        result.data &&
-        result.data.photos
-      )
-        ? result.data.photos
-        : [];
-
-
-    if(
-      photos.length === 0
-    ){
-
-      body.innerHTML =
-        `
-        <div class="empty-record">
-          ${escapeHtml(t("noPhotos"))}
-        </div>
-        `;
-
-      return;
-
-    }
-
-
-    const grid =
-      document.createElement(
-        "div"
-      );
-
-
-    grid.className =
-      "day-photo-grid";
-
-
-    photos.forEach(
-      function(photo){
-
-        const box =
-          document.createElement(
-            "div"
-          );
-
-
-        box.className =
-          "day-photo";
-
-
-        const link =
-          document.createElement(
-            "a"
-          );
-
-
-        link.href =
-          photo.url;
-
-
-        link.target =
-          "_blank";
-
-
-        link.rel =
-          "noopener";
-
-
-        const img =
-          document.createElement(
-            "img"
-          );
-
-
-        img.src =
-          photo.thumbnailUrl ||
-          photo.url;
-
-
-        img.loading =
-          "lazy";
-
-
-        link.appendChild(
-          img
-        );
-
-
-        const caption =
-          document.createElement(
-            "div"
-          );
-
-
-        caption.className =
-          "day-photo-caption";
-
-
-        caption.textContent =
-          (
-            photo.employee ||
-            ""
-          ) +
-          (
-            photo.time
-              ? " · " +
-                photo.time
-              : ""
-          );
-
-
-        box.appendChild(
-          link
-        );
-
-
-        box.appendChild(
-          caption
-        );
-
-
-        grid.appendChild(
-          box
-        );
-
-      }
-    );
-
-
-    body.innerHTML = "";
-
-
-    body.appendChild(
-      grid
-    );
-
-
-  }catch(error){
-
-    console.error(
-      "當日照片載入失敗：",
-      error
-    );
-
-
-    body.innerHTML =
-      `
-      <div class="empty-record">
-        ${escapeHtml(t("photoLoadFailed"))}
-      </div>
-      `;
-
-  }
-
-}
-
-
-/* =================================================
-   Modal
-================================================= */
-
-document
-  .getElementById(
-    "modalCloseBtn"
-  )
-  .addEventListener(
-    "click",
-    function(){
-
-      document
-        .getElementById(
-          "photoModal"
-        )
-        .classList.remove(
-          "open"
-        );
-
-    }
-  );
-
-
-document
-  .getElementById(
-    "photoModal"
-  )
-  .addEventListener(
-    "click",
-    function(event){
-
-      if(
-        event.target ===
-        event.currentTarget
-      ){
-
-        event.currentTarget
-          .classList
-          .remove(
-            "open"
-          );
-
-      }
-
-    }
-  );
-
-
-document
-  .getElementById(
-    "refreshHistoryBtn"
-  )
-  .addEventListener(
-    "click",
-    loadHistory
-  );
-
-
-/* =================================================
-   HTML 安全
-================================================= */
-
-function escapeHtml(
-  value
-){
-
-  return String(
-    value ?? ""
-  )
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-}
-
-
-function escapeAttribute(
-  value
-){
-
-  return String(
-    value ?? ""
-  )
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    );
-
-}
-
-
-/* =================================================
    啟動
 ================================================= */
 
 async function init(){
 
-  ensureLanguage();
-
   applyLanguage();
+
+
+  /*
+   * 第一次進入沒有語言設定
+   * → 顯示正常的選擇按鈕
+   */
+
+  if(
+    !currentLanguage
+  ){
+
+    openLanguageModal();
+
+  }
 
 
   document
