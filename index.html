@@ -2526,44 +2526,8 @@ function sortedTrucks(){
         const truckA =
           a.truck;
 
-
         const truckB =
           b.truck;
-
-
-        const fixedA =
-          truckA.fixed ===
-          true;
-
-
-        const fixedB =
-          truckB.fixed ===
-          true;
-
-
-        if(
-          fixedA !==
-          fixedB
-        ){
-
-          return fixedA
-            ? -1
-            : 1;
-
-        }
-
-
-        if(
-          fixedA &&
-          fixedB
-        ){
-
-          return (
-            a.originalIndex -
-            b.originalIndex
-          );
-
-        }
 
 
         const usageA =
@@ -2571,26 +2535,34 @@ function sortedTrucks(){
             truckA.name
           );
 
-
         const usageB =
           getTruckUsage(
             truckB.name
           );
 
 
+        /*
+         * 只要今天有使用紀錄
+         * 就算已使用。
+         */
+
         const usedA =
           Boolean(
-            usageA &&
-            usageA.staff
+            usageA
           );
-
 
         const usedB =
           Boolean(
-            usageB &&
-            usageB.staff
+            usageB
           );
 
+
+        /*
+         * 已使用的大車一律排到最後。
+         *
+         * 不管是不是固定置頂，
+         * 今天只要下過，就往下面移。
+         */
 
         if(
           usedA !==
@@ -2603,6 +2575,41 @@ function sortedTrucks(){
 
         }
 
+
+        /*
+         * 如果兩台都還沒使用，
+         * 才判斷固定置頂。
+         */
+
+        if(
+          !usedA &&
+          !usedB
+        ){
+
+          const fixedA =
+            truckA.fixed === true;
+
+          const fixedB =
+            truckB.fixed === true;
+
+
+          if(
+            fixedA !==
+            fixedB
+          ){
+
+            return fixedA
+              ? -1
+              : 1;
+
+          }
+
+        }
+
+
+        /*
+         * 其他情況維持原本順序。
+         */
 
         return (
           a.originalIndex -
@@ -2622,7 +2629,7 @@ function sortedTrucks(){
 
 }
 
-
+  
 function renderTrucks(){
 
   const list =
@@ -2674,10 +2681,13 @@ function renderTrucks(){
         );
 
 
+      /*
+       * 只要今天有這台大車的使用紀錄，
+       * 就直接視為已使用。
+       */
       const isUsed =
         Boolean(
-          usage &&
-          usage.staff
+          usage
         );
 
 
@@ -2767,8 +2777,14 @@ function renderTrucks(){
       );
 
 
+      /*
+       * 如果今天已經使用過，
+       * 而且有下貨人員資料，
+       * 就顯示人員標籤。
+       */
       if(
         isUsed &&
+        usage &&
         usage.staff
       ){
 
