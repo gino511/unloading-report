@@ -165,6 +165,42 @@ textarea{
 
 
 /* =================================================
+   編輯提示
+================================================= */
+
+.edit-banner{
+  display:none;
+  align-items:center;
+  gap:10px;
+  margin-bottom:18px;
+  padding:11px 12px;
+  border:1px solid #cad9ce;
+  border-radius:10px;
+  background:var(--accent-dim);
+}
+
+.edit-banner.show{
+  display:flex;
+}
+
+.edit-banner-text{
+  flex:1;
+  color:var(--accent);
+  font-size:13px;
+  font-weight:700;
+}
+
+.edit-cancel{
+  padding:7px 10px;
+  border:1px solid #b6cbbb;
+  border-radius:8px;
+  background:#fff;
+  color:var(--accent);
+  font-size:12px;
+}
+
+
+/* =================================================
    表單
 ================================================= */
 
@@ -256,6 +292,10 @@ legend{
   border-bottom:1px solid #eee;
 }
 
+.truck-option:last-child{
+  border-bottom:none;
+}
+
 .truck-option input{
   width:20px;
   height:20px;
@@ -313,6 +353,12 @@ legend{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:8px;
+}
+
+.staff-grid > .loading{
+  grid-column:1 / -1;
+  width:100%;
+  text-align:center;
 }
 
 .staff-item{
@@ -416,6 +462,7 @@ legend{
   aspect-ratio:1;
   overflow:hidden;
   border-radius:8px;
+  background:#eee;
 }
 
 .thumb img{
@@ -435,6 +482,17 @@ legend{
   border-radius:50%;
   background:rgba(0,0,0,.65);
   color:#fff;
+}
+
+.thumb-badge{
+  position:absolute;
+  left:4px;
+  bottom:4px;
+  padding:3px 6px;
+  border-radius:999px;
+  background:rgba(0,0,0,.58);
+  color:#fff;
+  font-size:9px;
 }
 
 .hint{
@@ -658,7 +716,7 @@ textarea{
 
 
 /* =================================================
-   卡片
+   回報卡片
 ================================================= */
 
 .report-card{
@@ -725,7 +783,6 @@ textarea{
 
 /* =================================================
    四格縮圖
-   無框、填滿
 ================================================= */
 
 .report-photos{
@@ -748,33 +805,55 @@ textarea{
   object-fit:cover;
 }
 
+
+/* =================================================
+   卡片底部
+================================================= */
+
 .report-footer{
   display:flex;
   align-items:center;
+  gap:6px;
   margin-top:10px;
   padding-top:8px;
   border-top:1px solid #eee;
 }
 
 .report-employee{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
   color:#8a8879;
   font-size:11px;
 }
 
-.report-delete{
+.report-actions{
+  display:flex;
+  gap:5px;
   margin-left:auto;
-  padding:6px 10px;
+}
+
+.report-edit,
+.report-delete{
+  padding:6px 9px;
   border:1px solid var(--line);
   border-radius:8px;
   background:#fff;
-  color:var(--warn);
   font-size:11px;
+}
+
+.report-edit{
+  color:var(--accent);
+}
+
+.report-delete{
+  color:var(--warn);
 }
 
 
 /* =================================================
-   當日全部照片
-   三格
+   當日照片
 ================================================= */
 
 .all-photo-screen{
@@ -833,7 +912,7 @@ textarea{
 
 
 /* =================================================
-   放大
+   Lightbox
 ================================================= */
 
 .lightbox{
@@ -953,6 +1032,7 @@ textarea{
     <div class="language-options">
 
       <button
+        type="button"
         class="language-option"
         data-lang="zh"
       >
@@ -960,6 +1040,7 @@ textarea{
       </button>
 
       <button
+        type="button"
         class="language-option"
         data-lang="vi"
       >
@@ -995,6 +1076,7 @@ textarea{
     <div class="top-actions">
 
       <button
+        type="button"
         class="top-btn"
         id="historyBtn"
       >
@@ -1002,6 +1084,7 @@ textarea{
       </button>
 
       <button
+        type="button"
         class="top-btn"
         id="languageBtn"
       >
@@ -1009,6 +1092,29 @@ textarea{
       </button>
 
     </div>
+
+  </div>
+
+
+  <div
+    class="edit-banner"
+    id="editBanner"
+  >
+
+    <div
+      class="edit-banner-text"
+      id="editBannerText"
+    >
+      正在編輯回報
+    </div>
+
+    <button
+      type="button"
+      class="edit-cancel"
+      id="editCancelBtn"
+    >
+      取消編輯
+    </button>
 
   </div>
 
@@ -1025,6 +1131,7 @@ textarea{
     >
 
       <button
+        type="button"
         class="truck-select-button"
         id="truckSelectButton"
       >
@@ -1050,7 +1157,6 @@ textarea{
 
       </button>
 
-
       <div
         class="truck-dropdown"
         id="truckDropdown"
@@ -1070,6 +1176,7 @@ textarea{
         <div class="truck-dropdown-footer">
 
           <button
+            type="button"
             id="truckClearBtn"
             data-i18n="clear"
           >
@@ -1077,6 +1184,7 @@ textarea{
           </button>
 
           <button
+            type="button"
             class="primary"
             id="truckDoneBtn"
             data-i18n="done"
@@ -1131,6 +1239,7 @@ textarea{
     >
 
       <button
+        type="button"
         data-v="ok"
         class="active"
         data-i18n="qtyOk"
@@ -1139,6 +1248,7 @@ textarea{
       </button>
 
       <button
+        type="button"
         data-v="bad"
         data-i18n="qtyBad"
       >
@@ -1184,7 +1294,7 @@ textarea{
       class="hint"
       data-i18n="photoHint"
     >
-      至少上傳1張
+      至少上傳1張，可拍照或從相簿選取多張
     </div>
 
   </fieldset>
@@ -1298,6 +1408,7 @@ textarea{
       </h2>
 
       <button
+        type="button"
         class="history-close"
         id="historyClose"
         data-i18n="close"
@@ -1326,6 +1437,7 @@ textarea{
       <h3 id="allPhotoTitle"></h3>
 
       <button
+        type="button"
         class="all-photo-close"
         id="allPhotoClose"
       >
@@ -1350,6 +1462,7 @@ textarea{
 >
 
   <button
+    type="button"
     class="lightbox-close"
     id="lightboxClose"
   >
@@ -1409,6 +1522,9 @@ let reportCache =
 let isSubmitting =
   false;
 
+let editingReport =
+  null;
+
 let currentLanguage =
   localStorage.getItem(
     "zhubei_report_language"
@@ -1435,6 +1551,7 @@ const translations = {
     note:"備註（選填）",
     notePlaceholder:"有多有少的原因、異常說明等",
     submit:"送出回報",
+    saveEdit:"儲存修改",
     clear:"清除",
     done:"完成",
     historyTitle:"回報紀錄",
@@ -1446,18 +1563,21 @@ const translations = {
     noPhotos:"這筆回報沒有照片",
     allPhotos:"當日全部照片",
     delete:"刪除",
+    edit:"編輯",
     deleting:"刪除中…",
     deleteConfirm:"確定要刪除這筆回報嗎？",
     success:"✓ 已成功寫入回報紀錄",
+    editSuccess:"✓ 回報修改完成",
     needTruck:"請至少選擇1台大車",
     needStaff:"請至少選擇1位下貨人員",
-    needPhoto:"請至少上傳1張照片",
+    needPhoto:"請至少保留或上傳1張照片",
     processingPhoto:"照片處理中",
     compressingPhoto:"照片壓縮中",
     uploading:"照片上傳中…",
     serverProcessing:"系統寫入中…",
     lineMatch:"LINE 使用者「{user}」已自動對應下貨人員「{staff}」",
-    languageName:"中文"
+    languageName:"中文",
+    existingPhoto:"原照片"
 
   },
 
@@ -1471,10 +1591,11 @@ const translations = {
     qtyBad:"✗ Thừa / thiếu",
     photo:"Ảnh",
     uploadPhoto:"Nhấn để tải ảnh lên",
-    photoHint:"Vui lòng tải ít nhất 1 ảnh",
+    photoHint:"Vui lòng giữ hoặc tải ít nhất 1 ảnh",
     note:"Ghi chú",
     notePlaceholder:"Ghi chú...",
     submit:"Gửi báo cáo",
+    saveEdit:"Lưu thay đổi",
     clear:"Xóa",
     done:"Xong",
     historyTitle:"Lịch sử báo cáo",
@@ -1486,18 +1607,21 @@ const translations = {
     noPhotos:"Không có ảnh",
     allPhotos:"Tất cả ảnh trong ngày",
     delete:"Xóa",
+    edit:"Sửa",
     deleting:"Đang xóa…",
     deleteConfirm:"Bạn có chắc muốn xóa?",
     success:"✓ Đã lưu báo cáo",
+    editSuccess:"✓ Đã cập nhật báo cáo",
     needTruck:"Vui lòng chọn xe",
     needStaff:"Vui lòng chọn nhân viên",
-    needPhoto:"Vui lòng tải ảnh",
+    needPhoto:"Vui lòng giữ hoặc tải ít nhất 1 ảnh",
     processingPhoto:"Đang xử lý ảnh",
     compressingPhoto:"Đang nén ảnh",
     uploading:"Đang tải ảnh…",
     serverProcessing:"Đang lưu…",
     lineMatch:"LINE「{user}」đã ghép với「{staff}」",
-    languageName:"Tiếng Việt"
+    languageName:"Tiếng Việt",
+    existingPhoto:"Ảnh cũ"
 
   }
 
@@ -1559,6 +1683,9 @@ function applyLanguage(){
     t(
       "languageName"
     );
+
+
+  updateSubmitButtonText();
 
 }
 
@@ -1653,7 +1780,7 @@ function setStatus(
 
 
 /* =================================================
-   GET
+   API
 ================================================= */
 
 async function getBackend(
@@ -1703,13 +1830,8 @@ async function getBackend(
       "?" +
       params.toString(),
       {
-
-        method:
-          "GET",
-
-        cache:
-          "no-store"
-
+        method:"GET",
+        cache:"no-store"
       }
     );
 
@@ -1753,10 +1875,6 @@ async function getBackend(
 
 }
 
-
-/* =================================================
-   POST
-================================================= */
 
 async function postBackend(
   payload
@@ -1896,7 +2014,7 @@ async function initLIFF(){
 
 
 /* =================================================
-   大車先載入
+   大車
 ================================================= */
 
 async function loadTrucks(){
@@ -1944,49 +2062,6 @@ async function loadTrucks(){
 }
 
 
-/* =================================================
-   人員
-================================================= */
-
-async function loadStaff(){
-
-  try {
-
-    const result =
-      await getBackend(
-        "staff"
-      );
-
-
-    staffData =
-      Array.isArray(
-        result.data.staff
-      )
-        ? result.data.staff
-        : [];
-
-
-    renderStaff();
-
-
-    autoMatchLineStaff();
-
-
-  } catch (error) {
-
-    console.error(
-      error
-    );
-
-  }
-
-}
-
-
-/* =================================================
-   大車排序
-================================================= */
-
 function sortedTrucks(){
 
   return truckData
@@ -2024,7 +2099,7 @@ function sortedTrucks(){
 
 
         /*
-         * D 欄固定置頂最高優先。
+         * D 欄 TRUE 永遠置頂
          */
 
         if (
@@ -2068,11 +2143,6 @@ function sortedTrucks(){
           );
 
 
-        /*
-         * 非固定車：
-         * 今天用過排最後。
-         */
-
         if (
           usedA !==
           usedB
@@ -2104,10 +2174,6 @@ function sortedTrucks(){
 }
 
 
-/* =================================================
-   大車顯示
-================================================= */
-
 function renderTrucks(){
 
   const list =
@@ -2118,6 +2184,18 @@ function renderTrucks(){
 
   list.innerHTML =
     "";
+
+
+  if (
+    truckData.length === 0
+  ) {
+
+    list.innerHTML =
+      '<div class="loading">目前沒有啟用中的大車</div>';
+
+    return;
+
+  }
 
 
   sortedTrucks()
@@ -2283,12 +2361,14 @@ function updateTruckButtonText(){
     el.textContent =
       "請選擇大車…";
 
+
   } else if (
     names.length === 1
   ) {
 
     el.textContent =
       names[0];
+
 
   } else {
 
@@ -2306,8 +2386,57 @@ function updateTruckButtonText(){
 
 
 /* =================================================
-   人員顯示
+   人員
 ================================================= */
+
+async function loadStaff(){
+
+  try {
+
+    const result =
+      await getBackend(
+        "staff"
+      );
+
+
+    staffData =
+      Array.isArray(
+        result.data.staff
+      )
+        ? result.data.staff
+        : [];
+
+
+    renderStaff();
+
+
+    if (
+      !editingReport
+    ) {
+
+      autoMatchLineStaff();
+
+    }
+
+
+  } catch (error) {
+
+    console.error(
+      error
+    );
+
+
+    document
+      .getElementById(
+        "staffGrid"
+      )
+      .innerHTML =
+      '<div class="loading">下貨人員資料載入失敗</div>';
+
+  }
+
+}
+
 
 function renderStaff(){
 
@@ -2319,6 +2448,18 @@ function renderStaff(){
 
   grid.innerHTML =
     "";
+
+
+  if (
+    staffData.length === 0
+  ) {
+
+    grid.innerHTML =
+      '<div class="loading">目前沒有啟用中的下貨人員</div>';
+
+    return;
+
+  }
 
 
   staffData.forEach(
@@ -2426,50 +2567,11 @@ function autoMatchLineStaff(){
   }
 
 
-  const input =
+  setSelectedStaff(
     [
-      ...
-      document.querySelectorAll(
-        "#staffGrid input"
-      )
-    ].find(
-      function(item){
-
-        return (
-          item.value ===
-          matched.name
-        );
-
-      }
-    );
-
-
-  if (!input) {
-
-    return;
-
-  }
-
-
-  input.checked =
-    true;
-
-
-  const item =
-    input.closest(
-      ".staff-item"
-    );
-
-
-  if (
-    item
-  ) {
-
-    item.classList.add(
-      "selected"
-    );
-
-  }
+      matched.name
+    ]
+  );
 
 
   const hint =
@@ -2498,8 +2600,202 @@ function autoMatchLineStaff(){
 }
 
 
+function setSelectedStaff(
+  names
+){
+
+  const wanted =
+    new Set(
+      names
+    );
+
+
+  document
+    .querySelectorAll(
+      "#staffGrid input[type=checkbox]"
+    )
+    .forEach(
+      function(input){
+
+        input.checked =
+          wanted.has(
+            input.value
+          );
+
+
+        const item =
+          input.closest(
+            ".staff-item"
+          );
+
+
+        if (
+          item
+        ) {
+
+          item.classList.toggle(
+            "selected",
+            input.checked
+          );
+
+        }
+
+      }
+    );
+
+}
+
+
 /* =================================================
-   大車選單
+   大車名稱解析（前端）
+================================================= */
+
+function parseTruckSelection(
+  text
+){
+
+  text =
+    String(
+      text ||
+      ""
+    ).trim();
+
+
+  const names =
+    truckData
+      .map(
+        function(truck){
+
+          return truck.name;
+
+        }
+      )
+      .sort(
+        function(a,b){
+
+          return (
+            b.length -
+            a.length
+          );
+
+        }
+      );
+
+
+  function walk(
+    position
+  ){
+
+    if (
+      position ===
+      text.length
+    ) {
+
+      return [];
+
+    }
+
+
+    for (
+      let i = 0;
+      i < names.length;
+      i++
+    ) {
+
+      const name =
+        names[i];
+
+
+      if (
+        text.slice(
+          position,
+          position +
+          name.length
+        ) !==
+        name
+      ) {
+
+        continue;
+
+      }
+
+
+      const end =
+        position +
+        name.length;
+
+
+      if (
+        end ===
+        text.length
+      ) {
+
+        return [
+          name
+        ];
+
+      }
+
+
+      if (
+        text.charAt(
+          end
+        ) !==
+        "、"
+      ) {
+
+        continue;
+
+      }
+
+
+      const rest =
+        walk(
+          end + 1
+        );
+
+
+      if (
+        rest
+      ) {
+
+        return [
+          name
+        ].concat(
+          rest
+        );
+
+      }
+
+    }
+
+
+    return null;
+
+  }
+
+
+  return (
+    walk(
+      0
+    ) ||
+    text
+      .split("、")
+      .map(
+        function(item){
+
+          return item.trim();
+
+        }
+      )
+      .filter(Boolean)
+  );
+
+}
+
+
+/* =================================================
+   大車下拉
 ================================================= */
 
 document
@@ -2585,6 +2881,41 @@ document
   );
 
 
+document.addEventListener(
+  "click",
+  function(event){
+
+    const wrap =
+      document.getElementById(
+        "truckSelectWrap"
+      );
+
+
+    if (
+      !wrap.contains(
+        event.target
+      )
+    ) {
+
+      document
+        .getElementById(
+          "truckDropdown"
+        )
+        .classList.remove(
+          "open"
+        );
+
+
+      wrap.classList.remove(
+        "open"
+      );
+
+    }
+
+  }
+);
+
+
 /* =================================================
    件數
 ================================================= */
@@ -2630,7 +2961,7 @@ document
 
 
 /* =================================================
-   照片壓縮
+   照片處理
 ================================================= */
 
 function readFileAsDataURL(
@@ -2750,6 +3081,10 @@ function compressDataURL(
 }
 
 
+/* =================================================
+   進度
+================================================= */
+
 function showProgress(){
 
   document
@@ -2832,6 +3167,7 @@ function setProgressStage(
             "done"
           );
 
+
         } else if (
           index ===
           activeIndex
@@ -2896,6 +3232,10 @@ function updateProgress(
 
 }
 
+
+/* =================================================
+   選照片
+================================================= */
 
 document
   .getElementById(
@@ -3005,9 +3345,15 @@ document
             );
 
 
-          photos.push(
-            compressed
-          );
+          photos.push({
+
+            kind:
+              "new",
+
+            dataUrl:
+              compressed
+
+          });
 
         }
 
@@ -3069,13 +3415,23 @@ function renderPhotoGrid(){
 
 
       img.src =
-        photo;
+        photo.kind ===
+        "existing"
+          ? (
+              photo.thumbnailUrl ||
+              photo.url
+            )
+          : photo.dataUrl;
 
 
       const remove =
         document.createElement(
           "button"
         );
+
+
+      remove.type =
+        "button";
 
 
       remove.className =
@@ -3121,6 +3477,34 @@ function renderPhotoGrid(){
       );
 
 
+      if (
+        photo.kind ===
+        "existing"
+      ) {
+
+        const badge =
+          document.createElement(
+            "span"
+          );
+
+
+        badge.className =
+          "thumb-badge";
+
+
+        badge.textContent =
+          t(
+            "existingPhoto"
+          );
+
+
+        div.appendChild(
+          badge
+        );
+
+      }
+
+
       grid.appendChild(
         div
       );
@@ -3132,7 +3516,7 @@ function renderPhotoGrid(){
 
 
 /* =================================================
-   送出
+   取得人員
 ================================================= */
 
 function getSelectedStaff(){
@@ -3152,6 +3536,354 @@ function getSelectedStaff(){
 
 }
 
+
+/* =================================================
+   編輯模式
+================================================= */
+
+function updateSubmitButtonText(){
+
+  document
+    .getElementById(
+      "submitBtn"
+    )
+    .textContent =
+    editingReport
+      ? t(
+          "saveEdit"
+        )
+      : t(
+          "submit"
+        );
+
+}
+
+
+function startEditReport(
+  report
+){
+
+  editingReport =
+    {
+
+      row:
+        report.row,
+
+      date:
+        report.date
+
+    };
+
+
+  document
+    .getElementById(
+      "historyScreen"
+    )
+    .classList.remove(
+      "open"
+    );
+
+
+  document
+    .getElementById(
+      "editBanner"
+    )
+    .classList.add(
+      "show"
+    );
+
+
+  document
+    .getElementById(
+      "editBannerText"
+    )
+    .textContent =
+    "正在編輯 " +
+    formatDateLabel(
+      report.date
+    ) +
+    " " +
+    (
+      report.time ||
+      ""
+    );
+
+
+  updateSubmitButtonText();
+
+
+  selectedTrucks =
+    new Set(
+      parseTruckSelection(
+        report.trucks
+      )
+    );
+
+
+  renderTrucks();
+
+
+  const selectedStaff =
+    String(
+      report.staff ||
+      ""
+    )
+      .split(
+        "、"
+      )
+      .map(
+        function(name){
+
+          return name.trim();
+
+        }
+      )
+      .filter(Boolean);
+
+
+  setSelectedStaff(
+    selectedStaff
+  );
+
+
+  document
+    .getElementById(
+      "lineMatchHint"
+    )
+    .style.display =
+    "none";
+
+
+  document
+    .querySelectorAll(
+      "#qtySeg button"
+    )
+    .forEach(
+      function(button){
+
+        button.classList.remove(
+          "active"
+        );
+
+      }
+    );
+
+
+  const qtyValue =
+    report.qtyStatus ===
+    "正確"
+      ? "ok"
+      : "bad";
+
+
+  document
+    .querySelector(
+      '#qtySeg button[data-v="' +
+      qtyValue +
+      '"]'
+    )
+    .classList.add(
+      "active"
+    );
+
+
+  document
+    .getElementById(
+      "note"
+    )
+    .value =
+    report.note ||
+    "";
+
+
+  photos =
+    Array.isArray(
+      report.photos
+    )
+      ? report.photos.map(
+          function(photo){
+
+            return {
+
+              kind:
+                "existing",
+
+              id:
+                photo.id,
+
+              name:
+                photo.name,
+
+              thumbnailUrl:
+                photo.thumbnailUrl,
+
+              url:
+                photo.url
+
+            };
+
+          }
+        )
+      : [];
+
+
+  renderPhotoGrid();
+
+
+  window.scrollTo({
+
+    top:
+      0,
+
+    behavior:
+      "smooth"
+
+  });
+
+}
+
+
+function cancelEdit(){
+
+  editingReport =
+    null;
+
+
+  document
+    .getElementById(
+      "editBanner"
+    )
+    .classList.remove(
+      "show"
+    );
+
+
+  clearForm(
+    true
+  );
+
+
+  updateSubmitButtonText();
+
+}
+
+
+document
+  .getElementById(
+    "editCancelBtn"
+  )
+  .addEventListener(
+    "click",
+    cancelEdit
+  );
+
+
+/* =================================================
+   清空表單
+================================================= */
+
+function clearForm(
+  rematchLine
+){
+
+  selectedTrucks.clear();
+
+
+  photos =
+    [];
+
+
+  renderTrucks();
+
+
+  renderPhotoGrid();
+
+
+  document
+    .getElementById(
+      "note"
+    )
+    .value =
+    "";
+
+
+  document
+    .querySelectorAll(
+      "#staffGrid input"
+    )
+    .forEach(
+      function(input){
+
+        input.checked =
+          false;
+
+
+        const item =
+          input.closest(
+            ".staff-item"
+          );
+
+
+        if (
+          item
+        ) {
+
+          item.classList.remove(
+            "selected"
+          );
+
+        }
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      "lineMatchHint"
+    )
+    .style.display =
+    "none";
+
+
+  document
+    .querySelectorAll(
+      "#qtySeg button"
+    )
+    .forEach(
+      function(button){
+
+        button.classList.remove(
+          "active"
+        );
+
+      }
+    );
+
+
+  document
+    .querySelector(
+      '#qtySeg button[data-v="ok"]'
+    )
+    .classList.add(
+      "active"
+    );
+
+
+  if (
+    rematchLine
+  ) {
+
+    autoMatchLineStaff();
+
+  }
+
+}
+
+
+/* =================================================
+   送出 / 儲存修改
+================================================= */
 
 document
   .getElementById(
@@ -3242,6 +3974,54 @@ document
           : "正確";
 
 
+      const newPhotos =
+        photos
+          .filter(
+            function(photo){
+
+              return (
+                photo.kind ===
+                "new"
+              );
+
+            }
+          )
+          .map(
+            function(photo){
+
+              return photo.dataUrl;
+
+            }
+          );
+
+
+      const keepPhotoIds =
+        photos
+          .filter(
+            function(photo){
+
+              return (
+                photo.kind ===
+                "existing"
+              );
+
+            }
+          )
+          .map(
+            function(photo){
+
+              return photo.id;
+
+            }
+          );
+
+
+      const isEditing =
+        Boolean(
+          editingReport
+        );
+
+
       isSubmitting =
         true;
 
@@ -3262,7 +4042,7 @@ document
       );
 
 
-      let fakePercent =
+      let progress =
         8;
 
 
@@ -3270,7 +4050,7 @@ document
         t(
           "uploading"
         ),
-        fakePercent,
+        progress,
         t(
           "uploading"
         ),
@@ -3278,38 +4058,32 @@ document
       );
 
 
-      /*
-       * Apps Script POST 無法把伺服器內部
-       * Drive 儲存進度逐張回傳給瀏覽器，
-       * 所以這裡只會在 90% 前緩慢等待，
-       * 絕不在後端完成前顯示 100%。
-       */
-
       const timer =
         setInterval(
           function(){
 
             if (
-              fakePercent <
+              progress <
               70
             ) {
 
-              fakePercent +=
+              progress +=
                 2;
 
+
             } else if (
-              fakePercent <
+              progress <
               88
             ) {
 
-              fakePercent +=
+              progress +=
                 0.5;
 
             }
 
 
             updateProgress(
-              fakePercent >
+              progress >
               75
                 ? t(
                     "serverProcessing"
@@ -3317,8 +4091,8 @@ document
                 : t(
                     "uploading"
                   ),
-              fakePercent,
-              fakePercent >
+              progress,
+              progress >
               75
                 ? t(
                     "serverProcessing"
@@ -3336,33 +4110,55 @@ document
 
       try {
 
-        const result =
-          await postBackend({
+        const payload = {
 
-            user:
-              userName,
+          user:
+            userName,
 
-            trucks:
-              trucks,
+          trucks:
+            trucks,
 
-            staff:
-              staff,
+          staff:
+            staff,
 
-            qtyStatus:
-              qtyStatus,
+          qtyStatus:
+            qtyStatus,
 
-            note:
-              document
-                .getElementById(
-                  "note"
-                )
-                .value
-                .trim(),
+          note:
+            document
+              .getElementById(
+                "note"
+              )
+              .value
+              .trim(),
 
-            photos:
-              photos.slice()
+          photos:
+            newPhotos
 
-          });
+        };
+
+
+        if (
+          isEditing
+        ) {
+
+          payload.action =
+            "updateReport";
+
+
+          payload.row =
+            editingReport.row;
+
+
+          payload.keepPhotoIds =
+            keepPhotoIds;
+
+        }
+
+
+        await postBackend(
+          payload
+        );
 
 
         clearInterval(
@@ -3371,30 +4167,36 @@ document
 
 
         updateProgress(
-          t(
-            "success"
-          ),
+          isEditing
+            ? t(
+                "editSuccess"
+              )
+            : t(
+                "success"
+              ),
           100,
-          t(
-            "success"
-          ),
+          isEditing
+            ? t(
+                "editSuccess"
+              )
+            : t(
+                "success"
+              ),
           ""
         );
 
 
         setStatus(
-          t(
-            "success"
-          ),
+          isEditing
+            ? t(
+                "editSuccess"
+              )
+            : t(
+                "success"
+              ),
           "ok"
         );
 
-
-        /*
-         * 新回報後：
-         * 清除回報紀錄快取，
-         * 下次打開重新取得日期。
-         */
 
         reportDates =
           [];
@@ -3404,75 +4206,33 @@ document
           {};
 
 
-        trucks.forEach(
-          function(truck){
-
-            truckLastUsed[
-              truck
-            ] = {
-
-              time:
-                new Date(),
-
-              staff:
-                staff.join(
-                  "、"
-                )
-
-            };
-
-          }
-        );
-
-
-        selectedTrucks.clear();
-
-        photos =
-          [];
-
-
-        renderTrucks();
-
-        renderPhotoGrid();
+        editingReport =
+          null;
 
 
         document
           .getElementById(
-            "note"
+            "editBanner"
           )
-          .value =
-          "";
-
-
-        document
-          .querySelectorAll(
-            "#staffGrid input"
-          )
-          .forEach(
-            function(input){
-
-              input.checked =
-                false;
-
-
-              const item =
-                input.closest(
-                  ".staff-item"
-                );
-
-
-              if (
-                item
-              ) {
-
-                item.classList.remove(
-                  "selected"
-                );
-
-              }
-
-            }
+          .classList.remove(
+            "show"
           );
+
+
+        updateSubmitButtonText();
+
+
+        /*
+         * 重新取得今日大車狀態，
+         * 因為編輯可能改了大車。
+         */
+
+        await loadTrucks();
+
+
+        clearForm(
+          true
+        );
 
 
         setTimeout(
@@ -3493,22 +4253,28 @@ document
               false;
 
 
-            try {
+            if (
+              !isEditing
+            ) {
 
-              if (
-                window.liff &&
-                liff.isInClient()
-              ) {
+              try {
 
-                liff.closeWindow();
+                if (
+                  window.liff &&
+                  liff.isInClient()
+                ) {
+
+                  liff.closeWindow();
+
+                }
+
+              } catch (error) {
+
+                console.log(
+                  error
+                );
 
               }
-
-            } catch (error) {
-
-              console.log(
-                error
-              );
 
             }
 
@@ -3556,8 +4322,6 @@ document
 
 /* =================================================
    回報紀錄
-
-   第一階段只取得日期
 ================================================= */
 
 document
@@ -3568,6 +4332,15 @@ document
     "click",
     async function(){
 
+      if (
+        isSubmitting
+      ) {
+
+        return;
+
+      }
+
+
       document
         .getElementById(
           "historyScreen"
@@ -3576,11 +4349,6 @@ document
           "open"
         );
 
-
-      /*
-       * 已經有日期就直接顯示，
-       * 不必每次重新抓。
-       */
 
       if (
         reportDates.length >
@@ -3670,10 +4438,6 @@ async function loadReportDates(){
 }
 
 
-/* =================================================
-   日期先顯示
-================================================= */
-
 function renderHistoryDates(){
 
   const content =
@@ -3687,8 +4451,7 @@ function renderHistoryDates(){
 
 
   if (
-    reportDates.length ===
-    0
+    reportDates.length === 0
   ) {
 
     content.innerHTML =
@@ -3716,10 +4479,6 @@ function renderHistoryDates(){
         "history-day";
 
 
-      day.dataset.date =
-        date;
-
-
       const head =
         document.createElement(
           "div"
@@ -3734,6 +4493,10 @@ function renderHistoryDates(){
         document.createElement(
           "button"
         );
+
+
+      toggle.type =
+        "button";
 
 
       toggle.className =
@@ -3786,6 +4549,10 @@ function renderHistoryDates(){
         );
 
 
+      photoButton.type =
+        "button";
+
+
       photoButton.className =
         "history-photo-all";
 
@@ -3811,10 +4578,6 @@ function renderHistoryDates(){
         "click",
         async function(){
 
-          /*
-           * 已經展開就收起。
-           */
-
           if (
             day.classList.contains(
               "open"
@@ -3835,10 +4598,6 @@ function renderHistoryDates(){
           );
 
 
-          /*
-           * 第一次點才載入這天。
-           */
-
           if (
             !reportCache[
               date
@@ -3849,6 +4608,7 @@ function renderHistoryDates(){
               date,
               body
             );
+
 
           } else {
 
@@ -3930,10 +4690,6 @@ function renderHistoryDates(){
 }
 
 
-/* =================================================
-   點日期才載入
-================================================= */
-
 async function loadReportsForDate(
   date,
   body
@@ -3966,13 +4722,6 @@ async function loadReportsForDate(
         ? result.data.reports
         : [];
 
-
-    /*
-     * 前端快取。
-     *
-     * 同一天再次開啟
-     * 不會再叫 Apps Script。
-     */
 
     reportCache[
       date
@@ -4159,10 +4908,6 @@ function createReportCard(
   );
 
 
-  /* ---------------------------------------------
-     四格小縮圖
-  --------------------------------------------- */
-
   if (
     Array.isArray(
       report.photos
@@ -4271,10 +5016,6 @@ function createReportCard(
   }
 
 
-  /*
-   * 回報人與刪除同一排
-   */
-
   const footer =
     document.createElement(
       "div"
@@ -4318,10 +5059,56 @@ function createReportCard(
     ).trim()
   ) {
 
+    const actions =
+      document.createElement(
+        "div"
+      );
+
+
+    actions.className =
+      "report-actions";
+
+
+    const editButton =
+      document.createElement(
+        "button"
+      );
+
+
+    editButton.type =
+      "button";
+
+
+    editButton.className =
+      "report-edit";
+
+
+    editButton.textContent =
+      t(
+        "edit"
+      );
+
+
+    editButton.addEventListener(
+      "click",
+      function(){
+
+        startEditReport(
+          report
+        );
+
+      }
+    );
+
+
     const deleteButton =
       document.createElement(
         "button"
       );
+
+
+    deleteButton.type =
+      "button";
 
 
     deleteButton.className =
@@ -4377,11 +5164,6 @@ function createReportCard(
           });
 
 
-          /*
-           * 刪除後清除日期快取，
-           * 重新載入日期。
-           */
-
           reportDates =
             [];
 
@@ -4391,6 +5173,9 @@ function createReportCard(
 
 
           await loadReportDates();
+
+
+          await loadTrucks();
 
 
         } catch (error) {
@@ -4416,8 +5201,18 @@ function createReportCard(
     );
 
 
-    footer.appendChild(
+    actions.appendChild(
+      editButton
+    );
+
+
+    actions.appendChild(
       deleteButton
+    );
+
+
+    footer.appendChild(
+      actions
     );
 
   }
@@ -4434,7 +5229,7 @@ function createReportCard(
 
 
 /* =================================================
-   日期格式
+   日期
 ================================================= */
 
 function formatDateLabel(
@@ -4606,7 +5401,7 @@ document
 
 
 /* =================================================
-   放大
+   Lightbox
 ================================================= */
 
 function openLightbox(
@@ -4686,8 +5481,6 @@ document
 
 /* =================================================
    啟動
-
-   大車不等 LINE
 ================================================= */
 
 async function init(){
@@ -4720,10 +5513,8 @@ async function init(){
 
 
   /*
-   * 最重要：
-   *
-   * 大車立即開始抓，
-   * 不等待 LINE Profile。
+   * 大車立即開始
+   * LINE 同時開始
    */
 
   const truckPromise =
@@ -4735,15 +5526,11 @@ async function init(){
 
 
   /*
-   * 先讓大車完成。
+   * 大車先完成、先顯示
    */
 
   await truckPromise;
 
-
-  /*
-   * LINE 同時已經在跑。
-   */
 
   const loginOK =
     await linePromise;
@@ -4754,8 +5541,7 @@ async function init(){
   ) {
 
     /*
-     * 大車已經出來之後，
-     * 才抓人員＋自動勾選。
+     * 大車出來後才載人員
      */
 
     await loadStaff();
