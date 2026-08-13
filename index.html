@@ -2530,6 +2530,52 @@ function sortedTrucks(){
           b.truck;
 
 
+        const fixedA =
+          truckA.fixed === true;
+
+        const fixedB =
+          truckB.fixed === true;
+
+
+        /*
+         * 1. D 欄固定置頂最高優先
+         */
+
+        if(
+          fixedA !==
+          fixedB
+        ){
+
+          return fixedA
+            ? -1
+            : 1;
+
+        }
+
+
+        /*
+         * 2. 如果兩台都是固定置頂
+         *    維持工作表原本順序
+         */
+
+        if(
+          fixedA &&
+          fixedB
+        ){
+
+          return (
+            a.originalIndex -
+            b.originalIndex
+          );
+
+        }
+
+
+        /*
+         * 3. 非固定置頂的大車
+         *    才判斷今天有沒有使用過
+         */
+
         const usageA =
           getTruckUsage(
             truckA.name
@@ -2540,11 +2586,6 @@ function sortedTrucks(){
             truckB.name
           );
 
-
-        /*
-         * 只要今天有使用紀錄
-         * 就算已使用。
-         */
 
         const usedA =
           Boolean(
@@ -2558,10 +2599,7 @@ function sortedTrucks(){
 
 
         /*
-         * 已使用的大車一律排到最後。
-         *
-         * 不管是不是固定置頂，
-         * 今天只要下過，就往下面移。
+         * 已使用排最後
          */
 
         if(
@@ -2577,38 +2615,7 @@ function sortedTrucks(){
 
 
         /*
-         * 如果兩台都還沒使用，
-         * 才判斷固定置頂。
-         */
-
-        if(
-          !usedA &&
-          !usedB
-        ){
-
-          const fixedA =
-            truckA.fixed === true;
-
-          const fixedB =
-            truckB.fixed === true;
-
-
-          if(
-            fixedA !==
-            fixedB
-          ){
-
-            return fixedA
-              ? -1
-              : 1;
-
-          }
-
-        }
-
-
-        /*
-         * 其他情況維持原本順序。
+         * 4. 其他維持原本工作表順序
          */
 
         return (
