@@ -4889,23 +4889,49 @@ function createReportCard(
 
 
   const time =
-    document.createElement(
-      "div"
+  document.createElement(
+    "div"
+  );
+
+
+time.className =
+  "report-time";
+
+
+/*
+ * 顯示真正日期＋時間。
+ *
+ * 跨日凌晨也會清楚知道
+ * 實際是哪一天。
+ */
+
+if (
+  report.actualDate
+) {
+
+  time.textContent =
+    formatDateLabel(
+      report.actualDate
+    ) +
+    " " +
+    (
+      report.time ||
+      ""
     );
 
 
-  time.className =
-    "report-time";
-
+} else {
 
   time.textContent =
     report.time ||
     "";
 
+}
 
-  card.appendChild(
-    time
-  );
+
+card.appendChild(
+  time
+);
 
 
   if (
