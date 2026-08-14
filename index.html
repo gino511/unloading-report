@@ -1036,6 +1036,85 @@ textarea{
   text-align:center;
 }
 
+
+/* =================================================
+   Lightbox 上一張 / 下一張
+================================================= */
+
+.lightbox-nav{
+  position:absolute;
+  top:50%;
+  z-index:3;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:58px;
+  height:74px;
+  padding:0;
+  border:1px solid rgba(255,255,255,.28);
+  border-radius:14px;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,.34);
+  color:#fff;
+  font-size:52px;
+  font-weight:300;
+  line-height:1;
+}
+
+.lightbox-prev{
+  left:12px;
+}
+
+.lightbox-next{
+  right:12px;
+}
+
+.lightbox-nav:disabled{
+  opacity:.22;
+}
+
+.lightbox-counter{
+  position:absolute;
+  left:50%;
+  bottom:18px;
+  z-index:3;
+  transform:translateX(-50%);
+  padding:6px 11px;
+  border-radius:999px;
+  background:rgba(0,0,0,.48);
+  color:#fff;
+  font-size:14px;
+  font-weight:700;
+  white-space:nowrap;
+}
+
+@media(max-width:700px){
+
+  .lightbox{
+    padding:10px 54px;
+  }
+
+  .lightbox-nav{
+    width:48px;
+    height:68px;
+    border-radius:12px;
+    font-size:46px;
+  }
+
+  .lightbox-prev{
+    left:4px;
+  }
+
+  .lightbox-next{
+    right:4px;
+  }
+
+  .lightbox-counter{
+    bottom:14px;
+    font-size:13px;
+  }
+}
+
 </style>
 
 </head>
@@ -1491,8 +1570,18 @@ textarea{
     type="button"
     class="lightbox-close"
     id="lightboxClose"
+    aria-label="關閉"
   >
     ×
+  </button>
+
+  <button
+    type="button"
+    class="lightbox-nav lightbox-prev"
+    id="lightboxPrev"
+    aria-label="上一張"
+  >
+    ‹
   </button>
 
   <img
@@ -1500,6 +1589,20 @@ textarea{
     src=""
     alt=""
   >
+
+  <button
+    type="button"
+    class="lightbox-nav lightbox-next"
+    id="lightboxNext"
+    aria-label="下一張"
+  >
+    ›
+  </button>
+
+  <div
+    class="lightbox-counter"
+    id="lightboxCounter"
+  ></div>
 
 </div>
 
@@ -2311,113 +2414,73 @@ function isTruckFixed(truck){
 function sortedTrucks(){
 
   /*
-   * D欄固定的車：
-   * 永遠留在工作表原本的位置，完全不參加排序。
+   * D 欄「不下移」真正邏輯：
    *
-   * D欄未固定的車：
-   * 未使用排前、已使用排後，
-   * 但只在其他「非固定位置」之間移動。
+   * 1. 未使用的車留在前面
+   * 2. D 欄勾選「不下移」的車也永遠留在前面
+   * 3. 只有「已使用 + 沒勾不下移」才移到最後
+   * 4. 前區與後區都維持工作表原本順序
+   *
+   * 例如原本：
+   * 1、2、3、4
+   *
+   * 2、3 已使用，4 勾不下移
+   *
+   * 顯示：
+   * 1、4、2、3
    */
 
-  const items =
-    truckData.map(
-      function(
-        truck,
-        index
-      ){
+  const front =
+    [];
 
-        return {
-
-          truck:
-            truck,
-
-          originalIndex:
-            index,
-
-          fixed:
-            isTruckFixed(
-              truck
-            ),
-
-          used:
-            Boolean(
-              truckLastUsed[
-                truck.name
-              ]
-            )
-
-        };
-
-      }
-    );
+  const used =
+    [];
 
 
-  const movableItems =
-    items
-      .filter(
-        function(item){
+  truckData.forEach(
+    function(truck){
 
-          return !item.fixed;
-
-        }
-      )
-      .sort(
-        function(a,b){
-
-          if(
-            a.used !==
-            b.used
-          ){
-
-            return a.used
-              ? 1
-              : -1;
-
-          }
+      const isFixed =
+        isTruckFixed(
+          truck
+        );
 
 
-          return (
-            a.originalIndex -
-            b.originalIndex
-          );
-
-        }
-      );
-
-
-  let movableIndex =
-    0;
+      const isUsed =
+        Boolean(
+          truckLastUsed[
+            truck.name
+          ]
+        );
 
 
-  return items.map(
-    function(item){
+      if (
+        isFixed ||
+        !isUsed
+      ) {
 
-      if(
-        item.fixed
-      ){
+        front.push(
+          truck
+        );
 
-        return item.truck;
+
+      } else {
+
+        used.push(
+          truck
+        );
 
       }
-
-
-      const result =
-        movableItems[
-          movableIndex
-        ].truck;
-
-
-      movableIndex++;
-
-
-      return result;
-
 
     }
   );
 
+
+  return front.concat(
+    used
+  );
+
 }
-  
 
 function renderTrucks(){
 
@@ -5260,7 +5323,7 @@ function createReportCard(
 
 
     report.photos.forEach(
-      function(photo){
+      function(photo, photoIndex){
 
         const item =
           document.createElement(
@@ -5295,9 +5358,9 @@ function createReportCard(
           "click",
           function(){
 
-            openLightbox(
-              photo.url ||
-              photo.thumbnailUrl
+            openLightboxGallery(
+              report.photos,
+              photoIndex
             );
 
           }
@@ -5774,6 +5837,15 @@ function showAllDayPhotos(
     );
 
 
+  /*
+   * 整天全部照片先合成一個陣列，
+   * 這樣 Lightbox 可以一路上一張 / 下一張。
+   */
+
+  const allDayPhotos =
+    [];
+
+
   reports.forEach(
     function(report){
 
@@ -5791,54 +5863,69 @@ function showAllDayPhotos(
       report.photos.forEach(
         function(photo){
 
-          const item =
-            document.createElement(
-              "div"
-            );
-
-
-          item.className =
-            "all-photo-item";
-
-
-          const img =
-            document.createElement(
-              "img"
-            );
-
-
-          img.src =
-            photo.thumbnailUrl ||
-            photo.url;
-
-
-          img.loading =
-            "lazy";
-
-
-          img.addEventListener(
-            "click",
-            function(){
-
-              openLightbox(
-                photo.url ||
-                photo.thumbnailUrl
-              );
-
-            }
-          );
-
-
-          item.appendChild(
-            img
-          );
-
-
-          grid.appendChild(
-            item
+          allDayPhotos.push(
+            photo
           );
 
         }
+      );
+
+    }
+  );
+
+
+  allDayPhotos.forEach(
+    function(photo, photoIndex){
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+
+      item.className =
+        "all-photo-item";
+
+
+      const img =
+        document.createElement(
+          "img"
+        );
+
+
+      img.src =
+        photo.thumbnailUrl ||
+        photo.url;
+
+
+      img.loading =
+        "lazy";
+
+
+      img.decoding =
+        "async";
+
+
+      img.addEventListener(
+        "click",
+        function(){
+
+          openLightboxGallery(
+            allDayPhotos,
+            photoIndex
+          );
+
+        }
+      );
+
+
+      item.appendChild(
+        img
+      );
+
+
+      grid.appendChild(
+        item
       );
 
     }
@@ -5880,16 +5967,109 @@ document
    Lightbox
 ================================================= */
 
+let lightboxPhotos =
+  [];
+
+let lightboxIndex =
+  0;
+
+
+function getLightboxPhotoUrl(
+  photo
+){
+
+  if (
+    !photo
+  ) {
+
+    return "";
+
+  }
+
+
+  if (
+    typeof photo ===
+    "string"
+  ) {
+
+    return photo;
+
+  }
+
+
+  return (
+    photo.url ||
+    photo.thumbnailUrl ||
+    photo.openUrl ||
+    ""
+  );
+
+}
+
+
 function openLightbox(
   url
 ){
 
-  document
-    .getElementById(
-      "lightboxImage"
+  openLightboxGallery(
+    [
+      {
+        url:
+          url
+      }
+    ],
+    0
+  );
+
+}
+
+
+function openLightboxGallery(
+  photos,
+  index
+){
+
+  lightboxPhotos =
+    Array.isArray(
+      photos
     )
-    .src =
-    url;
+      ? photos.filter(
+          function(photo){
+
+            return Boolean(
+              getLightboxPhotoUrl(
+                photo
+              )
+            );
+
+          }
+        )
+      : [];
+
+
+  if (
+    lightboxPhotos.length ===
+    0
+  ) {
+
+    return;
+
+  }
+
+
+  lightboxIndex =
+    Math.max(
+      0,
+      Math.min(
+        Number(
+          index
+        ) || 0,
+        lightboxPhotos.length - 1
+      )
+    );
+
+
+  updateLightboxPhoto();
 
 
   document
@@ -5899,6 +6079,124 @@ function openLightbox(
     .classList.add(
       "open"
     );
+
+}
+
+
+function updateLightboxPhoto(){
+
+  const photo =
+    lightboxPhotos[
+      lightboxIndex
+    ];
+
+
+  const image =
+    document.getElementById(
+      "lightboxImage"
+    );
+
+
+  image.src =
+    getLightboxPhotoUrl(
+      photo
+    );
+
+
+  const prev =
+    document.getElementById(
+      "lightboxPrev"
+    );
+
+
+  const next =
+    document.getElementById(
+      "lightboxNext"
+    );
+
+
+  /*
+   * 多張照片時循環切換，
+   * 第一張按上一張會到最後一張。
+   */
+
+  prev.style.display =
+    lightboxPhotos.length > 1
+      ? "flex"
+      : "none";
+
+
+  next.style.display =
+    lightboxPhotos.length > 1
+      ? "flex"
+      : "none";
+
+
+  const counter =
+    document.getElementById(
+      "lightboxCounter"
+    );
+
+
+  counter.textContent =
+    lightboxPhotos.length > 1
+      ? (
+          (lightboxIndex + 1) +
+          " / " +
+          lightboxPhotos.length
+        )
+      : "";
+
+}
+
+
+function showPreviousLightboxPhoto(){
+
+  if (
+    lightboxPhotos.length <=
+    1
+  ) {
+
+    return;
+
+  }
+
+
+  lightboxIndex =
+    (
+      lightboxIndex -
+      1 +
+      lightboxPhotos.length
+    ) %
+    lightboxPhotos.length;
+
+
+  updateLightboxPhoto();
+
+}
+
+
+function showNextLightboxPhoto(){
+
+  if (
+    lightboxPhotos.length <=
+    1
+  ) {
+
+    return;
+
+  }
+
+
+  lightboxIndex =
+    (
+      lightboxIndex +
+      1
+    ) %
+    lightboxPhotos.length;
+
+
+  updateLightboxPhoto();
 
 }
 
@@ -5921,6 +6219,14 @@ function closeLightbox(){
     .src =
     "";
 
+
+  lightboxPhotos =
+    [];
+
+
+  lightboxIndex =
+    0;
+
 }
 
 
@@ -5931,6 +6237,38 @@ document
   .addEventListener(
     "click",
     closeLightbox
+  );
+
+
+document
+  .getElementById(
+    "lightboxPrev"
+  )
+  .addEventListener(
+    "click",
+    function(event){
+
+      event.stopPropagation();
+
+      showPreviousLightboxPhoto();
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "lightboxNext"
+  )
+  .addEventListener(
+    "click",
+    function(event){
+
+      event.stopPropagation();
+
+      showNextLightboxPhoto();
+
+    }
   );
 
 
@@ -5953,6 +6291,60 @@ document
 
     }
   );
+
+
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    const lightbox =
+      document.getElementById(
+        "lightbox"
+      );
+
+
+    if (
+      !lightbox.classList.contains(
+        "open"
+      )
+    ) {
+
+      return;
+
+    }
+
+
+    if (
+      event.key ===
+      "ArrowLeft"
+    ) {
+
+      showPreviousLightboxPhoto();
+
+    }
+
+
+    if (
+      event.key ===
+      "ArrowRight"
+    ) {
+
+      showNextLightboxPhoto();
+
+    }
+
+
+    if (
+      event.key ===
+      "Escape"
+    ) {
+
+      closeLightbox();
+
+    }
+
+  }
+);
 
 
 /* =================================================
