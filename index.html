@@ -1558,6 +1558,125 @@ let currentLanguage =
 
 
 /* =================================================
+   大車 / 下貨人員手機快取
+================================================= */
+
+const TRUCK_CACHE_KEY =
+  "zhubei_trucks_cache_v1";
+
+const STAFF_CACHE_KEY =
+  "zhubei_staff_cache_v1";
+
+
+function readListCache(
+  key
+){
+
+  try {
+
+    const text =
+      localStorage.getItem(
+        key
+      );
+
+
+    if (
+      !text
+    ) {
+
+      return [];
+
+    }
+
+
+    const value =
+      JSON.parse(
+        text
+      );
+
+
+    return Array.isArray(
+      value
+    )
+      ? value
+      : [];
+
+
+  } catch (error) {
+
+    console.warn(
+      "讀取快取失敗：",
+      key,
+      error
+    );
+
+
+    return [];
+
+  }
+
+}
+
+
+function writeListCache(
+  key,
+  value
+){
+
+  try {
+
+    localStorage.setItem(
+      key,
+      JSON.stringify(
+        Array.isArray(
+          value
+        )
+          ? value
+          : []
+      )
+    );
+
+
+  } catch (error) {
+
+    console.warn(
+      "寫入快取失敗：",
+      key,
+      error
+    );
+
+  }
+
+}
+
+
+function isSameListData(
+  a,
+  b
+){
+
+  try {
+
+    return (
+      JSON.stringify(
+        a || []
+      ) ===
+      JSON.stringify(
+        b || []
+      )
+    );
+
+
+  } catch (error) {
+
+    return false;
+
+  }
+
+}
+
+
+/* =================================================
    語言
 ================================================= */
 
@@ -2045,6 +2164,31 @@ async function initLIFF(){
 
 async function loadTrucks(){
 
+  /*
+   * 先用手機上一次快取的名單立即顯示。
+   * 今天使用狀態不快取，等背景後端更新。
+   */
+
+  const cachedTrucks =
+    readListCache(
+      TRUCK_CACHE_KEY
+    );
+
+
+  if (
+    cachedTrucks.length >
+    0
+  ) {
+
+    truckData =
+      cachedTrucks;
+
+
+    renderTrucks();
+
+  }
+
+
   try {
 
     const result =
@@ -2053,7 +2197,7 @@ async function loadTrucks(){
       );
 
 
-    truckData =
+    const latestTrucks =
       Array.isArray(
         result.data.trucks
       )
@@ -2066,6 +2210,34 @@ async function loadTrucks(){
       {};
 
 
+    /*
+     * 名單真的有變才覆寫手機快取。
+     */
+
+    if (
+      !isSameListData(
+        cachedTrucks,
+        latestTrucks
+      )
+    ) {
+
+      writeListCache(
+        TRUCK_CACHE_KEY,
+        latestTrucks
+      );
+
+    }
+
+
+    truckData =
+      latestTrucks;
+
+
+    /*
+     * 不論名單有沒有變，
+     * 今天使用狀態都要更新一次。
+     */
+
     renderTrucks();
 
 
@@ -2076,12 +2248,24 @@ async function loadTrucks(){
     );
 
 
-    document
-      .getElementById(
-        "truckSelectText"
-      )
-      .textContent =
-      "大車載入失敗";
+    /*
+     * 如果手機已經有快取，
+     * 後端短暫失敗時仍保留可用名單。
+     */
+
+    if (
+      truckData.length ===
+      0
+    ) {
+
+      document
+        .getElementById(
+          "truckSelectText"
+        )
+        .textContent =
+        "大車載入失敗";
+
+    }
 
   }
 
@@ -2128,42 +2312,19 @@ function sortedTrucks(){
 
   /*
    * D欄固定的車：
-   * 不代表固定原本位置，也不是固定最上面。
+   * 永遠留在工作表原本的位置，完全不參加排序。
    *
-   * 它的意思是：
-   * 就算今天已經使用過，也仍然視為「未使用」來排序。
-   *
-   * 因此：
-   * - 一般未使用車在前
-   * - D欄固定車也在前
-   * - 一般已使用車排到後面
-   * - 同一群內維持工作表原本順序
-   *
-   * 例如原本：1、2、3、4
-   * 2、3 已使用，4 有勾固定
-   * 結果：1、4、2、3
+   * D欄未固定的車：
+   * 未使用排前、已使用排後，
+   * 但只在其他「非固定位置」之間移動。
    */
 
-  return truckData
-    .map(
+  const items =
+    truckData.map(
       function(
         truck,
         index
       ){
-
-        const fixed =
-          isTruckFixed(
-            truck
-          );
-
-
-        const used =
-          Boolean(
-            truckLastUsed[
-              truck.name
-            ]
-          );
-
 
         return {
 
@@ -2173,49 +2334,90 @@ function sortedTrucks(){
           originalIndex:
             index,
 
-          /*
-           * fixed=true 時，
-           * 即使真的用過也不算進「已使用後移」群組。
-           */
-          sortAsUsed:
-            used && !fixed
+          fixed:
+            isTruckFixed(
+              truck
+            ),
+
+          used:
+            Boolean(
+              truckLastUsed[
+                truck.name
+              ]
+            )
 
         };
 
       }
-    )
-    .sort(
-      function(a,b){
+    );
 
-        if(
-          a.sortAsUsed !==
-          b.sortAsUsed
-        ){
 
-          return a.sortAsUsed
-            ? 1
-            : -1;
+  const movableItems =
+    items
+      .filter(
+        function(item){
+
+          return !item.fixed;
 
         }
+      )
+      .sort(
+        function(a,b){
+
+          if(
+            a.used !==
+            b.used
+          ){
+
+            return a.used
+              ? 1
+              : -1;
+
+          }
 
 
-        return (
-          a.originalIndex -
-          b.originalIndex
-        );
+          return (
+            a.originalIndex -
+            b.originalIndex
+          );
 
-      }
-    )
-    .map(
-      function(item){
+        }
+      );
+
+
+  let movableIndex =
+    0;
+
+
+  return items.map(
+    function(item){
+
+      if(
+        item.fixed
+      ){
 
         return item.truck;
 
       }
-    );
+
+
+      const result =
+        movableItems[
+          movableIndex
+        ].truck;
+
+
+      movableIndex++;
+
+
+      return result;
+
+
+    }
+  );
 
 }
-
+  
 
 function renderTrucks(){
 
@@ -2434,6 +2636,40 @@ function updateTruckButtonText(){
 
 async function loadStaff(){
 
+  /*
+   * LINE 登入完成後，
+   * 先用手機上一次快取的人員立即顯示。
+   */
+
+  const cachedStaff =
+    readListCache(
+      STAFF_CACHE_KEY
+    );
+
+
+  if (
+    cachedStaff.length >
+    0
+  ) {
+
+    staffData =
+      cachedStaff;
+
+
+    renderStaff();
+
+
+    if (
+      !editingReport
+    ) {
+
+      autoMatchLineStaff();
+
+    }
+
+  }
+
+
   try {
 
     const result =
@@ -2442,12 +2678,31 @@ async function loadStaff(){
       );
 
 
-    staffData =
+    const latestStaff =
       Array.isArray(
         result.data.staff
       )
         ? result.data.staff
         : [];
+
+
+    if (
+      !isSameListData(
+        cachedStaff,
+        latestStaff
+      )
+    ) {
+
+      writeListCache(
+        STAFF_CACHE_KEY,
+        latestStaff
+      );
+
+    }
+
+
+    staffData =
+      latestStaff;
 
 
     renderStaff();
@@ -2469,12 +2724,24 @@ async function loadStaff(){
     );
 
 
-    document
-      .getElementById(
-        "staffGrid"
-      )
-      .innerHTML =
-      '<div class="loading">下貨人員資料載入失敗</div>';
+    /*
+     * 有快取就繼續使用，
+     * 只有完全沒有資料才顯示失敗。
+     */
+
+    if (
+      staffData.length ===
+      0
+    ) {
+
+      document
+        .getElementById(
+          "staffGrid"
+        )
+        .innerHTML =
+        '<div class="loading">下貨人員資料載入失敗</div>';
+
+    }
 
   }
 
@@ -3383,8 +3650,8 @@ document
           const compressed =
             await compressDataURL(
               raw,
-              1200,
-              0.72
+              720,
+              0.50
             );
 
 
